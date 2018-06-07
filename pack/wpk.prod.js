@@ -25,7 +25,6 @@ function resolve (dir) {
     return path.join(__dirname, '..', dir)
 }
 const wpkconfig = {
-    mode: 'production',
     entry: {
         app: ["babel-polyfill", './src/index.js']
     },

@@ -83,22 +83,24 @@ Popup.prototype = {
             e.preventDefault()
         }
         that.$el.getElementsByClassName('owl-pop-title-wrapper')[0].addEventListener('mousedown', function (e) {
-            ox = e.offsetX
-            oy = e.offsetY
+            ox = e.offsetX + 1
+            oy = e.offsetY + 1
             pw = document.documentElement.clientWidth
             ph = document.documentElement.clientHeight
             ew = that.$el.clientWidth
             eh = that.$el.clientHeight
             mousedown = true
 
-            document.addEventListener('mousemove', move)
+            document.addEventListener('mousemove', move, false)
             document.addEventListener('mouseup', function () {
                 mousedown = false
             })
         })
         that.$el.getElementsByClassName('owl-pop-close')[0].addEventListener('click', function (e) {
-            document.removeEventListener('mousemove', move)
             that._destroy()
+        })
+        that.$el.getElementsByClassName('owl-pop-close')[0].addEventListener('mousedown', function (e) {
+            e.stopPropagation()
         })
         that.$el.getElementsByClassName('confirm')[0].addEventListener('click', function (e) {
             if(that._option.hasOwnProperty('confirm')) {
