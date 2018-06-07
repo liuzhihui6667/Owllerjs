@@ -5,8 +5,56 @@
   position: fixed;
   top: calc(50% - 100px);
   left: calc(50% - 150px);
-  box-shadow: 0px 0px 15px 8px #797D7F;
+  box-shadow: 0px 0px 15px 2px #797D7F;
   z-index: 2000;
+  transition: box-shadow .5s;
+}
+.owl-pop-rotate {
+  animation-name: popin-rotate;
+  animation-duration: .5s;
+}
+
+.owl-pop-scale {
+  animation-name: popin-scale;
+  animation-duration: .5s;
+}
+@keyframes popin-rotate {
+  10%{
+    transform: rotate(0deg) scale(0);
+  }
+  100%{
+    transform: rotate(1440deg) scale(1);
+  }
+}
+@keyframes popout-rotate {
+  10%{
+    transform: rotate(0deg) scale(1);
+  }
+  100%{
+    transform: rotate(1440deg) scale(0);
+  }
+}
+@keyframes popin-scale {
+  10%{
+    transform: scale(0.5) rotate(0deg);
+  }
+  70%{
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(1) rotate(360deg);
+  }
+}
+@keyframes popout-scale {
+  10%{
+    transform: scale(1);
+  }
+  30%{
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(0.5);
+  }
 }
 .owl-pop-title-wrapper {
   box-sizing: border-box;
@@ -24,15 +72,19 @@
   text-indent: 1em;
   font-size: 18px;
 }
+.owl-pop-container:hover {
+  box-shadow: 0px 0px 15px 5px #797D7F;
+  transition: box-shadow .5s;
+}
 .owl-pop-container:hover .owl-pop-title-wrapper {
   border: @theme-background-color solid 1px;
-  transition: all .5s;
+  transition: border .5s;
 }
 
 .owl-pop-container:hover .owl-pop-body-wrapper {
   border: @theme-background-color solid 1px;
   border-top: none;
-  transition: all .5s;
+  transition: border .5s;
 }
 
 .owl-pop-close {
@@ -80,6 +132,6 @@
   left: 40px;
 }
 
-.cancle {
+.cancel {
   right: 40px;
 }

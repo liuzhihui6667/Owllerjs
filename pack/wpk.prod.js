@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const port = 8090
 const HOST = process.env.HOST
@@ -29,12 +30,22 @@ const wpkconfig = {
         app: ["babel-polyfill", './src/index.js']
     },
     output: {
-
+        path: path.resolve(__dirname, '../dist/'),
+        filename: 'owlljs.js'
     },
     plugins: [
         new webpack.DefinePlugin({
             'process.env': 'development'
         }),
+        // new UglifyJsPlugin({
+        //     uglifyOptions: {
+        //         compress: {
+        //             warnings: false
+        //         }
+        //     },
+        //     sourceMap: true,
+        //     parallel: true
+        // }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
         new webpack.NoEmitOnErrorsPlugin(),

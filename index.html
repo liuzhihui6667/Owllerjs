@@ -3,6 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Owllerjs</title>
+    <style>
+        .owl-pop-op {
+            animation-name: popin-op;
+            animation-duration: .5s;
+        }
+        @keyframes popin-op {
+            0%{
+                opacity: 0;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
+        @keyframes popout-op {
+            0%{
+                opacity: 1;
+            }
+            100%{
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="owl">
