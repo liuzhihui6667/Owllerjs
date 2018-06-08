@@ -17,12 +17,8 @@ let pop2 = new popup('owl2', {
         pop3.render()
     }
 })
-// pop2.render()
-//
+
 let pop3 = new popup({
     animation: 'op'
 })
-//
-// pop3.render()
-// // pop3 = new popup()
-// pop3.render()
+

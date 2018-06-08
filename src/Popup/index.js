@@ -1,5 +1,3 @@
-import './style/index.less'
-import less from 'less'
 function Popup(el = '', option = {}) {
     if('object' === typeof el) {
         option = el
@@ -138,7 +136,6 @@ Popup.prototype = {
         let that = this
         that.$el = document.getElementById(that.$hashKey)
         that._set_event()
-
     },
 
     stick: function (el) {
@@ -158,7 +155,11 @@ Popup.prototype = {
         this.$has_instance = false
         this._leave()
         setTimeout(() => {
-            this.$el.remove()
+            if(is_ie()) {
+                this.removedNodes(true)
+            } else {
+                this.$el.remove()
+            }
         }, 400)
     },
     _leave: function () {
@@ -179,6 +180,14 @@ Popup.prototype = {
                 return 'scale'
                 break
         }
+    }
+}
+
+function is_ie() {
+    if((/Trident\/7\./).test(navigator.userAgent)){
+        return true;
+    }else{
+        return false;
     }
 }
 
