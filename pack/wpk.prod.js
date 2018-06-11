@@ -9,10 +9,6 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
-const port = 8090
-const HOST = process.env.HOST
-const PORT = process.env.PORT && Number(process.env.PORT) ? process.env.PORT : port
-
 const config = {
     prod: {
         assetsPublicPath: '/',
@@ -28,7 +24,9 @@ function resolve (dir) {
 }
 const wpkconfig = {
     entry: {
-        app: ["babel-polyfill", './src/index.js']
+        app: [
+            './src/index.js'
+        ]
     },
     output: {
         path: path.resolve(__dirname, '../dist/'),
@@ -36,7 +34,7 @@ const wpkconfig = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env': 'development'
+            'process.env': 'production'
         }),
         new UglifyJsPlugin({
             uglifyOptions: {
@@ -87,8 +85,9 @@ const wpkconfig = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                // include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
-            }, {
+                include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+            },
+            {
                 test: /\.less$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',

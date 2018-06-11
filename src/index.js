@@ -1,6 +1,6 @@
 import './Style/index.less'
 import popup from './Popup/index.js'
-import 'babel-polyfill'
+// import 'babel-polyfill'
 
 let pop1 = new popup('owl', {
     title: '我是一个弹窗',

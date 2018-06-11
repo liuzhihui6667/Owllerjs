@@ -156,7 +156,7 @@ Popup.prototype = {
         this._leave()
         setTimeout(() => {
             if(is_ie()) {
-                this.removedNodes(true)
+                this.$el.removeNode(true)
             } else {
                 this.$el.remove()
             }
