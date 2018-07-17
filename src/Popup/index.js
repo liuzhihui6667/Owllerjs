@@ -171,10 +171,12 @@ Popup.prototype = {
         }
     },
     _get_animation: function (animation = this._option.animation) {
-        return animation === undefined ? 'scale' : animation
         switch (animation) {
             case 'rotate':
                 return 'rotate'
+                break
+            case 'fade':
+                return 'fade'
                 break
             default:
                 return 'scale'

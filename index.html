@@ -4,25 +4,32 @@
     <meta charset="UTF-8">
     <title>Owllerjs</title>
     <style>
-        .owl-pop-op {
-            animation-name: popin-op;
-            animation-duration: .5s;
+        * {
+            padding: 0;
+            margin: 0;
         }
-        @keyframes popin-op {
-            0%{
-                opacity: 0;
-            }
-            100%{
-                opacity: 1;
-            }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
-        @keyframes popout-op {
-            0%{
-                opacity: 1;
-            }
-            100%{
-                opacity: 0;
-            }
+
+        ul, li, span {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #owl {
+            width: 100%;
+            height: 66px;
+        }
+        #owl2 {
+            height: 100%;
+            width: 250px;
         }
     </style>
 </head>

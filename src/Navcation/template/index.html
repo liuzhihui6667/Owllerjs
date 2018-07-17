@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        ul, li, span {
+            padding: 0;
+            margin: 0;
+        }
+        #owl {
+            width: 100%;
+            height: 66px;
+        }
+        #owl2 {
+            height: 100%;
+            width: 250px;
+        }
+        .owl-nav-container {
+            height: 100%;
+            width: 100%;
+            background: #545c64;
+        }
+
+        .owl-nav-wrapper {
+            list-style-type: none;
+            width: 100%;
+            height: 100%;
+            white-space: nowrap;
+        }
+
+        .owl-nav-item-h {
+            display: inline-block;
+            min-width: 70px;
+            height: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+            vertical-align: top;
+            color: #ffffff;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .owl-nav-item-v {
+            width: 100%;
+            height: 60px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 0 35px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .owl-nav-item-h-active {
+            color: red;
+            border-bottom: 4px solid red;
+        }
+
+        .owl-nav-item-h-active .owl-nav-item-text {
+            top: calc(50% - 8px);
+        }
+
+        .owl-nav-item-v-active {
+            color: red;
+            padding: 0 31px;
+            border-left: 4px solid red;
+        }
+
+        .owl-nav-item-v-active svg {
+            margin-right: 10px;
+        }
+
+        .owl-nav-item-v-active svg path,.owl-nav-item-h-active svg path {
+            stroke: red;
+        }
+
+        .owl-nav-item-text {
+            display: block;
+            height: 20px;
+            font-size: 16px;
+            line-height: 20px;
+            position: relative;
+            top: calc(50% - 10px);
+            z-index: 2;
+        }
+
+        .owl-nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .owl-nav-wrapper-h {
+            margin-left: 250px;
+        }
+
+        .owl-nav-item-v:before, .owl-nav-item-h:before {
+            box-sizing: border-box !important;
+            width: 0px;
+            height: 0px;
+            content: '';
+            border-color: #434A50 transparent transparent transparent;
+            border-width: 0px 0px 0px 0px;
+            border-style: solid;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+            transition: all .4s;
+        }
+
+        .owl-nav-item-v:hover:before {
+            border-width: 350px 450px 0px 0px;
+            transition: all .4s;
+        }
+        .owl-nav-item-h:hover:before {
+            border-width: 250px 250px 0px 0px;
+            transition: all .4s;
+        }
+    </style>
+</head>
+<body>
+<div id="owl">
+    <div class="owl-nav-container">
+        <ul class="owl-nav-wrapper owl-nav-wrapper-h">
+            <li class="owl-nav-item-h">
+                <span class="owl-nav-item-text">你好啊</span>
+            </li>
+            <li class="owl-nav-item-h owl-nav-item-h-active">
+                <span class="owl-nav-item-text">
+                    <svg class="owl-nav-icon" viewBox="0 0 15 15">
+                        <path d="M0,0 L15,15 M0,15 L15, 0" stroke="#ffffff" stroke-width="2px" stroke-opacity="1"></path>
+                    </svg>
+                    <span style="vertical-align: top;">你好啊</span>
+                </span>
+            </li>
+            <li class="owl-nav-item-h"><span class="owl-nav-item-text">你好你好啊</span></li>
+            <li class="owl-nav-item-h"><span class="owl-nav-item-text">你啊</span></li>
+            <li class="owl-nav-item-h"><span class="owl-nav-item-text">English</span></li>
+        </ul>
+    </div>
+</div>
+<div id="owl2">
+    <div class="owl-nav-container">
+        <ul class="owl-nav-wrapper">
+            <li class="owl-nav-item-v owl-nav-item-v-active">
+                <span class="owl-nav-item-text">
+                    <svg class="owl-nav-icon" viewBox="0 0 15 15">
+                        <path d="M0,0 L15,15 M0,15 L15, 0" stroke="#909399" stroke-width="2px" stroke-opacity="0.7"></path>
+                    </svg>
+                    <span style="vertical-align: top;">你好啊</span>
+                </span>
+            </li>
+            <li class="owl-nav-item-v">
+                <span class="owl-nav-item-text">
+                    <svg class="owl-nav-icon" viewBox="0 0 15 15">
+                        <path d="M0,0 L15,15 M0,15 L15, 0" stroke="#909399" stroke-width="2px" stroke-opacity="0.7"></path>
+                    </svg>
+                    <span style="vertical-align: top;">你好啊</span>
+                </span>
+            </li>
+            <li class="owl-nav-item-v">
+                <span class="owl-nav-item-text">你好你好啊</span>
+            </li>
+            <li class="owl-nav-item-v"><span class="owl-nav-item-text">你啊</span></li>
+            <li class="owl-nav-item-v"><span class="owl-nav-item-text">English</span></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
