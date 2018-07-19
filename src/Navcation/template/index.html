@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Layout</title>
+    <title>Navcation</title>
+    <link rel="stylesheet/less" type="text/css" href="../../Style/index.less">
+    <link rel="stylesheet/less" href="../style/index.less">
     <style>
         * {
             padding: 0;
@@ -12,174 +14,171 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
         }
 
         ul, li, span {
             padding: 0;
             margin: 0;
         }
-        #owl {
-            width: 100%;
-            height: 66px;
+        body {
+            margin: 0;
+            padding: 0;
         }
         #owl2 {
             height: 100%;
             width: 250px;
-        }
-        .owl-nav-container {
-            height: 100%;
-            width: 100%;
-            background: #545c64;
-        }
-
-        .owl-nav-wrapper {
-            list-style-type: none;
-            width: 100%;
-            height: 100%;
-            white-space: nowrap;
-        }
-
-        .owl-nav-item-h {
             display: inline-block;
-            min-width: 70px;
-            height: 100%;
-            padding: 0 20px;
-            box-sizing: border-box;
+        }
+        #owl3 {
+            height: 66px;
+            width: calc(100% - 250px);
+            display: inline-block;
             vertical-align: top;
-            color: #ffffff;
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .owl-nav-item-v {
-            width: 100%;
-            height: 60px;
-            color: #ffffff;
-            cursor: pointer;
-            padding: 0 35px;
-            box-sizing: border-box;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .owl-nav-item-h-active {
-            color: red;
-            border-bottom: 4px solid red;
-        }
-
-        .owl-nav-item-h-active .owl-nav-item-text {
-            top: calc(50% - 8px);
-        }
-
-        .owl-nav-item-v-active {
-            color: red;
-            padding: 0 31px;
-            border-left: 4px solid red;
-        }
-
-        .owl-nav-item-v-active svg {
-            margin-right: 10px;
-        }
-
-        .owl-nav-item-v-active svg path,.owl-nav-item-h-active svg path {
-            stroke: red;
-        }
-
-        .owl-nav-item-text {
-            display: block;
-            height: 20px;
-            font-size: 16px;
-            line-height: 20px;
-            position: relative;
-            top: calc(50% - 10px);
-            z-index: 2;
-        }
-
-        .owl-nav-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-        }
-
-        .owl-nav-wrapper-h {
-            margin-left: 250px;
-        }
-
-        .owl-nav-item-v:before, .owl-nav-item-h:before {
-            box-sizing: border-box !important;
-            width: 0px;
-            height: 0px;
-            content: '';
-            border-color: #434A50 transparent transparent transparent;
-            border-width: 0px 0px 0px 0px;
-            border-style: solid;
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            z-index: 1;
-            transition: all .4s;
-        }
-
-        .owl-nav-item-v:hover:before {
-            border-width: 350px 450px 0px 0px;
-            transition: all .4s;
-        }
-        .owl-nav-item-h:hover:before {
-            border-width: 250px 250px 0px 0px;
-            transition: all .4s;
         }
     </style>
 </head>
 <body>
-<div id="owl">
-    <div class="owl-nav-container">
+<div id="owl2">
+    <div class="owl-nav-container" id="owl-popup-uetce0">
+        <div class="owl-nav-v-logo-wrapper"></div>
+        <ul class="owl-nav-wrapper owl-nav-wrapper-v">
+            <li class="owl-nav-item-v owl-nav-first">
+                <span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="owl-nav-icon" viewBox="0 0 1024 1024" version="1.1">
+                        <path fill="#ffffff"
+                              d="M924.8 385.6c-22.6-53.4-54.9-101.3-96-142.4-41.1-41.1-89-73.4-142.4-96C631.1 123.8 572.5 112 512 112s-119.1 11.8-174.4 35.2c-53.4 22.6-101.3 54.9-142.4 96-41.1 41.1-73.4 89-96 142.4C75.8 440.9 64 499.5 64 560c0 132.7 58.3 257.7 159.9 343.1l1.7 1.4c5.8 4.8 13.1 7.5 20.6 7.5h531.7c7.5 0 14.8-2.7 20.6-7.5l1.7-1.4C901.7 817.7 960 692.7 960 560c0-60.5-11.9-119.1-35.2-174.4zM761.4 836H262.6C184.5 765.5 140 665.6 140 560c0-99.4 38.7-192.8 109-263 70.3-70.3 163.7-109 263-109 99.4 0 192.8 38.7 263 109 70.3 70.3 109 163.7 109 263 0 105.6-44.5 205.5-122.6 276zM623.5 421.5c-3.1-3.1-8.2-3.1-11.3 0L527.7 506c-18.7-5-39.4-0.2-54.1 14.5-21.9 21.9-21.9 57.3 0 79.2 21.9 21.9 57.3 21.9 79.2 0 14.7-14.7 19.5-35.4 14.5-54.1l84.5-84.5c3.1-3.1 3.1-8.2 0-11.3l-28.3-28.3zM490 320h44c4.4 0 8-3.6 8-8v-80c0-4.4-3.6-8-8-8h-44c-4.4 0-8 3.6-8 8v80c0 4.4 3.6 8 8 8zM750 538v44c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8v-44c0-4.4-3.6-8-8-8h-80c-4.4 0-8 3.6-8 8zM762.7 340.8l-31.1-31.1c-3.1-3.1-8.2-3.1-11.3 0l-56.6 56.6c-3.1 3.1-3.1 8.2 0 11.3l31.1 31.1c3.1 3.1 8.2 3.1 11.3 0l56.6-56.6c3.1-3.1 3.1-8.2 0-11.3zM304.1 309.7c-3.1-3.1-8.2-3.1-11.3 0l-31.1 31.1c-3.1 3.1-3.1 8.2 0 11.3l56.6 56.6c3.1 3.1 8.2 3.1 11.3 0l31.1-31.1c3.1-3.1 3.1-8.2 0-11.3l-56.6-56.6zM262 530h-80c-4.4 0-8 3.6-8 8v44c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8v-44c0-4.4-3.6-8-8-8z"/>
+                    </svg><span class="owl-nav-item-text">启动页</span>
+                </span>
+                <ul class="owl-nav-wrapper owl-nav-wrapper-v">
+                    <li class="owl-nav-item-v ">
+                        <span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">
+                            <span class="owl-nav-item-text">查询页面</span>
+                        </span>
+                        <ul class="owl-nav-wrapper owl-nav-wrapper-v">
+                            <li class="owl-nav-item-v ">
+                                <span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">
+                                    <span class="owl-nav-item-text">启动页面</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="owl-nav-item-v owl-nav-first">
+                <span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="owl-nav-icon" viewBox="0 0 1024 1024" version="1.1">
+                        <path fill="#ffffff"
+                              d="M924.8 385.6c-22.6-53.4-54.9-101.3-96-142.4-41.1-41.1-89-73.4-142.4-96C631.1 123.8 572.5 112 512 112s-119.1 11.8-174.4 35.2c-53.4 22.6-101.3 54.9-142.4 96-41.1 41.1-73.4 89-96 142.4C75.8 440.9 64 499.5 64 560c0 132.7 58.3 257.7 159.9 343.1l1.7 1.4c5.8 4.8 13.1 7.5 20.6 7.5h531.7c7.5 0 14.8-2.7 20.6-7.5l1.7-1.4C901.7 817.7 960 692.7 960 560c0-60.5-11.9-119.1-35.2-174.4zM761.4 836H262.6C184.5 765.5 140 665.6 140 560c0-99.4 38.7-192.8 109-263 70.3-70.3 163.7-109 263-109 99.4 0 192.8 38.7 263 109 70.3 70.3 109 163.7 109 263 0 105.6-44.5 205.5-122.6 276zM623.5 421.5c-3.1-3.1-8.2-3.1-11.3 0L527.7 506c-18.7-5-39.4-0.2-54.1 14.5-21.9 21.9-21.9 57.3 0 79.2 21.9 21.9 57.3 21.9 79.2 0 14.7-14.7 19.5-35.4 14.5-54.1l84.5-84.5c3.1-3.1 3.1-8.2 0-11.3l-28.3-28.3zM490 320h44c4.4 0 8-3.6 8-8v-80c0-4.4-3.6-8-8-8h-44c-4.4 0-8 3.6-8 8v80c0 4.4 3.6 8 8 8zM750 538v44c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8v-44c0-4.4-3.6-8-8-8h-80c-4.4 0-8 3.6-8 8zM762.7 340.8l-31.1-31.1c-3.1-3.1-8.2-3.1-11.3 0l-56.6 56.6c-3.1 3.1-3.1 8.2 0 11.3l31.1 31.1c3.1 3.1 8.2 3.1 11.3 0l56.6-56.6c3.1-3.1 3.1-8.2 0-11.3zM304.1 309.7c-3.1-3.1-8.2-3.1-11.3 0l-31.1 31.1c-3.1 3.1-3.1 8.2 0 11.3l56.6 56.6c3.1 3.1 8.2 3.1 11.3 0l31.1-31.1c3.1-3.1 3.1-8.2 0-11.3l-56.6-56.6zM262 530h-80c-4.4 0-8 3.6-8 8v44c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8v-44c0-4.4-3.6-8-8-8z"/>
+                    </svg><span class="owl-nav-item-text">启动页</span>
+                </span>
+                <ul class="owl-nav-wrapper owl-nav-wrapper-v">
+                    <li class="owl-nav-item-v ">
+                        <span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">
+                            <span class="owl-nav-item-text">查询页面</span>
+                        </span>
+                        <ul class="owl-nav-wrapper owl-nav-wrapper-v">
+                            <li class="owl-nav-item-v ">
+                                <span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">
+                                    <span class="owl-nav-item-text">启动页面</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="owl-nav-item-v ">
+                        <span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">
+                            <span class="owl-nav-item-text">查询页面</span>
+                        </span>
+                        <ul class="owl-nav-wrapper owl-nav-wrapper-v">
+                            <li class="owl-nav-item-v">
+                                <span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">
+                                    <span class="owl-nav-item-text">启动页面</span>
+                                </span>
+                            </li>
+                            <li class="owl-nav-item-v">
+                                <span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">
+                                    <span class="owl-nav-item-text">启动页面</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div><div id="owl3">
+    <div class="owl-nav-container" id="owl-popup-kjh7ft">
         <ul class="owl-nav-wrapper owl-nav-wrapper-h">
-            <li class="owl-nav-item-h">
-                <span class="owl-nav-item-text">你好啊</span>
+            <li class="owl-nav-item-h ">
+                <span class="owl-nav-item-text">
+                <span style="vertical-align: top;">启动页面</span>
+                </span>
+            </li>
+            <li class="owl-nav-item-h ">
+                <span class="owl-nav-item-text">
+                <span style="vertical-align: top;">启动页面</span>
+                </span>
             </li>
             <li class="owl-nav-item-h owl-nav-item-h-active">
                 <span class="owl-nav-item-text">
-                    <svg class="owl-nav-icon" viewBox="0 0 15 15">
-                        <path d="M0,0 L15,15 M0,15 L15, 0" stroke="#ffffff" stroke-width="2px" stroke-opacity="1"></path>
-                    </svg>
-                    <span style="vertical-align: top;">你好啊</span>
+                <span style="vertical-align: top;">启动页面</span>
                 </span>
             </li>
-            <li class="owl-nav-item-h"><span class="owl-nav-item-text">你好你好啊</span></li>
-            <li class="owl-nav-item-h"><span class="owl-nav-item-text">你啊</span></li>
-            <li class="owl-nav-item-h"><span class="owl-nav-item-text">English</span></li>
-        </ul>
-    </div>
-</div>
-<div id="owl2">
-    <div class="owl-nav-container">
-        <ul class="owl-nav-wrapper">
-            <li class="owl-nav-item-v owl-nav-item-v-active">
-                <span class="owl-nav-item-text">
-                    <svg class="owl-nav-icon" viewBox="0 0 15 15">
-                        <path d="M0,0 L15,15 M0,15 L15, 0" stroke="#909399" stroke-width="2px" stroke-opacity="0.7"></path>
-                    </svg>
-                    <span style="vertical-align: top;">你好啊</span>
-                </span>
-            </li>
-            <li class="owl-nav-item-v">
-                <span class="owl-nav-item-text">
-                    <svg class="owl-nav-icon" viewBox="0 0 15 15">
-                        <path d="M0,0 L15,15 M0,15 L15, 0" stroke="#909399" stroke-width="2px" stroke-opacity="0.7"></path>
-                    </svg>
-                    <span style="vertical-align: top;">你好啊</span>
-                </span>
-            </li>
-            <li class="owl-nav-item-v">
-                <span class="owl-nav-item-text">你好你好啊</span>
-            </li>
-            <li class="owl-nav-item-v"><span class="owl-nav-item-text">你啊</span></li>
-            <li class="owl-nav-item-v"><span class="owl-nav-item-text">English</span></li>
         </ul>
     </div>
 </div>
 </body>
+<script src="../../Style/less.js"></script>
+
+<script>
+    let li = document.getElementById('owl-popup-uetce0').getElementsByTagName('li')
+    for (let el of li) {
+        el.addEventListener('click', function (e) {
+            if(this.getElementsByTagName('ul').length > 0) {
+                let pel = this.parentNode
+                let sel = pel.childNodes
+                let selc = 0
+                for (let s of sel) {
+                    if(s.nodeType === 1) {
+                        selc++
+                        s.style.transition = 'all .5s'
+                        s.style.height = hasClass(s, 'owl-nav-first') ? '60px' : '50px'
+                        if(hasClass(s, 'owl-nav-first')) {
+                            for (let el of s.getElementsByTagName('li')) {
+                                el.style.transition = 'all .5s'
+                                el.style.height = '50px'
+                            }
+                        }
+                    }
+                }
+                let cel = this.getElementsByTagName('ul')[0]
+                let celc = 0
+                for (let c of cel.childNodes) {
+                    if(c.nodeType === 1) {
+                        celc++
+                    }
+                }
+                this.style.transition = 'all .5s'
+                this.style.height = hasClass(this, 'owl-nav-first') ? (60 + celc*50 + 'px') : (50 + celc*50 + 'px')
+                if(!hasClass(this, 'owl-nav-first')) {
+                    this.parentNode.parentNode.style.height = (60 + (selc+celc)*50) + 'px'
+                }
+            }
+            for(let e of document.getElementById('owl-popup-uetce0').getElementsByClassName('owl-nav-item-v-active')) {
+                e.classList.remove('owl-nav-item-v-active')
+            }
+            this.getElementsByTagName('span')[0].classList.add('owl-nav-item-v-active')
+            e.stopPropagation()
+        })
+    }
+
+    function hasClass(el, className) {
+        let class_list = el.classList
+        for (let cl of class_list) {
+            if(cl === className) {
+                return true
+            }
+        }
+        return false
+    }
+</script>
 </html>

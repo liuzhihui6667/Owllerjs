@@ -1,11 +1,10 @@
-import './Style/index.less'
 import popup from './Popup/index.js'
 import layout from './Layout/index.js'
 import Nav from './Navcation/index.js'
 
 // import 'babel-polyfill'
 
-// let pop1 = new popup('owl', {
+// let pop1 = new popup('owl2', {
 //     title: '我是一个弹窗',
 //     text: '你好啊，第一次见面，请多指教',
 //     animation: 'fade',
@@ -34,7 +33,7 @@ let op = {
         },
         {
             text: 'sandoasi',
-            active: false
+            active: false,
         },
         {
             text: 'sandoasi',
@@ -42,24 +41,73 @@ let op = {
         }
     ]
 }
-let nav = new Nav('owl', op)
+let nav = new Nav('owl3', op)
 
 
 nav.render()
 let op2 = {
     type: 'v',
+    show_logo: true,
     list: [
         {
-            text: 'sandoasi',
-            active: false
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
         },
         {
-            text: 'sandoasi',
-            active: false
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
         },
         {
-            text: 'sandoasi',
-            active: true
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                },{
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

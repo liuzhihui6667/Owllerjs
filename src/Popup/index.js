@@ -1,3 +1,6 @@
+import './style/index.less'
+import Icon from '../Icon/index'
+
 function Popup(el = '', option = {}) {
     if('object' === typeof el) {
         option = el
@@ -34,12 +37,11 @@ Popup.prototype = {
 
     template: function() {
         let animation = 'owl-pop-' + this._get_animation()
+        let icon = new Icon({name: 'close', class_name: 'owl-pop-close'})
         return '<div class="owl-pop-container ' +animation+ '" id="' +this.$hashKey+ '">\n' +
             '    <div class="owl-pop-title-wrapper">\n' +
             '        <span class="owl-pop-title">'+this.$title+'</span>\n' +
-            '        <svg width="15px" height="15px" viewBox="0 0 15 15" class="owl-pop-close">\n' +
-            '            <path d="M0,0 L15,15 M0,15 L15, 0" stroke="#666666" stroke-width="2px" stroke-opacity="0.7"></path>\n' +
-            '        </svg>\n' +
+            icon.template() +
             '    </div>\n' +
             '    <div class="owl-pop-body-wrapper">\n' +
             '        <p class="owl-pop-text">'+ this.$text +'</p>\n' +

@@ -12,7 +12,6 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
         }
 
         ul, li, span {
@@ -24,22 +23,30 @@
             padding: 0;
         }
         #owl {
-            width: 100%;
+            width: 1200px;
             height: 66px;
         }
         #owl2 {
             height: 100%;
             width: 250px;
+            display: inline-block;
         }
+        #owl3 {
+            height: 66px;
+            width: calc(100% - 250px);
+            display: inline-block;
+            vertical-align: top;
+        }
+
     </style>
 </head>
 <body>
-    <div id="owl">
+    <!--<div id="owl">-->
 
-    </div>
+    <!--</div>-->
 
     <div id="owl2">
 
-    </div>
+    </div><div id="owl3"></div>
 </body>
 </html>

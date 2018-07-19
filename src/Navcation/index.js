@@ -1,4 +1,5 @@
-import Popup from "../Popup";
+import './style/index.less'
+import Icon from '../Icon/index'
 
 function Navcation(el, option) {
     if('object' === typeof el) {
@@ -19,54 +20,106 @@ Navcation.prototype = {
     $type: 'h',
     _option: null,
     init: function () {
-        
+        this.$hashKey = this._hash_id_generator()
     },
 
     template: function() {
         let ish = this.$type === 'h'
-        console.log(this.$nav_list)
-        let t = '<div class="owl-nav-container">\n'
-                t += '<ul class="owl-nav-wrapper ' + (ish ? 'owl-nav-wrapper-h' : 'owl-nav-wrapper-v') + '">\n'
-                    for (let l of this.$nav_list) {
-                        t += '<li class="'+ (ish ? 'owl-nav-item-h' : 'owl-nav-item-v') +' '+ (l.active ? (ish ? 'owl-nav-item-h-active' : 'owl-nav-item-v-active') : '') +'">\n'
-                            t += '<span class="owl-nav-item-text">\n'
-                                t += this.getSvg()
-                                t += '<span style="vertical-align: top;">' + l.text + '</span>\n'
-                            t += '</span>\n'
+        let t = ''
+        if(ish) {
+
+        } else {
+            t += '<div class="owl-nav-container" id="'+this.$hashKey+'">'
+                if(this._option.show_logo) {
+                    t += '<div class="owl-nav-v-logo-wrapper"></div>'
+                }
+                t += '<ul class="owl-nav-wrapper owl-nav-wrapper-v">'
+                    for (let f of this.$nav_list) {
+                        t += '<li class="owl-nav-item-v owl-nav-first">'
+                            t += '<span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">'
+                                t += this.getSvg(f.icon)
+                                t += '<span class="owl-nav-item-text">' + f.text + '</span>'
+                            t += '</span>'
+                            t += '<ul class="owl-nav-wrapper owl-nav-wrapper-v">'
+                                for (let s of f.list) {
+                                    t += '<li class="owl-nav-item-v">'
+                                        t += '<span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper"><span class="owl-nav-item-text">' + s.text + '</span></span>'
+                                        t += '<ul class="owl-nav-wrapper owl-nav-wrapper-v">'
+                                        for (let r of s.list) {
+                                            t += '<li class="owl-nav-item-v">'
+                                            t += '<span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper"><span class="owl-nav-item-text">' + r.text + '</span></span>'
+
+                                            t += '</li>'
+                                        }
+                                        t += '</ul>'
+                                    t += '</li>'
+                                }
+                            t += '</ul>'
                         t += '</li>'
                     }
-                t += '</ul>\n'
+                t += '</ul>'
             t += '</div>'
-        console.log(t)
+        }
         return t
-        return '<div class="owl-nav-container">\n' +
-            '        <ul class="owl-nav-wrapper owl-nav-wrapper-h">\n' +
-            '            <li class="owl-nav-item-h">\n' +
-            '                <span class="owl-nav-item-text">你好啊</span>\n' +
-            '            </li>\n' +
-            '            <li class="owl-nav-item-h owl-nav-item-h-active">\n' +
-            '                <span class="owl-nav-item-text">\n' +
-            '                    <svg class="owl-nav-icon" viewBox="0 0 15 15">\n' +
-            '                        <path d="M0,0 L15,15 M0,15 L15, 0" stroke="#ffffff" stroke-width="2px" stroke-opacity="1"></path>\n' +
-            '                    </svg>\n' +
-            '                    <span style="vertical-align: top;">你好啊</span>\n' +
-            '                </span>\n' +
-            '            </li>\n' +
-            '            <li class="owl-nav-item-h"><span class="owl-nav-item-text">你好你好啊</span></li>\n' +
-            '            <li class="owl-nav-item-h"><span class="owl-nav-item-text">你啊</span></li>\n' +
-            '            <li class="owl-nav-item-h"><span class="owl-nav-item-text">English</span></li>\n' +
-            '        </ul>\n' +
-            '    </div>'
     },
 
-    getSvg: function() {
-        return '<svg class="owl-nav-icon" viewBox="0 0 15 15">\n' +
-            '                        <path d="M0,0 L15,15 M0,15 L15, 0" stroke="#ffffff" stroke-width="2px" stroke-opacity="1"></path>\n' +
-            '                    </svg>'
+    getSvg: function(iconName) {
+        let icon = new Icon({name: iconName, class_name: 'owl-nav-icon'})
+        return icon.template()
     },
 
     _set_event: function() {
-
+        let hasClass = function(el, className) {
+            let class_list = el.classList
+            for (let cl of class_list) {
+                if(cl === className) {
+                    return true
+                }
+            }
+            return false
+        }
+        let that = this
+        let li = this.$pel.getElementsByTagName('li')
+        for (let el of li) {
+            console.log(el)
+            el.addEventListener('click', function (e) {
+                if(this.getElementsByTagName('ul').length > 0) {
+                    let pel = this.parentNode
+                    let sel = pel.childNodes
+                    let selc = 0
+                    for (let s of sel) {
+                        if(s.nodeType === 1) {
+                            selc++
+                            s.style.transition = 'all .5s'
+                            s.style.height = hasClass(s, 'owl-nav-first') ? '60px' : '50px'
+                            if(hasClass(s, 'owl-nav-first')) {
+                                for (let el of s.getElementsByTagName('li')) {
+                                    el.style.transition = 'all .5s'
+                                    el.style.height = '50px'
+                                }
+                            }
+                        }
+                    }
+                    let cel = this.getElementsByTagName('ul')[0]
+                    let celc = 0
+                    for (let c of cel.childNodes) {
+                        if(c.nodeType === 1) {
+                            celc++
+                        }
+                    }
+                    this.style.transition = 'all .5s'
+                    this.style.height = hasClass(this, 'owl-nav-first') ? (60 + celc*50 + 'px') : (50 + celc*50 + 'px')
+                    if(!hasClass(this, 'owl-nav-first')) {
+                        this.parentNode.parentNode.style.height = (60 + (selc+celc)*50) + 'px'
+                    }
+                }
+                for(let e of that.$pel.getElementsByClassName('owl-nav-item-v-active')) {
+                    e.classList.remove('owl-nav-item-v-active')
+                }
+                this.getElementsByTagName('span')[0].classList.add('owl-nav-item-v-active')
+                e.stopPropagation()
+            })
+        }
     },
 
     _hash_id_generator: function() {
