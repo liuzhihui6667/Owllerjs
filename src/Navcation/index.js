@@ -27,7 +27,19 @@ Navcation.prototype = {
         let ish = this.$type === 'h'
         let t = ''
         if(ish) {
-
+            t += '<div class="owl-nav-container" id="'+this.$hashKey+'">'
+                if(this._option.show_logo) {
+                    t += '<div class="owl-nav-h-logo-wrapper"></div>'
+                }
+                t += '<ul class="owl-nav-wrapper owl-nav-wrapper-h">'
+                    for (let f of this.$nav_list) {
+                        t += '<li class="owl-nav-item-h "><span class="owl-nav-item-text-wrapper owl-nav-h-item-text-wrapper">'
+                            t += this.getSvg(f.icon)
+                            t += '<span class="owl-nav-item-text">' + f.text + '</span>'
+                        t += '</span></li>'
+                    }
+                t += '</ul>'
+            t += '</div>'
         } else {
             t += '<div class="owl-nav-container" id="'+this.$hashKey+'">'
                 if(this._option.show_logo) {
@@ -80,45 +92,56 @@ Navcation.prototype = {
         }
         let that = this
         let li = this.$pel.getElementsByTagName('li')
-        for (let el of li) {
-            console.log(el)
-            el.addEventListener('click', function (e) {
-                if(this.getElementsByTagName('ul').length > 0) {
-                    let pel = this.parentNode
-                    let sel = pel.childNodes
-                    let selc = 0
-                    for (let s of sel) {
-                        if(s.nodeType === 1) {
-                            selc++
-                            s.style.transition = 'all .5s'
-                            s.style.height = hasClass(s, 'owl-nav-first') ? '60px' : '50px'
-                            if(hasClass(s, 'owl-nav-first')) {
-                                for (let el of s.getElementsByTagName('li')) {
-                                    el.style.transition = 'all .5s'
-                                    el.style.height = '50px'
+        if(this.$type === 'v') {
+            for (let el of li) {
+                el.addEventListener('click', function (e) {
+                    if(this.getElementsByTagName('ul').length > 0) {
+                        let pel = this.parentNode
+                        let sel = pel.childNodes
+                        let selc = 0
+                        for (let s of sel) {
+                            if(s.nodeType === 1) {
+                                selc++
+                                s.style.transition = 'all .5s'
+                                s.style.height = hasClass(s, 'owl-nav-first') ? '60px' : '50px'
+                                if(hasClass(s, 'owl-nav-first')) {
+                                    for (let el of s.getElementsByTagName('li')) {
+                                        el.style.transition = 'all .5s'
+                                        el.style.height = '50px'
+                                    }
                                 }
                             }
                         }
-                    }
-                    let cel = this.getElementsByTagName('ul')[0]
-                    let celc = 0
-                    for (let c of cel.childNodes) {
-                        if(c.nodeType === 1) {
-                            celc++
+                        let cel = this.getElementsByTagName('ul')[0]
+                        let celc = 0
+                        for (let c of cel.childNodes) {
+                            if(c.nodeType === 1) {
+                                celc++
+                            }
+                        }
+                        this.style.transition = 'all .5s'
+                        this.style.height = hasClass(this, 'owl-nav-first') ? (60 + celc*50 + 'px') : (50 + celc*50 + 'px')
+                        if(!hasClass(this, 'owl-nav-first')) {
+                            this.parentNode.parentNode.style.height = (60 + (selc+celc)*50) + 'px'
                         }
                     }
-                    this.style.transition = 'all .5s'
-                    this.style.height = hasClass(this, 'owl-nav-first') ? (60 + celc*50 + 'px') : (50 + celc*50 + 'px')
-                    if(!hasClass(this, 'owl-nav-first')) {
-                        this.parentNode.parentNode.style.height = (60 + (selc+celc)*50) + 'px'
+                    for(let e of that.$pel.getElementsByClassName('owl-nav-item-v-active')) {
+                        e.classList.remove('owl-nav-item-v-active')
                     }
-                }
-                for(let e of that.$pel.getElementsByClassName('owl-nav-item-v-active')) {
-                    e.classList.remove('owl-nav-item-v-active')
-                }
-                this.getElementsByTagName('span')[0].classList.add('owl-nav-item-v-active')
-                e.stopPropagation()
-            })
+                    this.getElementsByTagName('span')[0].classList.add('owl-nav-item-v-active')
+                    e.stopPropagation()
+                })
+            }
+        } else {
+            for (let el of li) {
+                el.addEventListener('click', function (e) {
+                    for(let e of that.$pel.getElementsByClassName('owl-nav-item-h-active')) {
+                        e.classList.remove('owl-nav-item-h-active')
+                    }
+                    this.getElementsByTagName('span')[0].classList.add('owl-nav-item-h-active')
+                    e.stopPropagation()
+                })
+            }
         }
     },
 

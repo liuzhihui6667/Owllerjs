@@ -39,7 +39,6 @@
   display: inline-block;
   min-width: 70px;
   height: 100%;
-  padding: 0 20px;
   box-sizing: border-box;
   vertical-align: top;
   color: @theme-dark-font-color;
@@ -75,6 +74,10 @@
   top: calc(50% - 8px);
 }
 
+.owl-nav-item-h-active svg {
+  top: calc(50% - 8px);
+}
+
 span.owl-nav-item-v-active {
   color: @theme-active;
   border-left: 4px solid @theme-active;
@@ -96,12 +99,17 @@ span.owl-nav-item-v-active {
   position: relative;
   z-index: 2;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .owl-nav-v-item-text-wrapper {
   height: 60px;
-  line-height: 60px;
   padding-left: 35px;
+}
+
+.owl-nav-h-item-text-wrapper {
+  height: 100%;
+  padding: 0 20px;
 }
 
 .owl-nav-item-v .owl-nav-item-v .owl-nav-v-item-text-wrapper {
@@ -125,15 +133,21 @@ span.owl-nav-item-v-active {
 .owl-nav-icon {
   width: 20px;
   height: 20px;
-  margin-top: 20px;
+  line-height: 20px;
   margin-right: 10px;
   position: relative;
+  vertical-align: top;
+  top: calc(50% - 10px);
   z-index: 2;
 }
 
 .owl-nav-item-text {
   vertical-align: top;
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
   position: relative;
+  top: calc(50% - 10px);
   z-index: 2;
 }
 
@@ -157,8 +171,8 @@ span.owl-nav-item-v-active {
   transition: all .4s;
 }
 .owl-nav-h-item-text-wrapper:hover:before {
-  border-width: 250px 250px 0px 0px;
-  transition: all .4s;
+  border-width: 350px 250px 0px 0px;
+  transition: all .5s;
 }
 
 .owl-nav-dent-icon {

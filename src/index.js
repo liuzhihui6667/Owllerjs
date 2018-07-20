@@ -4,15 +4,15 @@ import Nav from './Navcation/index.js'
 
 // import 'babel-polyfill'
 
-// let pop1 = new popup('owl2', {
-//     title: '我是一个弹窗',
-//     text: '你好啊，第一次见面，请多指教',
-//     animation: 'fade',
-//     confirm: function () {
-//         pop2.render()
-//     }
-// })
-// pop1.render()
+let pop1 = new popup('owl2', {
+    title: '我是一个弹窗',
+    text: '你好啊，第一次见面，请多指教',
+    animation: 'fade',
+    confirm: function () {
+        pop2.render()
+    }
+})
+pop1.render()
 //
 // let pop2 = new popup('owl2', {
 //     animation: 'rotate',
@@ -28,16 +28,64 @@ import Nav from './Navcation/index.js'
 let op = {
     list: [
         {
-            text: 'sandoasi',
-            active: false
-        },
-        {
-            text: 'sandoasi',
+            text: '一级菜单',
             active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
         },
         {
-            text: 'sandoasi',
-            active: true
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                },{
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
