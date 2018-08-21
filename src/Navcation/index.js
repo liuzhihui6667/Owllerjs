@@ -147,7 +147,7 @@ Navcation.prototype = {
 
     _hash_id_generator: function() {
         let arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm']
-        let _id = 'owl-popup-'
+        let _id = 'owl-nav-'
         for (let i = 0; i < 6; i++) {
             _id += arr[parseInt(Math.random()*100%36)]
         }
