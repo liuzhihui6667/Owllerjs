@@ -41,8 +41,16 @@
     </style>
 </head>
 <body>
-    <layout id="1" childrenlayout="h">
-        <layout id="3" layout="h" childrenlayout="v" dir="left"></layout>
-    </layout>
+    <owl-layout childrenlayout="h">
+        <owl-layout layout="h" width="300px"></owl-layout>
+        <owl-layout layout="h" childrenlayout="v">
+            <owl-layout height="60px"></owl-layout>
+            <owl-layout childrenlayout="h">
+                <owl-layout></owl-layout>
+                <owl-layout></owl-layout>
+            </owl-layout>
+            <owl-layout height="60px"></owl-layout>
+        </owl-layout>
+    </owl-layout>
 </body>
 </html>
