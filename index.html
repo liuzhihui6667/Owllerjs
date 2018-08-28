@@ -40,17 +40,148 @@
 
     </style>
 </head>
+<script>
+    item = [
+        {
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                },{
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+    itemh = [
+        {
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            text: '一级菜单',
+            active: false,
+            icon: 'dashboard',
+            list: [
+                {
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                },{
+                    text: '二级菜单',
+                    list: [
+                        {
+                            text: '三级菜单'
+                        },{
+                            text: '三级菜单'
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+</script>
 <body>
-    <owl-layout childrenlayout="h">
-        <owl-layout layout="h" width="300px"></owl-layout>
+    <owl-layout childrenlayout="h" class="a b c" ooo="999">
+        <owl-layout layout="h" width="250px">
+            <owl-nav dir="v" itemlist="item"></owl-nav>
+        </owl-layout>
         <owl-layout layout="h" childrenlayout="v">
-            <owl-layout height="60px"></owl-layout>
+            <owl-layout height="60px">
+                <owl-nav dir="h" itemlist="itemh"></owl-nav>
+            </owl-layout>
             <owl-layout childrenlayout="h">
-                <owl-layout></owl-layout>
+                <owl-layout><owl-icon name="store" class="aaa"></owl-icon></owl-layout>
                 <owl-layout></owl-layout>
             </owl-layout>
             <owl-layout height="60px"></owl-layout>
         </owl-layout>
     </owl-layout>
 </body>
+
 </html>

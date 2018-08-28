@@ -1,78 +1,62 @@
 import './style/index.less'
 import Icon from '../Icon/index'
 
-function Navcation(el, option) {
-    if('object' === typeof el) {
-        option = el
-        this.$pel = document.getElementsByTagName('body')[0]
-    } else {
-        this.$pel = el === '' ? document.getElementsByTagName('body')[0] : document.getElementById(el)
-    }
-    this.$nav_list = option.hasOwnProperty('list') ? option.list : {}
-    this.$type = option.hasOwnProperty('type') ? option.type : 'h'
-    this._option = option
-    this.init()
+function Navcation(option) {
+    this.init(option)
 }
 
 Navcation.prototype = {
-
-    $nav_list: {},
-    $type: 'h',
     _option: null,
-    init: function () {
-        this.$hashKey = this._hash_id_generator()
+    node: null,
+    init: function (option) {
+        this._option = {
+            dir: 'v',
+            logoImg: null,
+            itemList: null
+        }
+        this._option = Object.assign(this._option, option)
     },
 
     template: function() {
-        let ish = this.$type === 'h'
-        let t = ''
-        if(ish) {
-            t += '<div class="owl-nav-container" id="'+this.$hashKey+'">'
-                if(this._option.show_logo) {
-                    t += '<div class="owl-nav-h-logo-wrapper"></div>'
+        let node = document.createElement('div')
+        node.classList.add('owl-nav-container')
+        let ulNode = getItemNode(this._option.itemList, this._option.dir, true)
+        node.appendChild(ulNode)
+        
+        function getItemNode(arr, dir, first = false) {
+            let ulNode = document.createElement('ul')
+            ulNode.classList.add('owl-nav-wrapper')
+            ulNode.classList.add('owl-nav-wrapper-' + dir)
+            for (let f of arr) {
+                let liNode = document.createElement('li')
+                liNode.classList.add('owl-nav-item-' + dir)
+                if(dir === 'v' && first) {
+                    liNode.classList.add('owl-nav-first')
                 }
-                t += '<ul class="owl-nav-wrapper owl-nav-wrapper-h">'
-                    for (let f of this.$nav_list) {
-                        t += '<li class="owl-nav-item-h "><span class="owl-nav-item-text-wrapper owl-nav-h-item-text-wrapper">'
-                            t += this.getSvg(f.icon)
-                            t += '<span class="owl-nav-item-text">' + f.text + '</span>'
-                        t += '</span></li>'
-                    }
-                t += '</ul>'
-            t += '</div>'
-        } else {
-            t += '<div class="owl-nav-container" id="'+this.$hashKey+'">'
-                if(this._option.show_logo) {
-                    t += '<div class="owl-nav-v-logo-wrapper"></div>'
+                let spanNode = document.createElement('span')
+                spanNode.classList.add('owl-nav-item-text-wrapper')
+                spanNode.classList.add('owl-nav-'+dir+'-item-text-wrapper')
+                let icon = new Icon({
+                    name: f.icon
+                })
+                let iconNode = icon.template()
+                iconNode.classList.add('owl-nav-icon')
+                let cSpanNode = document.createElement('span')
+                cSpanNode.classList.add('owl-nav-item-text')
+                cSpanNode.innerText = f.text
+                spanNode.appendChild(iconNode)
+                spanNode.appendChild(cSpanNode)
+                liNode.appendChild(spanNode)
+                if(dir === 'v' && f.hasOwnProperty('list') && f.list.length > 0) {
+                    liNode.appendChild(getItemNode(f.list, dir))
                 }
-                t += '<ul class="owl-nav-wrapper owl-nav-wrapper-v">'
-                    for (let f of this.$nav_list) {
-                        t += '<li class="owl-nav-item-v owl-nav-first">'
-                            t += '<span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper">'
-                                t += this.getSvg(f.icon)
-                                t += '<span class="owl-nav-item-text">' + f.text + '</span>'
-                            t += '</span>'
-                            t += '<ul class="owl-nav-wrapper owl-nav-wrapper-v">'
-                                for (let s of f.list) {
-                                    t += '<li class="owl-nav-item-v">'
-                                        t += '<span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper"><span class="owl-nav-item-text">' + s.text + '</span></span>'
-                                        t += '<ul class="owl-nav-wrapper owl-nav-wrapper-v">'
-                                        for (let r of s.list) {
-                                            t += '<li class="owl-nav-item-v">'
-                                            t += '<span class="owl-nav-item-text-wrapper owl-nav-v-item-text-wrapper"><span class="owl-nav-item-text">' + r.text + '</span></span>'
-
-                                            t += '</li>'
-                                        }
-                                        t += '</ul>'
-                                    t += '</li>'
-                                }
-                            t += '</ul>'
-                        t += '</li>'
-                    }
-                t += '</ul>'
-            t += '</div>'
+                ulNode.appendChild(liNode)
+            }
+            return ulNode
         }
-        return t
+        this.node = node
+        this._set_event()
+        return node
     },
 
     getSvg: function(iconName) {
@@ -91,8 +75,8 @@ Navcation.prototype = {
             return false
         }
         let that = this
-        let li = this.$pel.getElementsByTagName('li')
-        if(this.$type === 'v') {
+        let li = this.node.getElementsByTagName('li')
+        if(this._option.dir === 'v') {
             for (let el of li) {
                 el.addEventListener('click', function (e) {
                     if(this.getElementsByTagName('ul').length > 0) {
@@ -125,7 +109,7 @@ Navcation.prototype = {
                             this.parentNode.parentNode.style.height = (60 + (selc+celc)*50) + 'px'
                         }
                     }
-                    for(let e of that.$pel.getElementsByClassName('owl-nav-item-v-active')) {
+                    for(let e of that.node.getElementsByClassName('owl-nav-item-v-active')) {
                         e.classList.remove('owl-nav-item-v-active')
                     }
                     this.getElementsByTagName('span')[0].classList.add('owl-nav-item-v-active')
@@ -135,7 +119,7 @@ Navcation.prototype = {
         } else {
             for (let el of li) {
                 el.addEventListener('click', function (e) {
-                    for(let e of that.$pel.getElementsByClassName('owl-nav-item-h-active')) {
+                    for(let e of that.node.getElementsByClassName('owl-nav-item-h-active')) {
                         e.classList.remove('owl-nav-item-h-active')
                     }
                     this.getElementsByTagName('span')[0].classList.add('owl-nav-item-h-active')
@@ -170,6 +154,42 @@ Navcation.prototype = {
 
 
 }
+
+function Render() {
+    let container = document.getElementsByTagName('owl-nav')
+    if(container.length > 0) {
+        this.container = container
+        this.autoRender()
+    }
+}
+
+Render.prototype = {
+    container: null,
+    autoRender: function () {
+        let cLength = this.container.length
+        for (let i = 0; i < cLength; i++) {
+            let node = this.container[0]
+            let cnf = this._getNodeCnf(node)
+            let newNode = this._createNode(cnf)
+            node.parentNode.replaceChild(newNode, node)
+        }
+    },
+    _getNodeCnf: function (node) {
+        let dir = node.attributes.hasOwnProperty('dir') && node.attributes.dir.value === 'v' ? 'v' : 'h'
+        let item = node.attributes.hasOwnProperty('itemlist') ? window[node.attributes.itemlist.value] : null
+        return {
+            dir: dir,
+            itemList: item
+        }
+    },
+    _createNode: function (cnf) {
+        let nav = new Navcation(cnf)
+        let temp = nav.template()
+        return temp
+    }
+}
+
+new Render()
 
 
 export default Navcation

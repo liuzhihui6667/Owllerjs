@@ -1,30 +1,38 @@
-function Icon(el, option) {
-    if('object' === typeof el) {
-        option = el
-        this.$pel = document.getElementsByTagName('body')[0]
-    } else {
-        this.$pel = el === '' ? document.getElementsByTagName('body')[0] : document.getElementById(el)
-    }
-    this.$name = option.hasOwnProperty('name') ? option.name : ''
-    this.$class_name = option.hasOwnProperty('class_name') ? option.class_name : ''
-    this._option = option
-    this.init()
+import './style/index.less'
+function Icon(option) {
+    this.init(option)
 }
 
 Icon.prototype = {
 
-    $name: '',
-    $class_name: '',
-    init: function () {
-        
+    _option: null,
+    init: function (option) {
+        this._option = {
+            name: null,
+            attr: []
+        }
+        this._option = Object.assign(this._option, option)
     },
 
     template: function() {
-        let path = this.get_path(this.$name)
-        let class_name = this.$class_name
-        return '<svg xmlns="http://www.w3.org/2000/svg" class="'+class_name+'" viewBox="0 0 1024 1024" version="1.1">\n' +
-            '    <path fill="#ffffff" d="'+path+'"/>\n' +
-            '</svg>'
+        let node = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+        node.classList.add('owl-icon')
+        node.setAttribute('viewBox', '0 0 1024 1024')
+        for (let i = 0; i < this._option.attr.length; i++) {
+            if(this._option.attr[i].name === 'class') {
+                let class_list = this._option.attr[i].value.split(' ')
+                for (let i = 0; i < class_list.length; i++) {
+                    node.classList.add(class_list[i])
+                }
+                continue
+            }
+            node.setAttribute(this._option.attr[i].name, this._option.attr[i].value)
+        }
+        let path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+        path.setAttribute('fill', '#ffffff')
+        path.setAttribute('d', this.get_path(this._option.name))
+        node.appendChild(path)
+        return node
     },
 
     _set_event: function() {
@@ -53,14 +61,8 @@ Icon.prototype = {
                 return 'M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zM400 646c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zM904 160H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM904 792H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4 0.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1c-4.5 3.5-4.5 10.3 0 13.8z'
             case 'indent':
                 return 'M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zM400 646c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zM904 160H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM904 792H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM142.4 642.1L298.7 519c4.5-3.5 4.5-10.3 0-13.9L142.4 381.9c-5.8-4.6-14.4-0.5-14.4 6.9v246.3c0 7.4 8.5 11.6 14.4 7z'
-
-
-
-
-
-
             default:
-                break
+                return ''
         }
     },
 
@@ -79,5 +81,40 @@ Icon.prototype = {
 
 
 }
+
+function Render() {
+    let container = document.getElementsByTagName('owl-icon')
+    if(container.length > 0) {
+        this.container = container
+        this.autoRender()
+    }
+}
+
+Render.prototype = {
+    container: null,
+    autoRender: function () {
+        let cLength = this.container.length
+        for (let i = 0; i < cLength; i++) {
+            let node = this.container[0]
+            let cnf = this._getNodeCnf(node)
+            let newNode = this._createNode(cnf)
+            node.parentNode.replaceChild(newNode, node)
+        }
+    },
+    _getNodeCnf: function (node) {
+        let name = node.attributes.hasOwnProperty('name') ? node.attributes.name.value : 'default'
+        return {
+            name: name,
+            attr: node.attributes
+        }
+    },
+    _createNode: function (cnf) {
+        let nav = new Icon(cnf)
+        let temp = nav.template()
+        return temp
+    }
+}
+
+new Render()
 
 export default Icon
