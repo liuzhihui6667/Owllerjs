@@ -1,11 +1,17 @@
 import './style/index.less'
+import UIComponent from '../Lib/UIComponent/uicomponent'
+import UIRender from '../Lib/Render/render'
 function Layout(option) {
+    // UIComponent.call(this)
     this.init(option)
 }
 
-Layout.prototype = {
-    _option: {},
-    init: function (option) {
+(function () {
+    let Super = function () {}
+    Super.prototype = UIComponent.prototype
+    Layout.prototype = new Super()
+    Layout.prototype.constructor = Layout
+    Layout.prototype.init = function (option) {
         this._option = {
             selfLayout: null,
             childrenLayout: null,
@@ -15,10 +21,9 @@ Layout.prototype = {
             childrenEl: null,
             attr: null
         }
-        this._option = Object.assign(this._option, option)
-    },
-
-    template: function() {
+        UIComponent.prototype.init.apply(this, [option])
+    }
+    Layout.prototype.template = function() {
         let node = document.createElement('div')
         node.classList.add('owl-layout-container')
         if(this._option.childrenLayout === 'h') {
@@ -48,49 +53,27 @@ Layout.prototype = {
             node.setAttribute(this._option.attr[i].name, this._option.attr[i].value)
         }
         return node
-    },
-
-    _set_event: function() {
-
-    },
-
-    _hash_id_generator: function() {
-        let arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm']
-        let _id = 'owl-popup-'
-        for (let i = 0; i < 6; i++) {
-            _id += arr[parseInt(Math.random()*100%36)]
-        }
-        return _id
-    },
-
-    render: function () {
-        
-    },
-
-
-}
-
-function Render() {
-    let container = document.getElementsByTagName(('owl-layout'))
-    if(container.length > 0) {
-        this.container = container[0]
-        this.autoRender()
     }
+})()
+
+function LayoutRender() {
+    // UIRender.call(this)
+    this.init()
 }
 
-Render.prototype = {
-    container: null,
-    autoRender: function () {
-        if(null === this.container) {
-            return
-        }
-        let rootContainer = this.container.parentNode
+(function () {
+    let Super = function () {}
+    Super.prototype = UIRender.prototype
+    LayoutRender.prototype = new Super()
+    LayoutRender.prototype.constructor = LayoutRender
+    LayoutRender.prototype.componentName = 'layout'
+    LayoutRender.prototype.autoRender = function () {
+        let rootContainer = this.container[0].parentNode
         let targetContainer = rootContainer.cloneNode(true)
         this._traversalNodes(rootContainer, targetContainer)
         rootContainer.replaceChild(targetContainer.getElementsByClassName('owl-layout-container')[0], rootContainer.getElementsByTagName('owl-layout')[0])
-    },
-
-    _traversalNodes: function (node, targetNode) {
+    }
+    LayoutRender.prototype._traversalNodes = function (node, targetNode) {
         if(node && node.nodeName === "OWL-LAYOUT"){
             let cnf = this._getNodeCnf(node)
             let createdNode = this._createNode(cnf)
@@ -104,13 +87,11 @@ Render.prototype = {
             oldChildNode = oldChildNodes[i]
             targetChildNode = targetChildNodes[i]
             if(oldChildNode.nodeName === "OWL-LAYOUT"){
-                //递归先序遍历子节点
                 this._traversalNodes(oldChildNode, targetChildNode);
             }
         }
-    },
-
-    _getNodeCnf: function (node) {
+    }
+    LayoutRender.prototype._getNodeCnf = function (node) {
         let parentNode = node.parentNode
         let selfLayout = parentNode.attributes.hasOwnProperty('childrenlayout') && parentNode.attributes.childrenlayout.value === 'h' ? 'h' : 'v'
         let childrenLayout = node.attributes.hasOwnProperty('childrenlayout') ? node.attributes["childrenlayout"].value : 'v'
@@ -175,15 +156,13 @@ Render.prototype = {
             childrenEl: node.innerHTML,
             attr: node.attributes
         }
-    },
-
-    _createNode: function (nodeConfig) {
+    }
+    LayoutRender.prototype._createNode = function (nodeConfig) {
         let layout = new Layout(nodeConfig)
         let temp = layout.template()
         return temp
     }
-}
+})()
 
-new Render()
-
+new LayoutRender()
 export default Layout

@@ -1,28 +1,31 @@
 import './style/index.less'
+import UIComponent from '../Lib/UIComponent/uicomponent'
+import UIRender from '../Lib/Render/render'
 import Icon from '../Icon/index'
 
 function Navcation(option) {
     this.init(option)
 }
 
-Navcation.prototype = {
-    _option: null,
-    node: null,
-    init: function (option) {
+(function () {
+    let Super = function () {}
+    Super.prototype = UIComponent.prototype
+    Navcation.prototype = new Super()
+    Navcation.prototype.constructor = Navcation
+    Navcation.prototype.init = function (option) {
         this._option = {
             dir: 'v',
             logoImg: null,
             itemList: null
         }
-        this._option = Object.assign(this._option, option)
-    },
-
-    template: function() {
+        UIComponent.prototype.init.apply(this, [option])
+    }
+    Navcation.prototype.template = function() {
         let node = document.createElement('div')
         node.classList.add('owl-nav-container')
         let ulNode = getItemNode(this._option.itemList, this._option.dir, true)
         node.appendChild(ulNode)
-        
+
         function getItemNode(arr, dir, first = false) {
             let ulNode = document.createElement('ul')
             ulNode.classList.add('owl-nav-wrapper')
@@ -57,14 +60,8 @@ Navcation.prototype = {
         this.node = node
         this._set_event()
         return node
-    },
-
-    getSvg: function(iconName) {
-        let icon = new Icon({name: iconName, class_name: 'owl-nav-icon'})
-        return icon.template()
-    },
-
-    _set_event: function() {
+    }
+    Navcation.prototype._set_event = function() {
         let hasClass = function(el, className) {
             let class_list = el.classList
             for (let cl of class_list) {
@@ -127,45 +124,20 @@ Navcation.prototype = {
                 })
             }
         }
-    },
-
-    _hash_id_generator: function() {
-        let arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm']
-        let _id = 'owl-nav-'
-        for (let i = 0; i < 6; i++) {
-            _id += arr[parseInt(Math.random()*100%36)]
-        }
-        return _id
-    },
-
-    render: function () {
-        if(this.$has_instance) {
-            return
-        }
-        this.$has_instance = true
-        let container = this.$pel
-        container.insertAdjacentHTML('beforeend', this.template())
-        let mousedown = false
-        let ox, oy, cx, cy, pw, ph, ew, eh
-        let that = this
-        that.$el = document.getElementById(that.$hashKey)
-        that._set_event()
-    },
-
-
-}
-
-function Render() {
-    let container = document.getElementsByTagName('owl-nav')
-    if(container.length > 0) {
-        this.container = container
-        this.autoRender()
     }
+})()
+
+function NavcationRender() {
+    this.init()
 }
 
-Render.prototype = {
-    container: null,
-    autoRender: function () {
+(function () {
+    let Super = function () {}
+    Super.prototype = UIRender.prototype
+    NavcationRender.prototype = new Super()
+    NavcationRender.prototype.constructor = NavcationRender
+    NavcationRender.prototype.componentName = 'nav'
+    NavcationRender.prototype.autoRender = function () {
         let cLength = this.container.length
         for (let i = 0; i < cLength; i++) {
             let node = this.container[0]
@@ -173,23 +145,23 @@ Render.prototype = {
             let newNode = this._createNode(cnf)
             node.parentNode.replaceChild(newNode, node)
         }
-    },
-    _getNodeCnf: function (node) {
+    }
+    NavcationRender.prototype._getNodeCnf = function (node) {
         let dir = node.attributes.hasOwnProperty('dir') && node.attributes.dir.value === 'v' ? 'v' : 'h'
         let item = node.attributes.hasOwnProperty('itemlist') ? window[node.attributes.itemlist.value] : null
         return {
             dir: dir,
             itemList: item
         }
-    },
-    _createNode: function (cnf) {
+    }
+    NavcationRender.prototype._createNode = function (cnf) {
         let nav = new Navcation(cnf)
         let temp = nav.template()
         return temp
     }
-}
+})()
 
-new Render()
+new NavcationRender()
 
 
 export default Navcation

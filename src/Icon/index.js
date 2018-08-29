@@ -1,20 +1,23 @@
 import './style/index.less'
+import UIComponent from '../Lib/UIComponent/uicomponent'
+import UIRender from '../Lib/Render/render'
 function Icon(option) {
     this.init(option)
 }
 
-Icon.prototype = {
-
-    _option: null,
-    init: function (option) {
+(function () {
+    let Super = function () {}
+    Super.prototype = UIComponent.prototype
+    Icon.prototype = new Super()
+    Icon.prototype.constructor = Icon
+    Icon.prototype.init = function (option) {
         this._option = {
             name: null,
             attr: []
         }
-        this._option = Object.assign(this._option, option)
-    },
-
-    template: function() {
+        UIComponent.prototype.init.apply(this, [option])
+    }
+    Icon.prototype.template = function() {
         let node = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
         node.classList.add('owl-icon')
         node.setAttribute('viewBox', '0 0 1024 1024')
@@ -33,13 +36,8 @@ Icon.prototype = {
         path.setAttribute('d', this.get_path(this._option.name))
         node.appendChild(path)
         return node
-    },
-
-    _set_event: function() {
-
-    },
-
-    get_path: function(name) {
+    }
+    Icon.prototype.get_path = function(name) {
         switch (name) {
             case 'dashboard':
                 return 'M924.8 385.6c-22.6-53.4-54.9-101.3-96-142.4-41.1-41.1-89-73.4-142.4-96C631.1 123.8 572.5 112 512 112s-119.1 11.8-174.4 35.2c-53.4 22.6-101.3 54.9-142.4 96-41.1 41.1-73.4 89-96 142.4C75.8 440.9 64 499.5 64 560c0 132.7 58.3 257.7 159.9 343.1l1.7 1.4c5.8 4.8 13.1 7.5 20.6 7.5h531.7c7.5 0 14.8-2.7 20.6-7.5l1.7-1.4C901.7 817.7 960 692.7 960 560c0-60.5-11.9-119.1-35.2-174.4zM761.4 836H262.6C184.5 765.5 140 665.6 140 560c0-99.4 38.7-192.8 109-263 70.3-70.3 163.7-109 263-109 99.4 0 192.8 38.7 263 109 70.3 70.3 109 163.7 109 263 0 105.6-44.5 205.5-122.6 276zM623.5 421.5c-3.1-3.1-8.2-3.1-11.3 0L527.7 506c-18.7-5-39.4-0.2-54.1 14.5-21.9 21.9-21.9 57.3 0 79.2 21.9 21.9 57.3 21.9 79.2 0 14.7-14.7 19.5-35.4 14.5-54.1l84.5-84.5c3.1-3.1 3.1-8.2 0-11.3l-28.3-28.3zM490 320h44c4.4 0 8-3.6 8-8v-80c0-4.4-3.6-8-8-8h-44c-4.4 0-8 3.6-8 8v80c0 4.4 3.6 8 8 8zM750 538v44c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8v-44c0-4.4-3.6-8-8-8h-80c-4.4 0-8 3.6-8 8zM762.7 340.8l-31.1-31.1c-3.1-3.1-8.2-3.1-11.3 0l-56.6 56.6c-3.1 3.1-3.1 8.2 0 11.3l31.1 31.1c3.1 3.1 8.2 3.1 11.3 0l56.6-56.6c3.1-3.1 3.1-8.2 0-11.3zM304.1 309.7c-3.1-3.1-8.2-3.1-11.3 0l-31.1 31.1c-3.1 3.1-3.1 8.2 0 11.3l56.6 56.6c3.1 3.1 8.2 3.1 11.3 0l31.1-31.1c3.1-3.1 3.1-8.2 0-11.3l-56.6-56.6zM262 530h-80c-4.4 0-8 3.6-8 8v44c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8v-44c0-4.4-3.6-8-8-8z'
@@ -64,35 +62,20 @@ Icon.prototype = {
             default:
                 return ''
         }
-    },
-
-    _hash_id_generator: function() {
-        let arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm']
-        let _id = 'owl-popup-'
-        for (let i = 0; i < 6; i++) {
-            _id += arr[parseInt(Math.random()*100%36)]
-        }
-        return _id
-    },
-
-    render: function () {
-        
-    },
-
-
-}
-
-function Render() {
-    let container = document.getElementsByTagName('owl-icon')
-    if(container.length > 0) {
-        this.container = container
-        this.autoRender()
     }
+})()
+
+function IconRender() {
+    this.init()
 }
 
-Render.prototype = {
-    container: null,
-    autoRender: function () {
+(function () {
+    let Super = function () {}
+    Super.prototype = UIRender.prototype
+    IconRender.prototype = new Super()
+    IconRender.prototype.constructor = IconRender
+    IconRender.prototype.componentName = 'icon'
+    IconRender.prototype.autoRender = function () {
         let cLength = this.container.length
         for (let i = 0; i < cLength; i++) {
             let node = this.container[0]
@@ -100,21 +83,22 @@ Render.prototype = {
             let newNode = this._createNode(cnf)
             node.parentNode.replaceChild(newNode, node)
         }
-    },
-    _getNodeCnf: function (node) {
+    }
+    IconRender.prototype._getNodeCnf = function (node) {
         let name = node.attributes.hasOwnProperty('name') ? node.attributes.name.value : 'default'
         return {
             name: name,
             attr: node.attributes
         }
-    },
-    _createNode: function (cnf) {
+    }
+
+    IconRender.prototype._createNode = function (cnf) {
         let nav = new Icon(cnf)
         let temp = nav.template()
         return temp
     }
-}
+})()
 
-new Render()
+new IconRender()
 
 export default Icon
