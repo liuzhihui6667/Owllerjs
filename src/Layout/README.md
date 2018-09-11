@@ -7,7 +7,13 @@ Layout是一种常用的网页布局，我们把网页看作是一块画布，�
 -
 <img src="../../static/md/image/Layout.png" width="100%">
 样例代码
-```javascript
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
 	//整个浏览器窗口或用户自定义元素块
 	<owl-layout childrenlayout="h" style="background: white;">
 		//Container 1
@@ -27,6 +33,8 @@ Layout是一种常用的网页布局，我们把网页看作是一块画布，�
             <owl-layout height="60px" style="background: orange;"></owl-layout>		
         </owl-layout>
     </owl-layout>
+</body>
+</html>
 ```
 
 使用
