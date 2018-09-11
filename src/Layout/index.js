@@ -29,12 +29,6 @@ function Layout(option) {
         if(this._option.childrenLayout === 'h') {
             node.classList.add('owl-layout-h')
         }
-        if(this._option.selfLayout === 'h') {
-            node.style.width = this._option.width
-            node.style.float = 'left'
-        } else {
-            node.style.height = this._option.height
-        }
         node.innerHTML = this._option.childrenEl
         for (let i = 0; i < this._option.attr.length; i++) {
             if(this._option.attr[i].name === 'layout' || this._option.attr[i].name === 'childrenlayout') {
@@ -51,6 +45,11 @@ function Layout(option) {
                 continue
             }
             node.setAttribute(this._option.attr[i].name, this._option.attr[i].value)
+            if(this._option.selfLayout === 'h') {
+                node.style.width = this._option.width
+            } else {
+                node.style.height = this._option.height
+            }
         }
         return node
     }
