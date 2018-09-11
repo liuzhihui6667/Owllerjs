@@ -7,6 +7,7 @@ Layout是一种常用的网页布局，我们把网页看作是一块画布，�
 -
 <img src="../../static/md/image/Layout.png" width="100%">
 样例代码
+
 ```html
 <!DOCTYPE html>
 <html>
