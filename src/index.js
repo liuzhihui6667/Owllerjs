@@ -1,7 +1,14 @@
-import popup from './Popup/index.js'
-import layout from './Layout/index.js'
-import Nav from './Navcation/index.js'
+import Components from './Components/components.js' 
+import Renders from './Renders/renders.js'
+
+function OwllerUI() {
+
+}
+
+OwllerUI.prototype = {
+    components: new Components(),
+    renders: new Renders()
+}
 
 
-
-
+window.OwllerUI = OwllerUI

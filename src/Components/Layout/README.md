@@ -1,4 +1,4 @@
-Layout
+Layout布局
 =
 
 Layout是一种常用的网页布局，我们把网页看作是一块画布，然后把这张画布任意切割为若干个小块，每一个小块即为一个容器，随后可在该容器中进行各种操作而不影响其他容器。
@@ -26,12 +26,12 @@ Layout是一种常用的网页布局，我们把网页看作是一块画布，�
             //Container (3+4)
             <owl-layout childrenlayout="h" style="background: yellow;">		
             	//Container 3
-                <owl-layout style="background: green;"></owl-layout>	
+                <owl-layout style="background: green;"></owl-layout>
                 //Container 4
-                <owl-layout style="background: yellowgreen;"></owl-layout>		
+                <owl-layout style="background: yellowgreen;"></owl-layout>
             </owl-layout>
             //Container 5
-            <owl-layout height="60px" style="background: orange;"></owl-layout>		
+            <owl-layout height="60px" style="background: orange;"></owl-layout>
         </owl-layout>
     </owl-layout>
 </body>
@@ -41,7 +41,8 @@ Layout是一种常用的网页布局，我们把网页看作是一块画布，�
 使用
 -
 
-```javascript
+
+```html
 	<owl-layout childrenlayout="h" width="300px" height="100%"></owl-layout>
 ```
 
@@ -58,3 +59,4 @@ Layout是一种常用的网页布局，我们把网页看作是一块画布，�
 |	childrenlayout		|	该容器的子容器的排列方式		|	h:水平排列，v:垂直排列	|该值默认为'v',如果没有子容器，则可忽略该属性|
 |	width		|	该容器的宽度		|	"100px", "100%"	|如果自身排列方式为垂直排列则固定为100%，请忽略该属性|
 |	height		|	该容器的高度		|	"100px", "100%"	|如果自身排列方式为水平排列则固定为100%，请忽略该属性|
+

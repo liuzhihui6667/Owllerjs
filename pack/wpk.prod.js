@@ -30,7 +30,7 @@ const wpkconfig = {
     },
     output: {
         path: path.resolve(__dirname, '../dist/'),
-        filename: 'owlljs.js'
+        filename: 'owller.js'
     },
     plugins: [
         new webpack.DefinePlugin({
