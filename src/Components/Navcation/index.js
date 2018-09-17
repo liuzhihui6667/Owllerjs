@@ -30,6 +30,9 @@ function Navcation(option) {
             let ulNode = document.createElement('ul')
             ulNode.classList.add('owl-nav-wrapper')
             ulNode.classList.add('owl-nav-wrapper-' + dir)
+            if(first && dir === 'v') {
+                ulNode.classList.add('owl-nav-wrapper-v-active')
+            }
             for (let f of arr) {
                 let liNode = document.createElement('li')
                 liNode.classList.add('owl-nav-item-' + dir)
@@ -77,34 +80,8 @@ function Navcation(option) {
             for (let el of li) {
                 el.addEventListener('click', function (e) {
                     if(this.getElementsByTagName('ul').length > 0) {
-                        let pel = this.parentNode
-                        let sel = pel.childNodes
-                        let selc = 0
-                        for (let s of sel) {
-                            if(s.nodeType === 1) {
-                                selc++
-                                s.style.transition = 'all .5s'
-                                s.style.height = hasClass(s, 'owl-nav-first') ? '60px' : '50px'
-                                if(hasClass(s, 'owl-nav-first')) {
-                                    for (let el of s.getElementsByTagName('li')) {
-                                        el.style.transition = 'all .5s'
-                                        el.style.height = '50px'
-                                    }
-                                }
-                            }
-                        }
-                        let cel = this.getElementsByTagName('ul')[0]
-                        let celc = 0
-                        for (let c of cel.childNodes) {
-                            if(c.nodeType === 1) {
-                                celc++
-                            }
-                        }
-                        this.style.transition = 'all .5s'
-                        this.style.height = hasClass(this, 'owl-nav-first') ? (60 + celc*50 + 'px') : (50 + celc*50 + 'px')
-                        if(!hasClass(this, 'owl-nav-first')) {
-                            this.parentNode.parentNode.style.height = (60 + (selc+celc)*50) + 'px'
-                        }
+                        this.getElementsByTagName('ul')[0].style.transition = 'all 2s ease'
+                        this.getElementsByTagName('ul')[0].classList.add('owl-nav-wrapper-v-active')
                     }
                     for(let e of that.node.getElementsByClassName('owl-nav-item-v-active')) {
                         e.classList.remove('owl-nav-item-v-active')

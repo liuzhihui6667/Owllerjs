@@ -33,6 +33,11 @@
 
 .owl-nav-wrapper-v {
   width: 100%;
+  max-height: 0px;
+}
+
+.owl-nav-wrapper-v-active {
+  max-height: 2000px;
 }
 
 .owl-nav-item-h {
@@ -50,7 +55,7 @@
 
 .owl-nav-item-v {
   width: 100%;
-  height: 50px;
+  min-height: 50px;
   color: @theme-dark-font-color;
   cursor: pointer;
   box-sizing: border-box;
@@ -58,7 +63,7 @@
 }
 
 .owl-nav-first {
-  height: 60px;
+  min-height: 60px;
 }
 
 .owl-nav-item-v .owl-nav-item-v {
@@ -76,6 +81,10 @@
 
 .owl-nav-item-h-active svg {
   top: calc(50% - 8px);
+}
+
+li.owl-nav-item-v-active {
+  height: auto;
 }
 
 span.owl-nav-item-v-active {

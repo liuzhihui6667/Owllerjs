@@ -15,7 +15,15 @@ function UIRender() {
         let container = document.getElementsByTagName(this.componentPrefix + this.componentName)
         if(container.length > 0) {
             this.container = container
-            this.autoRender()
+            let that = this
+            if(document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function () {
+                    that.autoRender()
+                })
+            } else {
+                that.autoRender()
+            }
+
         }
     }
 })()
