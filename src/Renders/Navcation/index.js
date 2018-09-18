@@ -23,9 +23,13 @@ function NavcationRender() {
     }
     NavcationRender.prototype._getNodeCnf = function (node) {
         let dir = node.attributes.hasOwnProperty('dir') && node.attributes.dir.value === 'v' ? 'v' : 'h'
+        let onlyone = node.attributes.hasOwnProperty('onlyone') ? true : false
+        let showall = node.attributes.hasOwnProperty('showall') ? true : false
         let item = node.attributes.hasOwnProperty('itemlist') ? window.Owller.data.Nav[node.attributes.itemlist.value] : null
         return {
             dir: dir,
+            onlyone: onlyone,
+            showall: showall,
             itemList: item
         }
     }

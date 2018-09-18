@@ -9,11 +9,6 @@
             margin: 0;
         }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-        }
-
         ul, li, span {
             padding: 0;
             margin: 0;
@@ -21,7 +16,6 @@
         body {
             margin: 0;
             padding: 0;
-            background: black;
         }
         #owl {
             width: 1200px;
@@ -45,22 +39,17 @@
     </style>
 </head>
 <body>
-    <owl-layout childrenlayout="h">
-        <owl-layout width="250px">
-            <owl-nav dir="v" itemlist="item"></owl-nav>
-        </owl-layout>
-        <owl-layout childrenlayout="v">
-            <owl-layout height="60px">
-                <owl-nav dir="h" itemlist="itemh"></owl-nav>
+    <owl-layout childrenlayout="v">
+        <owl-layout height="60px"></owl-layout>
+        <owl-layout childrenlayout="h">
+            <owl-layout width="250px">
+                <owl-nav dir="v" itemlist="item" showall></owl-nav>
             </owl-layout>
-            <owl-layout childrenlayout="h">
-                <owl-layout>
-                    <owl-icon name="store" color="red"></owl-icon>
-                </owl-layout>
+            <owl-layout childrenlayout="v">
                 <owl-layout></owl-layout>
             </owl-layout>
-            <owl-layout height="60px"></owl-layout>
         </owl-layout>
+        <owl-layout height="80px"></owl-layout>
     </owl-layout>
 
     <!--<owl-layout childrenlayout="h" style="background: white;">-->
@@ -96,6 +85,28 @@
                 item: [
                     {
                         text: '一级菜单',
+                        active: true,
+                        // icon: 'store',
+                        list: [
+                            {
+                                text: '二级菜单',
+                                icon: 'store',
+                                list: [
+                                    {
+                                        text: '三级菜单',
+                                        to: '/333',
+                                        icon: 'store',
+                                        active: false
+                                    },{
+                                        text: '三级菜单',
+                                        to: '/444'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        text: '一级菜单',
                         active: false,
                         icon: 'dashboard',
                         list: [
@@ -117,6 +128,119 @@
                         icon: 'dashboard',
                         list: [
                             {
+                                text: '二级菜单',
+                                list: [
+                                    {
+                                        text: '三级菜单'
+                                    },{
+                                        text: '三级菜单'
+                                    }
+                                ]
+                            },{
+                                text: '二级菜单',
+                                list: [
+                                    {
+                                        text: '三级菜单'
+                                    },{
+                                        text: '三级菜单'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        text: '一级菜单',
+                        active: false,
+                        icon: 'dashboard',
+                        list: [
+                            {
+                                text: '二级菜单',
+                                list: [
+                                    {
+                                        text: '三级菜单'
+                                    },{
+                                        text: '三级菜单'
+                                    }
+                                ]
+                            },{
+                                text: '二级菜单',
+                                list: [
+                                    {
+                                        text: '三级菜单'
+                                    },{
+                                        text: '三级菜单'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        text: '一级菜单',
+                        active: false,
+                        icon: 'dashboard',
+                        list: [
+                            {
+                                text: '二级菜单',
+                                list: [
+                                    {
+                                        text: '三级菜单'
+                                    },{
+                                        text: '三级菜单'
+                                    }
+                                ]
+                            },{
+                                text: '二级菜单',
+                                list: [
+                                    {
+                                        text: '三级菜单'
+                                    },{
+                                        text: '三级菜单'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        text: '一级菜单',
+                        active: false,
+                        icon: 'dashboard',
+                        list: [
+                            {
+                                text: '二级菜单',
+                                list: [
+                                    {
+                                        text: '三级菜单'
+                                    },{
+                                        text: '三级菜单'
+                                    }
+                                ]
+                            },{
+                                text: '二级菜单',
+                                list: [
+                                    {
+                                        text: '三级菜单'
+                                    },{
+                                        text: '三级菜单'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        text: '一级菜单',
+                        active: false,
+                        icon: 'dashboard',
+                        list: [
+                            {
+                                text: '二级菜单',
+                                list: [
+                                    {
+                                        text: '三级菜单'
+                                    },{
+                                        text: '三级菜单'
+                                    }
+                                ]
+                            },{
                                 text: '二级菜单',
                                 list: [
                                     {
