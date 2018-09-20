@@ -43,7 +43,7 @@
         <owl-layout height="60px"></owl-layout>
         <owl-layout childrenlayout="h">
             <owl-layout width="250px">
-                <owl-nav dir="v" itemlist="item" showall></owl-nav>
+                <owl-nav dir="v" itemlist="itemh" theme="lighter" menu></owl-nav>
             </owl-layout>
             <owl-layout childrenlayout="v">
                 <owl-layout></owl-layout>
@@ -51,32 +51,6 @@
         </owl-layout>
         <owl-layout height="80px"></owl-layout>
     </owl-layout>
-
-    <!--<owl-layout childrenlayout="h" style="background: white;">-->
-        <!--<owl-layout width="250px" style="background: dodgerblue;">-->
-            <!--<owl-nav dir="v" itemlist="item"></owl-nav>-->
-        <!--</owl-layout>-->
-        <!--<owl-layout childrenlayout="v" style="background: white;">-->
-            <!--<owl-layout height="60px" style="background: orange;"></owl-layout>-->
-            <!--<owl-layout childrenlayout="h" style="background: yellow;">-->
-                <!--<owl-layout style="background: green;"></owl-layout>-->
-                <!--<owl-layout style="background: yellowgreen;"></owl-layout>-->
-            <!--</owl-layout>-->
-            <!--<owl-layout height="60px" style="background: orange;"></owl-layout>-->
-        <!--</owl-layout>-->
-    <!--</owl-layout>-->
-
-    <!-- <owl-layout childrenlayout="h">
-        <owl-layout layout="h" width="250px"></owl-layout>
-        <owl-layout layout="h" childrenlayout="v">
-            <owl-layout height="60px"></owl-layout>
-            <owl-layout childrenlayout="h">
-                <owl-layout></owl-layout>
-                <owl-layout></owl-layout>
-            </owl-layout>
-            <owl-layout height="60px"></owl-layout>
-        </owl-layout>
-    </owl-layout> -->
 </body>
 <script>
     new OwllerUI({
@@ -281,66 +255,58 @@
                 ],
                 itemh: [
                     {
-                        text: '一级菜单',
+                        text: '布局',
                         active: false,
-                        icon: 'dashboard',
                         list: [
                             {
-                                text: '二级菜单',
-                                list: [
-                                    {
-                                        text: '三级菜单'
-                                    },{
-                                        text: '三级菜单'
-                                    }
-                                ]
+                                text: 'Layout布局',
+                                icon: 'layout',
+                                to: '/layout/layout.html'
                             }
                         ]
                     },
                     {
-                        text: '一级菜单',
+                        text: '组件',
                         active: false,
-                        icon: 'dashboard',
                         list: [
                             {
-                                text: '二级菜单',
-                                list: [
-                                    {
-                                        text: '三级菜单'
-                                    },{
-                                        text: '三级菜单'
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        text: '一级菜单',
-                        active: false,
-                        icon: 'dashboard',
-                        list: [
-                            {
-                                text: '二级菜单',
-                                list: [
-                                    {
-                                        text: '三级菜单'
-                                    },{
-                                        text: '三级菜单'
-                                    }
-                                ]
+                                text: '导航栏',
+                                icon: 'store',
+                                to: '/navigation/navigation.html'
                             },{
-                                text: '二级菜单',
-                                list: [
-                                    {
-                                        text: '三级菜单'
-                                    },{
-                                        text: '三级菜单'
-                                    }
-                                ]
+                                text: '跑马灯',
+                                icon: 'swiper',
+                                to: ''
+                            },{
+                                text: '分页器',
+                                icon: 'page',
+                            },{
+                                text: '树状图',
+                                icon: 'tree',
+                            }
+                        ]
+                    },
+                    {
+                        text: '其他',
+                        active: false,
+                        list: [
+                            {
+                                text: 'Icon图标',
+                                icon: 'coins',
+                                to: '/icon/icon.html'
+                            },{
+                                text: '按钮',
+                                icon: 'button',
+                            },{
+                                text: '提示器',
+                                icon: 'tips',
+                            },{
+                                text: '弹出框',
+                                icon: 'popup',
                             }
                         ]
                     }
-                ]
+                ],
             }
         }
     })

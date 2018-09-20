@@ -22,8 +22,12 @@ function IconRender() {
     IconRender.prototype._getNodeCnf = function (node) {
         let name = node.attributes.hasOwnProperty('name') ? node.attributes.name.value : ''
         let color = node.attributes.hasOwnProperty('color') ? node.attributes.color.value : ''
+        let width = node.attributes.hasOwnProperty('width') ? node.attributes.color.value : ''
+        let height = node.attributes.hasOwnProperty('height') ? node.attributes.color.value : ''
         return {
             name: name,
+            width: width,
+            height: height,
             fillColor: color,
             attr: node.attributes
         }

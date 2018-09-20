@@ -25,11 +25,15 @@ function NavcationRender() {
         let dir = node.attributes.hasOwnProperty('dir') && node.attributes.dir.value === 'v' ? 'v' : 'h'
         let onlyone = node.attributes.hasOwnProperty('onlyone') ? true : false
         let showall = node.attributes.hasOwnProperty('showall') ? true : false
+        let menu = node.attributes.hasOwnProperty('menu') ? true : false
+        let theme = node.attributes.hasOwnProperty('theme') && node.attributes.theme.value !== '' ? node.attributes.theme.value : 'lighter'
         let item = node.attributes.hasOwnProperty('itemlist') ? window.Owller.data.Nav[node.attributes.itemlist.value] : null
         return {
             dir: dir,
             onlyone: onlyone,
             showall: showall,
+            theme: theme,
+            menu: menu,
             itemList: item
         }
     }

@@ -3,22 +3,145 @@
 .owl-nav-container {
   height: 100%;
   width: 100%;
-  background: @theme;
+  box-sizing: border-box;
+  position: relative;
   //box-shadow: 2px 2px 6px rgba(0,21,41,.35);
-  border: 1px solid #dcdee2;
+}
+
+.owl-nav-theme-dark {
+  background-color: @theme-dark-less;
+}
+.owl-nav-theme-dark:after {
+  background-color: @theme-dark-more;
+}
+.owl-nav-theme-dark .owl-nav-h-logo-wrapper
+,.owl-nav-theme-dark .owl-nav-v-logo-wrapper
+,.owl-nav-theme-dark .owl-nav-item-v .owl-nav-item-v
+{
+  background-color: @theme-dark;
+}
+.owl-nav-theme-dark .owl-nav-item-h
+,.owl-nav-theme-dark .owl-nav-item-v
+{
+  color: @theme-dark-font-color;
+}
+.owl-nav-theme-dark .owl-nav-item-h-active {
+  color: @theme-dark-active;
+  border-bottom: 4px solid @theme-dark-active;
+}
+.owl-nav-theme-dark span.owl-nav-item-v-active {
+  color: @theme-dark-active;
+  border-left: 4px solid @theme-dark-active;
+  background-color: @theme-dark-active-less;
+}
+.owl-nav-theme-dark .owl-nav-item-v-active svg path,.owl-nav-item-h-active svg path {
+  stroke: @theme-dark-active;
+  fill: @theme-dark-active;
+}
+.owl-nav-theme-dark svg path {
+  stroke: @theme-dark-font-color;
+  fill: @theme-dark-font-color;
+}
+.owl-nav-theme-dark .owl-nav-item-text-wrapper {
+  font-size: @theme-dark-font-size;
+}
+
+.owl-nav-theme-light {
+  background-color: @theme-light-less;
+}
+.owl-nav-theme-light:after {
+  background-color: @theme-light-more;
+}
+.owl-nav-theme-light .owl-nav-h-logo-wrapper
+,.owl-nav-theme-light .owl-nav-v-logo-wrapper
+,.owl-nav-theme-light .owl-nav-item-v .owl-nav-item-v
+{
+  background-color: @theme-light;
+}
+.owl-nav-theme-light .owl-nav-item-h
+,.owl-nav-theme-light .owl-nav-item-v
+{
+  color: @theme-light-font-color;
+}
+.owl-nav-theme-light .owl-nav-item-h-active {
+  color: @theme-light-active;
+  border-bottom: 4px solid @theme-light-active;
+}
+.owl-nav-theme-light span.owl-nav-item-v-active {
+  color: @theme-light-active;
+  border-left: 4px solid @theme-light-active;
+  background-color: @theme-light-active-less;
+}
+.owl-nav-theme-light .owl-nav-item-v-active svg path,.owl-nav-item-h-active svg path {
+  stroke: @theme-light-active;
+  fill: @theme-light-active;
+}
+.owl-nav-theme-light svg path {
+  stroke: @theme-light-font-color;
+  fill: @theme-light-font-color;
+}
+.owl-nav-theme-light .owl-nav-item-text-wrapper {
+  font-size: @theme-light-font-size;
+}
+
+.owl-nav-theme-lighter {
+  background-color: @theme-lighter-less;
+}
+.owl-nav-theme-lighter:after {
+  background-color: @theme-lighter-more;
+}
+.owl-nav-theme-lighter .owl-nav-h-logo-wrapper
+,.owl-nav-theme-lighter .owl-nav-v-logo-wrapper
+,.owl-nav-theme-lighter .owl-nav-item-v .owl-nav-item-v
+{
+  background-color: @theme-lighter;
+}
+.owl-nav-theme-lighter .owl-nav-item-h
+,.owl-nav-theme-lighter .owl-nav-item-v
+{
+  color: @theme-lighter-font-color;
+}
+.owl-nav-theme-lighter .owl-nav-item-h-active {
+  color: @theme-lighter-active;
+  border-bottom: 4px solid @theme-lighter-active;
+}
+.owl-nav-theme-lighter span.owl-nav-item-v-active {
+  color: @theme-lighter-active;
+  border-left: 4px solid @theme-lighter-active;
+  background-color: @theme-lighter-active-less;
+}
+.owl-nav-theme-lighter .owl-nav-item-v-active svg path,.owl-nav-item-h-active svg path {
+  stroke: @theme-lighter-active;
+  fill: @theme-lighter-active;
+}
+.owl-nav-theme-lighter svg path {
+  stroke: @theme-lighter-font-color;
+  fill: @theme-lighter-font-color;
+}
+.owl-nav-theme-lighter .owl-nav-item-text-wrapper {
+  font-size: @theme-lighter-font-size;
+}
+
+.owl-nav-container:after {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  opacity: 0.3;
+  content: "";
 }
 
 .owl-nav-h-logo-wrapper {
   height: 100%;
   width: 250px;
-  background-color: @theme;
   display: inline-block;
 }
 
 .owl-nav-v-logo-wrapper {
   height: 66px;
   width: 100%;
-  background-color: @theme;
 }
 
 .owl-nav-wrapper {
@@ -48,7 +171,6 @@
   height: 100%;
   box-sizing: border-box;
   vertical-align: top;
-  color: @theme-font-color;
   cursor: pointer;
   text-align: center;
   position: relative;
@@ -58,7 +180,6 @@
 .owl-nav-item-v {
   width: 100%;
   min-height: 45px;
-  color: @theme-font-color;
   cursor: pointer;
   box-sizing: border-box;
   overflow: hidden;
@@ -66,15 +187,6 @@
 
 .owl-nav-first {
   min-height: 50px;
-}
-
-.owl-nav-item-v .owl-nav-item-v {
-  background-color: @theme-less;
-}
-
-.owl-nav-item-h-active {
-  color: @theme-active;
-  border-bottom: 4px solid @theme-active;
 }
 
 .owl-nav-item-h-active .owl-nav-item-text {
@@ -90,29 +202,15 @@ li.owl-nav-item-v-active {
 }
 
 span.owl-nav-item-v-active {
-  color: @theme-active;
-  border-left: 4px solid @theme-active;
   padding-left: 31px;
-  background-color: @theme-active-less;
 }
 
 .owl-nav-item-v-active svg {
   margin-right: 10px;
 }
 
-.owl-nav-item-v-active svg path,.owl-nav-item-h-active svg path {
-  stroke: @theme-active;
-  fill: @theme-active;
-}
-
-svg path {
-  stroke: @theme-font-color;
-  fill: @theme-font-color;
-}
-
 .owl-nav-item-text-wrapper {
   display: block;
-  font-size: @theme-font-size;
   position: relative;
   z-index: 2;
   overflow: hidden;
@@ -199,4 +297,23 @@ svg path {
   width: 25px;
   height: 25px;
   cursor: pointer;
+}
+
+.owl-nav-open-icon {
+  width: 10px !important;
+  height: 10px !important;
+  line-height: 20px;
+  margin-right: 10px;
+  position: absolute;
+  vertical-align: top;
+  top: calc(50% - 5px);
+  right: 20px;
+  z-index: 2;
+  transform-origin: center center;
+  transform: rotate(0deg);
+  transition: transform .3s;
+}
+
+.owl-nav-open-icon-open {
+  transform: rotate(180deg);
 }

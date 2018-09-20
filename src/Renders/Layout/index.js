@@ -75,22 +75,23 @@ function LayoutRender() {
 
                 }
             } else {
-                height = 'calc((100%'
-                let j = 0
-                for (let i = 0; i < parentNode.childNodes.length; i++) {
-                    if(parentNode.childNodes[i].nodeName === "OWL-LAYOUT") {
-                        j++
-                    }
-                    if(parentNode.childNodes[i].nodeName === "OWL-LAYOUT" && parentNode.childNodes[i].attributes.hasOwnProperty('height')) {
-                        height += ' - ' + parentNode.childNodes[i].attributes.height.value
-                        j--
-                    }
-                }
-                height += ')'
-                if(j !== 0) {
-                    height += ' / ' + j
-                }
-                height += ')'
+                // height = 'calc((100%'
+                // let j = 0
+                // for (let i = 0; i < parentNode.childNodes.length; i++) {
+                //     if(parentNode.childNodes[i].nodeName === "OWL-LAYOUT") {
+                //         j++
+                //     }
+                //     if(parentNode.childNodes[i].nodeName === "OWL-LAYOUT" && parentNode.childNodes[i].attributes.hasOwnProperty('height')) {
+                //         height += ' - ' + parentNode.childNodes[i].attributes.height.value
+                //         j--
+                //     }
+                // }
+                // height += ')'
+                // if(j !== 0) {
+                //     height += ' / ' + j
+                // }
+                // height += ')'
+                height = 'auto'
             }
 
         }
