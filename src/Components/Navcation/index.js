@@ -37,82 +37,9 @@ function Navcation(option) {
         let node = document.createElement('div')
         node.classList.add('owl-nav-container')
         node.classList.add('owl-nav-theme-' + this._option.theme)
-        let ulNode = getItemNode(this._option.itemList, this._option, true)
+        let ulNode = this._getItemNode(this._option.itemList, this._option, true)
         node.appendChild(ulNode)
-        function getItemNode(arr, option, first = false) {
-            let ulNode = document.createElement('ul')
-            ulNode.classList.add('owl-nav-wrapper')
-            ulNode.classList.add('owl-nav-wrapper-' + option.dir)
-            if(first && option.dir === 'v') {
-                ulNode.classList.add('owl-nav-wrapper-v-root')
-            }
-            for (let f of arr) {
-                let liNode = document.createElement('li')
-                liNode.classList.add('owl-nav-item-' + option.dir)
-                if(option.dir === 'v' && first) {
-                    liNode.classList.add('owl-nav-first')
-                }
-                let spanNode = document.createElement('span')
-                spanNode.classList.add('owl-nav-item-text-wrapper')
-                spanNode.classList.add('owl-nav-'+option.dir+'-item-text-wrapper')
-                let cSpanNode = document.createElement('span')
-                cSpanNode.classList.add('owl-nav-item-text')
-                cSpanNode.innerText = f.text
-                if(f.hasOwnProperty('icon') && f.icon !== '') {
-                    let icon = new Icon({
-                        name: f.icon,
-                        height: '16px',
-                        width: '16px'
-                    })
-                    var iconNode = icon.template()
-                    iconNode.classList.add('owl-nav-icon')
-                    spanNode.appendChild(iconNode)
-                }
-                spanNode.appendChild(cSpanNode)
-                liNode.appendChild(spanNode)
-                if(f.hasOwnProperty('to') && f.to !== '') {
-                    liNode.addEventListener('click', function () {
-                        window.location.href = f.to
-                    })
-                }
-                if(option.dir === 'v' && f.hasOwnProperty('list') && f.list.length > 0) {
-                    // todo 优化这儿
-                    if(!option.menu) {
-                        let openIcon = new Icon({
-                            name: 'bottom'
-                        })
-                        let openIconNode = openIcon.template()
-                        openIconNode.classList.add('owl-nav-open-icon')
-                        spanNode.appendChild(openIconNode)
-                    } else {
-                        if(first) {
-                            spanNode.style.fontSize = '15px'
-                            spanNode.style.paddingLeft = '20px'
-                        } else {
-                            spanNode.style.paddingLeft = '30px'
-                        }
-                        spanNode.style.cursor = 'initial'
-                        let fColor = ''
-                        if(option.theme === 'light') {
-                            fColor = '#fff'
-                        } else {
-                            fColor = '#999'
-                        }
-                        spanNode.style.color = fColor
-                        if(typeof iconNode === 'object') {
-                            iconNode.getElementsByTagName('path')[0].style.fill = fColor
-                            iconNode.getElementsByTagName('path')[0].style.stroke = fColor
-                        }
-                    }
-                    liNode.appendChild(getItemNode(f.list, option))
-                }
-                if(!f.hasOwnProperty('list') && f.active || window.location.pathname === f.to) {
-                    liNode.classList.add('owl-nav-leaf-active')
-                }
-                ulNode.appendChild(liNode)
-            }
-            return ulNode
-        }
+
         let itemHeight = 45
         if(this._option.showall || this._option.menu) {
             for(let u of node.getElementsByTagName('ul')) {
@@ -136,7 +63,7 @@ function Navcation(option) {
                 let rootUl = l.parentNode.parentNode.parentNode
                 //小三角
                 l.parentNode.parentNode.getElementsByClassName('owl-nav-open-icon')[0].classList.add('owl-nav-open-icon-open')
-                if(hasClass(rootUl.parentNode.parentNode, 'owl-nav-wrapper-v-root')) {
+                if(rootUl.parentNode.parentNode !== null && hasClass(rootUl.parentNode.parentNode, 'owl-nav-wrapper-v-root')) {
                     rootUl.parentNode.getElementsByClassName('owl-nav-open-icon')[0].classList.add('owl-nav-open-icon-open')
                 }
                 if(!hasClass(rootUl, 'owl-nav-wrapper-v-root')) {
@@ -253,6 +180,80 @@ function Navcation(option) {
                 })
             }
         }
+    }
+    Navcation.prototype._getItemNode = function (arr, option, first = false) {
+        let ulNode = document.createElement('ul')
+        ulNode.classList.add('owl-nav-wrapper')
+        ulNode.classList.add('owl-nav-wrapper-' + option.dir)
+        if(first && option.dir === 'v') {
+            ulNode.classList.add('owl-nav-wrapper-v-root')
+        }
+        for (let f of arr) {
+            let liNode = document.createElement('li')
+            liNode.classList.add('owl-nav-item-' + option.dir)
+            if(option.dir === 'v' && first) {
+                liNode.classList.add('owl-nav-first')
+            }
+            let spanNode = document.createElement('span')
+            spanNode.classList.add('owl-nav-item-text-wrapper')
+            spanNode.classList.add('owl-nav-'+option.dir+'-item-text-wrapper')
+            let cSpanNode = document.createElement('span')
+            cSpanNode.classList.add('owl-nav-item-text')
+            cSpanNode.innerText = f.text
+            if(f.hasOwnProperty('icon') && f.icon !== '') {
+                let icon = new Icon({
+                    name: f.icon,
+                    height: '16px',
+                    width: '16px'
+                })
+                var iconNode = icon.template()
+                iconNode.classList.add('owl-nav-icon')
+                spanNode.appendChild(iconNode)
+            }
+            spanNode.appendChild(cSpanNode)
+            liNode.appendChild(spanNode)
+            if(f.hasOwnProperty('to') && f.to !== '') {
+                liNode.addEventListener('click', function () {
+                    window.location.href = f.to
+                })
+            }
+            if(option.dir === 'v' && f.hasOwnProperty('list') && f.list.length > 0) {
+                // todo 优化这儿
+                if(!option.menu) {
+                    let openIcon = new Icon({
+                        name: 'bottom'
+                    })
+                    let openIconNode = openIcon.template()
+                    openIconNode.classList.add('owl-nav-open-icon')
+                    spanNode.appendChild(openIconNode)
+                } else {
+                    if(first) {
+                        spanNode.style.fontSize = '15px'
+                        spanNode.style.paddingLeft = '20px'
+                    } else {
+                        spanNode.style.paddingLeft = '30px'
+                    }
+                    spanNode.style.cursor = 'initial'
+                    let fColor = ''
+                    if(option.theme === 'light') {
+                        fColor = '#fff'
+                    } else {
+                        fColor = '#999'
+                    }
+                    spanNode.style.color = fColor
+                    if(typeof iconNode === 'object') {
+                        iconNode.getElementsByTagName('path')[0].style.fill = fColor
+                        iconNode.getElementsByTagName('path')[0].style.stroke = fColor
+                    }
+                }
+                liNode.appendChild(this._getItemNode(f.list, option))
+            }
+            if(!f.hasOwnProperty('list') && f.active || window.location.pathname === f.to) {
+                liNode.classList.add('owl-nav-leaf-active')
+            }
+            ulNode.appendChild(liNode)
+        }
+        return ulNode
     }
 })()
 
