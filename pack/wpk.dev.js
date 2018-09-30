@@ -26,6 +26,7 @@ function resolve (dir) {
 const wpkconfig = {
     entry: {
         app: ["babel-polyfill", './src/index.js']
+        // app: ['./src/entry.ts']
     },
     output: {
 
@@ -79,11 +80,15 @@ const wpkconfig = {
         ])
     ],
     resolve: {
-        extensions: ['.js']
+        extensions: ['.js', '.ts', 'tsx']
     },
 
     module: {
         rules: [
+            {
+                test: /\.tsx?$/,
+                loader: "ts-loader"
+            },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
