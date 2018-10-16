@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout</title>
+    <link rel="stylesheet/less" type="text/css" href="../../Style/index.less">
+    <link rel="stylesheet/less" href="../style/index.less">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        ul, li, span {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .owl-layout-container {
+            width: 100%;
+            height: 100%;
+            background-color: #17202A;
+        }
+
+        .owl-layout-h {
+            white-space: nowrap;
+        }
+
+        .owl-layout-h-left {
+            width: 300px;
+            background-color: #2E86C1;
+        }
+
+        .owl-layout-h-center {
+            width: 0;
+        }
+
+        .owl-layout-h-right {
+            width: calc(100% - 300px);
+            background-color: #9B59B6;
+        }
+
+        .owl-layout-h>.owl-layout-container {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .owl-layout-h-f>.owl-layout-container {
+            width: 33.33%;
+        }
+
+        .owl-layout-v>.owl-layout-container {
+            width: 100%;
+        }
+
+        .owl-layout-v-top {
+            height: 60px;
+            background-color: #797d7f;
+        }
+
+        .owl-layout-v-center {
+            height: calc(100% - 120px);
+            background-color: chartreuse;
+        }
+
+        .owl-layout-v-bottom {
+            height: 60px;
+            background-color: #F1C40F;
+        }
+    </style>
+</head>
+<body>
+<div class="owl-layout-container owl-layout-h">
+    <div class="owl-layout-container owl-layout-h-left">
+
+    </div><div class="owl-layout-container owl-layout-h-center">
+
+    </div><div class="owl-layout-container owl-layout-h-right owl-layout-v">
+        <div class="owl-layout-container owl-layout-v-top">
+
+        </div>
+        <div class="owl-layout-container owl-layout-v-center owl-layout-h owl-layout-h-f">
+            <div class="owl-layout-container owl-layout-h-left">
+
+            </div><div class="owl-layout-container owl-layout-h-center" id="www">
+
+            </div><div class="owl-layout-container owl-layout-h-right">
+
+            </div>
+        </div>
+        <div class="owl-layout-container owl-layout-v-bottom">
+
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="../../Style/less.js"></script>
+</html>

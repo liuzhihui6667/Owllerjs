@@ -1,0 +1,160 @@
+@import "../../Style/index.less";
+.owl-pop-container {
+  width: 300px;
+  height: 180px;
+  position: fixed;
+  top: calc(50% - 100px);
+  left: calc(50% - 150px);
+  box-shadow: 0px 0px 15px 2px #797D7F;
+  z-index: 2000;
+  transition: box-shadow .5s;
+}
+.owl-pop-rotate {
+  animation-name: popin-rotate;
+  animation-duration: .5s;
+}
+
+.owl-pop-scale {
+  animation-name: popin-scale;
+  animation-duration: .5s;
+}
+.owl-pop-fade {
+  animation-name: popin-fade;
+  animation-duration: .5s;
+}
+@keyframes popin-fade {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+@keyframes popout-fade {
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+@keyframes popin-rotate {
+  10%{
+    transform: rotate(0deg) scale(0);
+  }
+  100%{
+    transform: rotate(1440deg) scale(1);
+  }
+}
+@keyframes popout-rotate {
+  10%{
+    transform: rotate(0deg) scale(1);
+  }
+  100%{
+    transform: rotate(1440deg) scale(0);
+  }
+}
+@keyframes popin-scale {
+  10%{
+    transform: scale(0.5) rotate(0deg);
+  }
+  70%{
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(1) rotate(360deg);
+  }
+}
+@keyframes popout-scale {
+  10%{
+    transform: scale(1);
+  }
+  30%{
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(0.5);
+  }
+}
+.owl-pop-title-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  background: @theme;
+  border: @theme solid 1px;
+  cursor: move;
+  transition: all .5s;
+  position: relative;
+  color: #ffffff;
+}
+.owl-pop-title {
+  display: inline-block;
+  line-height: 40px;
+  text-indent: 1em;
+  font-size: 18px;
+}
+.owl-pop-container:hover {
+  box-shadow: 0px 0px 15px 5px #797D7F;
+  transition: box-shadow .5s;
+}
+.owl-pop-container:hover .owl-pop-title-wrapper {
+  border: @theme-more solid 1px;
+  transition: border .5s;
+}
+
+.owl-pop-container:hover .owl-pop-body-wrapper {
+  border: @theme-more solid 1px;
+  border-top: none;
+  transition: border .5s;
+}
+
+.owl-pop-close {
+  position: absolute;
+  right: 13px;
+  top: 11px;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+}
+
+.owl-pop-body-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(100% - 40px);
+  background: #FBFCFC;
+  border: @theme solid 1px;
+  border-top: none;
+  transition: all .5s;
+  padding: 30px 30px;
+  position: relative;
+}
+
+.owl-pop-text {
+  width: 80%;
+  //height: 40%;
+  position: absolute;
+  top: 20px;
+  margin: 0;
+  text-align: center;
+  line-height: 24px;
+}
+
+.owl-pop-button {
+  color: #ffffff;
+  width: 100px;
+  height: 40px;
+  position: absolute;
+  background: @theme;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  bottom: 25px;
+}
+
+.confirm {
+  left: 40px;
+}
+
+.cancel {
+  right: 40px;
+}

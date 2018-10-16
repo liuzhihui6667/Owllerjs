@@ -25,8 +25,8 @@ function resolve (dir) {
 }
 const wpkconfig = {
     entry: {
-        app: ["babel-polyfill", './src/index.js']
-        // app: ['./src/entry.ts']
+        // app: ["babel-polyfill", './src/index.js']
+        app: ['./src/entry.ts']
     },
     output: {
 
