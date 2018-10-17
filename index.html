@@ -19,9 +19,9 @@
             padding: 0;
         }
         .container {
-            width: 250px;
+            width: 750px;
             position: fixed;
-            top: 500px;
+            top: 50px;
             left: 700px;
         }
         .owl-nav-container {
@@ -47,14 +47,20 @@
             height: 45px;
             text-align: center;
         }
+        img {
+            width: 20px;
+        }
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container" onclick="sss(this)">
 
 </div>
 </body>
 <script>
+function sss(e) {
 
+    console.log(e.children[0] instanceof HTMLElement)
+}
 </script>
 </html>
