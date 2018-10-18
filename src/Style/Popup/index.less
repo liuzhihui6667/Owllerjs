@@ -1,0 +1,222 @@
+@import "../../Style/index.less";
+//theme-dark
+.owl-pop-theme-dark .owl-pop-title-wrapper,
+.owl-pop-theme-dark .owl-pop-button
+{
+  color: @theme-dark-font-color;
+}
+
+.owl-pop-theme-dark .owl-pop-title-wrapper
+,.owl-pop-theme-dark .owl-pop-button
+{
+  background-color: @theme-dark;
+}
+
+.owl-pop-theme-dark .owl-pop-title-wrapper
+,.owl-pop-theme-dark:hover .owl-pop-title-wrapper
+,.owl-pop-theme-dark:hover .owl-pop-body-wrapper
+,.owl-pop-theme-dark .owl-pop-body-wrapper
+{
+  border: 1px solid @theme-dark;
+}
+//theme-light
+.owl-pop-theme-light .owl-pop-title-wrapper,
+.owl-pop-theme-light .owl-pop-button
+{
+  color: @theme-light-font-color;
+}
+
+.owl-pop-theme-light .owl-pop-title-wrapper
+{
+  background-color: @theme-light;
+}
+
+.owl-pop-theme-light .owl-pop-button
+{
+  background-color: @theme-light-less;
+}
+
+.owl-pop-theme-light .owl-pop-title-wrapper
+,.owl-pop-theme-light:hover .owl-pop-title-wrapper
+,.owl-pop-theme-light:hover .owl-pop-body-wrapper
+,.owl-pop-theme-light .owl-pop-body-wrapper
+{
+  border: 1px solid @theme-light;
+}
+//theme-lighter
+.owl-pop-theme-lighter .owl-pop-title-wrapper
+{
+  color: @theme-lighter-font-color;
+}
+.owl-pop-theme-lighter .owl-pop-button
+{
+  color: @theme-light-font-color;
+}
+
+.owl-pop-theme-lighter .owl-pop-body-wrapper
+{
+  background-color: @theme-lighter;
+}
+.owl-pop-theme-lighter .owl-pop-title-wrapper
+{
+  background-color: @theme-lighter-less;
+}
+.owl-pop-theme-lighter .owl-pop-button {
+  background-color: @theme-light-less;
+}
+.owl-pop-theme-lighter .owl-pop-title-wrapper
+,.owl-pop-theme-lighter:hover .owl-pop-title-wrapper
+,.owl-pop-theme-lighter:hover .owl-pop-body-wrapper
+,.owl-pop-theme-lighter .owl-pop-body-wrapper
+{
+  border: 1px solid @theme-lighter;
+}
+.owl-pop-theme-lighter svg path {
+  stroke: @theme-lighter-font-color;
+  fill: @theme-lighter-font-color;
+}
+.owl-pop-container {
+  width: 270px;
+  height: 170px;
+  position: fixed;
+  top: calc(50% - 100px);
+  left: calc(50% - 150px);
+  box-shadow: 0px 0px 15px 0px #797D7F;
+  z-index: 2000;
+  transition: box-shadow .5s;
+  border-radius: 2px;
+}
+.owl-pop-rotate {
+  animation-name: popin-rotate;
+  animation-duration: .5s;
+}
+.owl-pop-scale {
+  animation-name: popin-scale;
+  animation-duration: .5s;
+}
+.owl-pop-fade {
+  animation-name: popin-fade;
+  animation-duration: .5s;
+}
+@keyframes popin-fade {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+@keyframes popout-fade {
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+@keyframes popin-rotate {
+  10%{
+    transform: rotate(0deg) scale(0);
+  }
+  100%{
+    transform: rotate(1440deg) scale(1);
+  }
+}
+@keyframes popout-rotate {
+  10%{
+    transform: rotate(0deg) scale(1);
+  }
+  100%{
+    transform: rotate(1440deg) scale(0);
+  }
+}
+@keyframes popin-scale {
+  10%{
+    transform: scale(0.5) rotate(0deg);
+  }
+  70%{
+    transform: scale(1.1);
+  }
+  100%{
+    transform: scale(1) rotate(360deg);
+  }
+}
+@keyframes popout-scale {
+  10%{
+    transform: scale(1);
+  }
+  30%{
+    transform: scale(1.1);
+  }
+  100%{
+    transform: scale(0.5);
+  }
+}
+.owl-pop-title-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  height: 35px;
+  cursor: move;
+  transition: all .5s;
+  position: relative;
+  user-select: none;
+}
+.owl-pop-title {
+  display: inline-block;
+  line-height: 35px;
+  text-indent: 1em;
+  font-size: 16px;
+}
+.owl-pop-container:hover {
+  box-shadow: 0px 0px 15px 1px #797D7F;
+  transition: box-shadow .5s;
+}
+.owl-pop-container:hover .owl-pop-title-wrapper {
+  transition: border .5s;
+}
+.owl-pop-container:hover .owl-pop-body-wrapper {
+  transition: border .5s;
+}
+.owl-pop-close {
+  position: absolute;
+  right: 13px;
+  top: 11px;
+  cursor: pointer;
+}
+.owl-pop-body-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(100% - 35px);
+  background: #FBFCFC;
+  border-top: none;
+  transition: all .5s;
+  padding: 30px 30px;
+  position: relative;
+}
+.owl-pop-text {
+  width: 80%;
+  position: absolute;
+  height: 45px;
+  overflow: hidden;
+  top: 20px;
+  margin: 0;
+  text-align: left;
+  line-height: 24px;
+  font-size: 14px;
+}
+.owl-pop-button {
+  width: 70px;
+  height: 35px;
+  position: absolute;
+  text-align: center;
+  line-height: 35px;
+  cursor: pointer;
+  bottom: 25px;
+  border-radius: 3px;
+}
+.confirm {
+  right: 25px;
+}
+.cancel {
+  right: 25px;
+}

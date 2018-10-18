@@ -120,7 +120,7 @@ class ButtonComponent extends Components {
     }
 
     _setEvent() {
-        this.node
+
     }
 
 }

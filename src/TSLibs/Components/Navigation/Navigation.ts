@@ -190,7 +190,7 @@ export class NavigationComponent extends Components{
                         pNodeHeight += isNaN(parseInt(u[index].style.height)) ? 0 : parseInt(u[index].style.height)
                     }
                     pNodeHeight += rootUl.childNodes.length * itemHeight
-                    rootUl.style.height = pNodeHeight + 'px'
+                    // rootUl.style.height = pNodeHeight + 'px'
                 }
             }
         }

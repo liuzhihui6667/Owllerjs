@@ -1,5 +1,18 @@
 import {NavigationComponent} from './TSLibs/Components/Navigation/Navigation'
 import {ButtonComponent} from "./TSLibs/Components/Button/Button";
+import {PopupComponent} from "./TSLibs/Components/Popup/Popup";
+
+let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light')
+
+document.getElementsByClassName('container')[0].appendChild(p.node)
+
+let p2 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter')
+
+document.getElementsByClassName('container')[0].appendChild(p2.node)
+
+let p3 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'dark', 'fade')
+
+document.getElementsByClassName('container')[0].appendChild(p3.node)
 
 let u = new NavigationComponent('v', [
     {
@@ -43,9 +56,9 @@ let u = new NavigationComponent('v', [
             }
         ]
     }
-], false, true, false, 'dark')
+], false, false, false, 'light')
 
-// document.getElementsByClassName('container')[0].appendChild(u._getTemplate())
+document.getElementsByClassName('container')[0].appendChild(u._getTemplate())
 
 
 let bs = new ButtonComponent('按钮', 'disabled', 'small', 'store')
@@ -90,53 +103,9 @@ let dd = new ButtonComponent('按钮', '', '', 'coins', true)
 document.getElementsByClassName('container')[0].appendChild(dd._getTemplate())
 document.getElementsByClassName('container')[0].appendChild(document.createElement('img'))
 
-let dl = new ButtonComponent('按钮', 'lighter', 'large', 'coins', true)
+let dl = new ButtonComponent('', 'lighter', 'large', '', true)
 
 document.getElementsByClassName('container')[0].appendChild(dl._getTemplate())
 document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
 document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
 
-
-// import Components from './Components/components.js'
-// import Renders from './Renders/renders.js'
-//
-// // function OwllerUI(option = {}) {
-// //     this.data = option.hasOwnProperty('data') ? option.data : {}
-// //     window.Owller = this
-// // }
-// //
-// // OwllerUI.prototype = {
-// //     components: new Components(),
-// //     renders: new Renders()
-// // }
-//
-// interface Option {
-//     data: OwllerUIData
-// }
-//
-// interface OwllerUIData {
-//     Nav: OwllerUIDataNav
-// }
-//
-// interface OwllerUIDataNav {
-//     item: OwllerUIDataListItem
-// }
-//
-// interface OwllerUIDataListItem {
-//     text: string;
-//     to: string;
-//     icon: string;
-//     active: boolean;
-//     list: OwllerUIDataListItem;
-// }
-//
-// class OwllerUI {
-//     data: OwllerUIData;
-//     constructor(option: Option) {
-//         this.data = option["data"]
-//         window["OwllerUI"] = this
-//     }
-// }
-//
-//
-// window["OwllerUI"] = OwllerUI
