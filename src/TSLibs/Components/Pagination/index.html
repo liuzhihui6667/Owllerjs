@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="owl-page-container">
+        <ul class="owl-page-wrapper">
+            <li class="owl-page-item">上一页</li>
+            <li class="owl-page-item">133</li>
+            <li class="owl-page-item">1</li>
+            <li class="owl-page-more"></li>
+            <li class="owl-page-item">1</li>
+            <li class="owl-page-item">1</li>
+            <li class="owl-page-item">下一页</li>
+        </ul>
+    </div>
+</body>
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0;
+    }
+    .owl-page-container {
+        position: absolute;
+        top: 700px;
+        left: 700px;
+        height: 32px;
+    }
+    .owl-page-wrapper {
+        display: inline-block;
+        height: 100%;
+    }
+
+    .owl-page-item {
+        box-sizing: border-box;
+        display: inline-block;
+        padding-left: 8px;
+        padding-right: 8px;
+        min-width: 32px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        border: 1px solid #797d7f;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-left: 5px;
+        color: #797d7f;
+        cursor: pointer;
+        transition: all .3s;
+        float: left;
+    }
+
+    .owl-page-item:hover {
+        border: 1px solid deepskyblue;
+        color: deepskyblue;
+    }
+</style>
+</html>

@@ -1,18 +1,19 @@
 import {NavigationComponent} from './TSLibs/Components/Navigation/Navigation'
 import {ButtonComponent} from "./TSLibs/Components/Button/Button";
 import {PopupComponent} from "./TSLibs/Components/Popup/Popup";
+import {PaginationComponent} from "./TSLibs/Components/Pagination/Pagination";
 
-let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light')
-
-document.getElementsByClassName('container')[0].appendChild(p.node)
-
-let p2 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter')
-
-document.getElementsByClassName('container')[0].appendChild(p2.node)
-
-let p3 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'dark', 'fade')
-
-document.getElementsByClassName('container')[0].appendChild(p3.node)
+// let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light')
+//
+// document.getElementsByClassName('container')[0].appendChild(p.node)
+//
+// let p2 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter')
+//
+// document.getElementsByClassName('container')[0].appendChild(p2.node)
+//
+// let p3 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'dark', 'fade')
+//
+// document.getElementsByClassName('container')[0].appendChild(p3.node)
 
 let u = new NavigationComponent('v', [
     {
@@ -56,7 +57,7 @@ let u = new NavigationComponent('v', [
             }
         ]
     }
-], false, false, false, 'light')
+], false, false, false, 'lighter')
 
 document.getElementsByClassName('container')[0].appendChild(u._getTemplate())
 
@@ -103,9 +104,15 @@ let dd = new ButtonComponent('按钮', '', '', 'coins', true)
 document.getElementsByClassName('container')[0].appendChild(dd._getTemplate())
 document.getElementsByClassName('container')[0].appendChild(document.createElement('img'))
 
-let dl = new ButtonComponent('', 'lighter', 'large', '', true)
+let dl = new ButtonComponent('Button', 'lighter', 'large', '', true)
 
 document.getElementsByClassName('container')[0].appendChild(dl._getTemplate())
 document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
 document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
 
+let a = (pageNum: number): void => {
+    console.log(pageNum)
+}
+let pa = new PaginationComponent(100, 10, 5, 'dark', a)
+
+document.getElementsByClassName('container')[0].appendChild(pa._getTemplate())
