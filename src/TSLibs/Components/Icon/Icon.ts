@@ -28,6 +28,11 @@ class IconComponent extends Components {
         if(this.node !== undefined) {
             return this.node
         }
+        this.node = this.__getNode()
+        return this.node
+    }
+
+    __getNode(): Element {
         let node = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
         node.style.height = this.height
         node.style.width = this.width
@@ -47,7 +52,6 @@ class IconComponent extends Components {
         path.setAttribute('fill', this.color)
         path.setAttribute('d', this.__getPath())
         node.appendChild(path)
-        this.node = node
         return node
     }
 

@@ -26,6 +26,11 @@ class PopupComponent extends Components {
         if(this.node !== undefined) {
             return this.node
         }
+        this.node = this.__getNode()
+        return this.node
+    }
+
+    __getNode(): Element {
         let node = document.createElement('div')
         node.classList.add('owl-pop-container')
         node.classList.add('owl-pop-theme-' + this.theme)
@@ -53,8 +58,7 @@ class PopupComponent extends Components {
         popBodyNode.appendChild(popBodyTextNode)
         popBodyNode.appendChild(confirmNode)
         node.appendChild(popBodyNode)
-        this.node = node
-        return node;
+        return node
     }
 
     _setEvent(): void {

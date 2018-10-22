@@ -138,6 +138,11 @@ export class NavigationComponent extends Components{
         if(this.node !== undefined) {
             return this.node
         }
+        this.node = this.__getNode()
+        return this.node
+    }
+
+    __getNode(): Element {
         switch (this.dir) {
             case 'v':
                 return this.__getTemplateV();
@@ -194,7 +199,6 @@ export class NavigationComponent extends Components{
                 }
             }
         }
-        this.node = node
         return node
     }
 

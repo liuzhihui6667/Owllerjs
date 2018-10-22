@@ -31,6 +31,11 @@ class ButtonComponent extends Components {
         if(this.node !== undefined) {
             return this.node;
         }
+        this.node = this.__getNode()
+        return this.node
+    }
+
+    __getNode(): Element {
         let node = document.createElement('div');
         node.classList.add('owl-btn-container');
         for (let index in this.attr) {
@@ -54,11 +59,11 @@ class ButtonComponent extends Components {
                 break
             case 'large':
                 node.classList.add('owl-btn-large')
-                btnHeight = '40px'
+                btnHeight = '36px'
                 break
             default:
                 node.classList.add('owl-btn-default')
-                btnHeight = '34px'
+                btnHeight = '32px'
                 break
         }
         switch (this.type) {
@@ -88,10 +93,10 @@ class ButtonComponent extends Components {
                     iconSize = '14px';
                     break;
                 case 'large':
-                    iconSize = '20px';
+                    iconSize = '18px';
                     break;
                 default:
-                    iconSize = '18px';
+                    iconSize = '16px';
                     break
             }
             let iconColor = this.type === 'disabled' ? '#c5c8ce' : '#ffffff'
@@ -115,7 +120,6 @@ class ButtonComponent extends Components {
         textSpan.classList.add('owl-btn-text-wrapper');
         textSpan.innerText = this.innerText;
         node.appendChild(textSpan);
-        this.node = node
         return node
     }
 

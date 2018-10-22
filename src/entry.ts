@@ -111,8 +111,8 @@ document.getElementsByClassName('container')[0].appendChild(document.createEleme
 document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
 
 let a = (pageNum: number): void => {
-    console.log(pageNum)
+
 }
-let pa = new PaginationComponent(100, 10, 5, 'dark', a)
+let pa = new PaginationComponent(12, 10, 1, 'light', a)
 
 document.getElementsByClassName('container')[0].appendChild(pa._getTemplate())
