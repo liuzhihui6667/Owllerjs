@@ -2,10 +2,11 @@ import {NavigationComponent} from './TSLibs/Components/Navigation/Navigation'
 import {ButtonComponent} from "./TSLibs/Components/Button/Button";
 import {PopupComponent} from "./TSLibs/Components/Popup/Popup";
 import {PaginationComponent} from "./TSLibs/Components/Pagination/Pagination";
+import {RollerComponent} from "./TSLibs/Components/Roller/Roller";
 
-// let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light')
-//
-// document.getElementsByClassName('container')[0].appendChild(p.node)
+let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light', 'fade')
+
+document.getElementsByTagName('body')[0].appendChild(p.node)
 //
 // let p2 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter')
 //
@@ -62,57 +63,54 @@ let u = new NavigationComponent('v', [
 document.getElementsByClassName('container')[0].appendChild(u._getTemplate())
 
 
-let bs = new ButtonComponent('按钮', 'disabled', 'small', 'store')
+let bs = new ButtonComponent('按钮', '', '', 'store')
 // b._getTemplate()
-document.getElementsByClassName('container')[0].appendChild(bs.node)
-document.getElementsByClassName('container')[0].appendChild(document.createElement('img'))
-let bd = new ButtonComponent('按钮', 'disabled', 'default', 'store')
+document.getElementsByClassName('btn-container')[0].appendChild(bs.node)
+let bd = new ButtonComponent('SUCCESS', 'success', 'default', '')
 // b._getTemplate()
-document.getElementsByClassName('container')[0].appendChild(bd.node)
-document.getElementsByClassName('container')[0].appendChild(document.createElement('img'))
+document.getElementsByClassName('btn-container')[0].appendChild(bd.node)
 
-let bl = new ButtonComponent('按钮', 'disabled', 'large', 'store')
+let bl = new ButtonComponent('FAIL', 'error', '', '')
 // b._getTemplate()
-document.getElementsByClassName('container')[0].appendChild(bl.node)
+document.getElementsByClassName('btn-container')[0].appendChild(bl.node)
 
-document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
-document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
-
-let cs = new ButtonComponent('按钮', 'dark', 'small', 'coins')
-
-document.getElementsByClassName('container')[0].appendChild(cs._getTemplate())
-document.getElementsByClassName('container')[0].appendChild(document.createElement('img'))
-
-let cd = new ButtonComponent('按钮', 'dark', '', 'coins')
-
-document.getElementsByClassName('container')[0].appendChild(cd._getTemplate())
-document.getElementsByClassName('container')[0].appendChild(document.createElement('img'))
-
-let cl = new ButtonComponent('按钮', 'success', 'large', '')
-
-document.getElementsByClassName('container')[0].appendChild(cl._getTemplate())
-document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
-document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
-
-let ds = new ButtonComponent('按钮', 'error', 'small', 'coins', true)
-
-document.getElementsByClassName('container')[0].appendChild(ds._getTemplate())
-document.getElementsByClassName('container')[0].appendChild(document.createElement('img'))
-
-let dd = new ButtonComponent('按钮', '', '', 'coins', true)
-
-document.getElementsByClassName('container')[0].appendChild(dd._getTemplate())
-document.getElementsByClassName('container')[0].appendChild(document.createElement('img'))
-
-let dl = new ButtonComponent('Button', 'lighter', 'large', '', true)
-
-document.getElementsByClassName('container')[0].appendChild(dl._getTemplate())
-document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
-document.getElementsByClassName('container')[0].appendChild(document.createElement('br'))
+let bdis = new ButtonComponent('DISABLED', 'disabled', '', '')
+// b._getTemplate()
+document.getElementsByClassName('btn-container')[0].appendChild(bdis.node)
 
 let a = (pageNum: number): void => {
 
 }
-let pa = new PaginationComponent(12, 10, 1, 'light', a)
+let pal = new PaginationComponent(120, 10, 2, 'lighter', a)
 
-document.getElementsByClassName('container')[0].appendChild(pa._getTemplate())
+document.getElementsByClassName('page-container')[0].appendChild(pal._getTemplate())
+document.getElementsByClassName('page-container')[0].appendChild(document.createElement('br'))
+
+let pali = new PaginationComponent(120, 10, 5, 'light', a)
+
+document.getElementsByClassName('page-container')[0].appendChild(pali._getTemplate())
+document.getElementsByClassName('page-container')[0].appendChild(document.createElement('br'))
+
+let pad = new PaginationComponent(120, 10, 6, 'dark', a)
+
+document.getElementsByClassName('page-container')[0].appendChild(pad._getTemplate())
+
+let rl1 = document.createElement('div')
+rl1.style.backgroundColor = 'red'
+let rl2 = document.createElement('div')
+rl2.style.backgroundColor = 'orange'
+let rl3 = document.createElement('div')
+rl3.style.backgroundColor = 'green'
+let rl4 = document.createElement('div')
+rl4.style.backgroundColor = 'blue'
+
+let rl = [
+    rl1,
+    rl2,
+    rl3,
+    rl4
+]
+
+let r = new RollerComponent(1, rl)
+
+document.getElementsByClassName('roller-container')[0].appendChild(r._getTemplate())

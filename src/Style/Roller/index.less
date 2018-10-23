@@ -1,0 +1,84 @@
+@import "../../Style/index.less";
+
+.owl-roller-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.owl-roller-item-container {
+  //width: 100%;
+  height: 100%;
+  //overflow: hidden;
+  position: relative;
+}
+
+.owl-roller-item-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  transition: transform .3s;
+}
+
+.owl-roller-tool {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  position: absolute;
+  opacity: 0;
+  transition: opacity .3s;
+  background-color: #000000;
+  text-align: center;
+}
+
+.owl-roller-tool:hover {
+  cursor: pointer;
+  transition: opacity .3s;
+  opacity: 0.7 !important;
+}
+
+.owl-roller-container:hover .owl-roller-tool {
+  opacity: 0.2;
+  transition: opacity .3s;
+}
+
+.owl-roller-tool-pre {
+  top: calc(50% - 20px);
+  left: 20px;
+}
+
+.owl-roller-tool-next {
+  top: calc(50% - 20px);
+  right: 20px;
+}
+
+.owl-roller-tip-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  height: 20px;
+  line-height: 20px;
+  position: absolute;
+  bottom: 10px;
+  text-align: center;
+  margin: auto;
+}
+
+.owl-roller-tip {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background-color: #000000;
+  display: inline-block;
+  margin-left: 6px;
+  opacity: .2;
+  cursor: pointer;
+}
+
+.owl-roller-tip-active {
+  opacity: .5;
+}

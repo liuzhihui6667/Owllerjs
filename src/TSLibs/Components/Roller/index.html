@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../Style/Roller/index.less">
+</head>
+<body>
+
+<div class="test-container">
+    <div class="owl-roller-container">
+        <div class="owl-roller-item-container">
+            <div class="owl-roller-item-wrapper id1 owl-roller-pre"></div>
+            <div class="owl-roller-item-wrapper id2 owl-roller-cur"></div>
+            <div class="owl-roller-item-wrapper id3 owl-roller-next"></div>
+            <div class="owl-roller-item-wrapper id4"></div>
+        </div>
+        <div class="owl-roller-tool-wrapper">
+            <div class="owl-roller-tool owl-roller-tool-pre"></div>
+            <div class="owl-roller-tool owl-roller-tool-next"></div>
+        </div>
+        <div class="owl-roller-tip-wrapper">
+            <div class="owl-roller-tip"></div>
+            <div class="owl-roller-tip"></div>
+            <div class="owl-roller-tip"></div>
+            <div class="owl-roller-tip"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+<style>
+    .test-container {
+        position: fixed;
+        top: 400px;
+        left: 400px;
+        width: 500px;
+        height: 250px;
+    }
+
+    .owl-roller-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        user-select: none;
+    }
+
+    .owl-roller-item-container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .owl-roller-item-wrapper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+    }
+
+    .owl-roller-pre {
+        display: block;
+        transform: translateX(-100%);
+    }
+    .owl-roller-cur {
+        display: block;
+    }
+    .owl-roller-next {
+        display: block;
+        transform: translateX(100%);
+    }
+
+    .owl-roller-tool {
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+        position: absolute;
+        opacity: 0;
+        transition: opacity .3s;
+        background-color: yellow;
+        cursor: pointer;
+    }
+
+    .owl-roller-container:hover .owl-roller-tool {
+        opacity: 1;
+        transition: opacity .3s;
+    }
+
+    .owl-roller-tool-pre {
+        top: calc(50% - 20px);
+        left: 20px;
+    }
+
+    .owl-roller-tool-next {
+        top: calc(50% - 20px);
+        right: 20px;
+    }
+
+    .owl-roller-tip-wrapper {
+        width: 100%;
+        box-sizing: border-box;
+        height: 20px;
+        line-height: 20px;
+        position: absolute;
+        bottom: 10px;
+        text-align: center;
+        margin: auto;
+    }
+
+    .owl-roller-tip {
+        width: 8px;
+        height: 8px;
+        border-radius: 8px;
+        background-color: #8E44AD;
+        display: inline-block;
+    }
+
+    .id1 {
+        background-color: red;
+    }
+
+    .id2 {
+        background-color: orange;
+    }
+
+    .id3 {
+        background-color: green;
+    }
+
+    .id4 {
+        background-color: blue;
+    }
+</style>
+</html>

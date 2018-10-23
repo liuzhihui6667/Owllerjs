@@ -19,10 +19,35 @@
             padding: 0;
         }
         .container {
-            width: 750px;
+            width: 250px;
             position: fixed;
             top: 50px;
-            left: 700px;
+            left: 0px;
+        }
+        .btn-container {
+            width: 400px;
+            position: fixed;
+            top: 50px;
+            left: 300px;
+            display: flex;
+            justify-content: left;
+        }
+        .btn-container div {
+            margin-right: 5px;
+        }
+        .page-container {
+            width: 800px;
+            height: 200px;
+            position: fixed;
+            bottom: 50px;
+            left: 300px;
+        }
+        .roller-container {
+            width: 500px;
+            height: 250px;
+            position: absolute;
+            left: 300px;
+            top: 120px;
         }
         .owl-nav-container {
             position: relative;
@@ -56,6 +81,9 @@
 <div class="container" onclick="sss(this)">
 
 </div>
+<div class="btn-container"></div>
+<div class="page-container"></div>
+<div class="roller-container"></div>
 </body>
 <script>
 function sss(e) {
