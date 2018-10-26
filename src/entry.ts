@@ -58,10 +58,9 @@ let u = new NavigationComponent('v', [
             }
         ]
     }
-], false, false, false, 'lighter')
+], true, false, false, 'lighter')
 
 document.getElementsByClassName('container')[0].appendChild(u._getTemplate())
-
 
 let bs = new ButtonComponent('按钮', '', '', 'store')
 // b._getTemplate()
@@ -101,8 +100,8 @@ let rl2 = document.createElement('div')
 rl2.style.backgroundColor = 'orange'
 let rl3 = document.createElement('div')
 rl3.style.backgroundColor = 'green'
-let rl4 = document.createElement('div')
-rl4.style.backgroundColor = 'blue'
+let rl4 = document.createElement('img')
+rl4.src = 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super'
 
 let rl = [
     rl1,
@@ -111,6 +110,6 @@ let rl = [
     rl4
 ]
 
-let r = new RollerComponent(1, rl)
+let r = new RollerComponent(1, rl, true, false, 5000, 'dot')
 
 document.getElementsByClassName('roller-container')[0].appendChild(r._getTemplate())

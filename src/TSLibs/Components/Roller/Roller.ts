@@ -37,8 +37,22 @@ class RollerComponent extends Components {
         node.classList.add('owl-roller-container')
         let itemNodeWrapper = document.createElement('div')
         itemNodeWrapper.classList.add('owl-roller-item-container')
+        let itemSliderWrapper = document.createElement('div')
+        itemSliderWrapper.classList.add('owl-roller-item-slider-wrapper')
+        itemNodeWrapper.appendChild(itemSliderWrapper)
         let tipWrapper = document.createElement('div')
         tipWrapper.classList.add('owl-roller-tip-wrapper')
+        switch (this.tip) {
+            case 'dot':
+                tipWrapper.classList.add('owl-roller-tip-dot')
+                break
+            case 'line':
+                tipWrapper.classList.add('owl-roller-tip-line')
+                break
+            default:
+                tipWrapper.classList.add('owl-roller-tip-dot')
+                break
+        }
         for (let i = 0; i < this.itemList.length; i++) {
             let itemNode = document.createElement('div')
             itemNode.classList.add('owl-roller-item-wrapper')
@@ -51,14 +65,16 @@ class RollerComponent extends Components {
             itemel.style.height = '100%'
             itemel.style.width = '100%'
             itemNode.appendChild(this.itemList[i])
-            itemNodeWrapper.appendChild(itemNode)
-
-            let tipItem = document.createElement('div')
-            tipItem.classList.add('owl-roller-tip')
-            if(i === this.curValue) {
-                tipItem.classList.add('owl-roller-tip-active')
+            itemSliderWrapper.appendChild(itemNode)
+            if(this.tip !== 'none') {
+                let tipItem = document.createElement('div')
+                tipItem.classList.add('owl-roller-tip')
+                tipItem.dataset.value = i.toString()
+                if(i === this.curValue) {
+                    tipItem.classList.add('owl-roller-tip-active')
+                }
+                tipWrapper.appendChild(tipItem)
             }
-            tipWrapper.appendChild(tipItem)
         }
         node.appendChild(itemNodeWrapper)
         let toolWrapper = document.createElement('div')
@@ -85,38 +101,115 @@ class RollerComponent extends Components {
         this.node.getElementsByClassName('owl-roller-tool-next')[0].addEventListener('click', function (e) {
             that.__move('left')
         })
+        this.node.getElementsByClassName('owl-roller-tool-pre')[0].addEventListener('click', function (e) {
+            that.__move('right')
+        })
+        let tipNodes = this.node.getElementsByClassName('owl-roller-tip')
+        for (let i = 0; i < tipNodes.length; i++) {
+            tipNodes[i].addEventListener('click', function (e) {
+                let value = parseInt(this.dataset.value)
+                if(value < that.curValue) {
+                    that.__move('right', that.curValue - value)
+                }
+                if(value > that.curValue) {
+                    that.__move('left', value - that.curValue)
+                }
+            })
+        }
+        console.log(this.auto)
+        if(this.auto) {
+            setInterval(function () {
+                that.__move('left')
+            }, this.speed)
+        }
     }
 
     __move(dir: string, moveNum: number = 1): void {
-        let that = this
-        let itemElList = this.node.getElementsByClassName('owl-roller-item-container')[0].children
-        console.log(itemElList)
+        if(!this.loop) {
+            if(dir === 'left' && this.curValue === this.itemList.length - 1 || dir === 'right' && this.curValue === 0) {
+                return
+            }
+        }
+        let wrapper = this.node.getElementsByClassName('owl-roller-item-slider-wrapper')[0]
+        wrapper.style.width = 100 * (moveNum + 1) + '%'
+        wrapper.style.left = 'none'
+        wrapper.style.right = 'none'
+        wrapper.style.transform = 'translate(0%)'
+        wrapper.style.transition = 'none'
+        let itemElList = wrapper.children
+        for (let i = 0; i < this.itemList.length; i++) {
+            itemElList[i].style.width = 1/(1+moveNum)*100 + '%'
+            itemElList[i].style.transform = 'translateX(0%)'
+            if(i !== this.curValue) {
+                itemElList[i].style.display = 'none'
+            }
+        }
+        let newValue: number
         switch (dir) {
             case 'left':
-                for (let i = 0; i < this.itemList.length; i++) {
-                    if(i !== this.curValue) {
-                        itemElList[i].style.display = 'none'
-                        itemElList[i].style.transform = 'translateX(0)'
-                    }
-                }
+                newValue = (this.curValue + moveNum) % this.itemList.length
+                this.__tipShow(this.curValue, newValue)
+                wrapper.style.left = '0px'
                 for (let i = 1; i <= moveNum; i++) {
                     let j = (this.curValue + i) % this.itemList.length
                     itemElList[j].style.display = 'block'
                     itemElList[j].style.transform = 'translateX('+100*i+'%)'
                 }
-                this.curValue = (this.curValue + moveNum) % this.itemList.length
+                this.curValue = newValue
+                setTimeout(function () {
+                    wrapper.style.transition = 'transform .3s'
+                    wrapper.style.transform = 'translateX(-' + 100 * moveNum/(moveNum + 1) + '%)'
+                }, 10)
+                break
+            case 'right':
+                newValue = (this.curValue - moveNum + this.itemList.length) % this.itemList.length
+                this.__tipShow(this.curValue, newValue)
+                wrapper.style.right = '0px'
+                for (let i = 1; i <= moveNum; i++) {
+                    let j = (this.curValue - i + this.itemList.length) % this.itemList.length
+                    itemElList[j].style.display = 'block'
+                    itemElList[j].style.transform = 'translateX(-'+100*i+'%)'
+                }
+                this.curValue = newValue
                 setTimeout(() => {
-                    for (let i = 0; i <= moveNum; i++) {
-                        let j = (this.curValue - i + this.itemList.length) % this.itemList.length
-                        itemElList[j].style.transform = 'translateX(-'+100*i+'%)'
-                    }
-                })
+                    wrapper.style.transition = 'transform .3s'
+                    wrapper.style.transform = 'translateX(' + 100 * moveNum/(moveNum + 1) + '%)'
+                }, 10)
                 break
         }
-        // this.curValue = this.curValue%this.itemList.length
-        console.log(this.curValue)
     }
 
+    __tipShow(oldValue: number, curValue: number): void {
+        if(this.tip === 'none') {
+            return
+        }
+        let tipNodes = this.node.getElementsByClassName('owl-roller-tip')
+        if(oldValue < curValue) {
+            let i = oldValue
+            let s = setInterval(function () {
+                tipNodes[i].classList.remove('owl-roller-tip-active')
+                tipNodes[i+1].classList.add('owl-roller-tip-active')
+                i++
+                if(i >= curValue) {
+                    clearInterval(s)
+                }
+            }, 10)
+        } else {
+            for (let i = oldValue; i > curValue; i--) {
+                tipNodes[i].classList.remove('owl-roller-tip-active')
+                tipNodes[i-1].classList.add('owl-roller-tip-active')
+            }
+            let i = oldValue
+            let s = setInterval(function () {
+                tipNodes[i].classList.remove('owl-roller-tip-active')
+                tipNodes[i-1].classList.add('owl-roller-tip-active')
+                i--
+                if(i <= curValue) {
+                    clearInterval(s)
+                }
+            }, 10)
+        }
+    }
 }
 
 export {RollerComponent}
