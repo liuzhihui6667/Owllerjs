@@ -3,6 +3,8 @@ import {ButtonComponent} from "./TSLibs/Components/Button/Button";
 import {PopupComponent} from "./TSLibs/Components/Popup/Popup";
 import {PaginationComponent} from "./TSLibs/Components/Pagination/Pagination";
 import {RollerComponent} from "./TSLibs/Components/Roller/Roller";
+import {RollerRender} from "./TSLibs/Renders/Roller/Roller";
+import {NavigationRender} from "./TSLibs/Renders/Navigation/Navigation";
 
 let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light', 'fade')
 
@@ -23,12 +25,14 @@ let u = new NavigationComponent('v', [
         icon: 'layout',
         list: [
             {
-                text: '二级菜单'
-            },{
-                text: '二级菜单'
+                text: '二级菜单',
+                list: []
             },{
                 text: '二级菜单',
-                active: true
+                list: []
+            },{
+                text: '二级菜单',
+                list: []
             }
         ]
     },
@@ -41,24 +45,29 @@ let u = new NavigationComponent('v', [
                 text: '二级菜单',
                 list: [
                     {
-                        text: '三级菜单'
+                        text: '三级菜单',
+                        list: []
                     },{
-                        text: '三级菜单'
+                        text: '三级菜单',
+                        list: [],
+                        active: true
                     }
                 ]
             },{
                 text: '二级菜单',
                 list: [
                     {
-                        text: '三级菜单'
+                        text: '三级菜单',
+                        list: []
                     },{
-                        text: '三级菜单'
+                        text: '三级菜单',
+                        list: []
                     }
                 ]
             }
         ]
     }
-], true, false, false, 'lighter')
+], false, false, false, 'lighter')
 
 document.getElementsByClassName('container')[0].appendChild(u._getTemplate())
 
@@ -94,22 +103,25 @@ let pad = new PaginationComponent(120, 10, 6, 'dark', a)
 
 document.getElementsByClassName('page-container')[0].appendChild(pad._getTemplate())
 
-let rl1 = document.createElement('div')
-rl1.style.backgroundColor = 'red'
-let rl2 = document.createElement('div')
-rl2.style.backgroundColor = 'orange'
-let rl3 = document.createElement('div')
-rl3.style.backgroundColor = 'green'
-let rl4 = document.createElement('img')
-rl4.src = 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super'
+// let rl1 = document.createElement('div')
+// rl1.style.backgroundColor = 'red'
+// let rl2 = document.createElement('div')
+// rl2.style.backgroundColor = 'orange'
+// let rl3 = document.createElement('div')
+// rl3.style.backgroundColor = 'green'
+// let rl4 = document.createElement('img')
+// rl4.src = 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super'
+//
+// let rl = [
+//     rl1,
+//     rl2,
+//     rl3,
+//     rl4
+// ]
+//
+// let r = new RollerComponent(1, rl, true, false, 5000, 'line')
+//
+// document.getElementsByClassName('roller-container')[0].appendChild(r._getTemplate())
 
-let rl = [
-    rl1,
-    rl2,
-    rl3,
-    rl4
-]
-
-let r = new RollerComponent(1, rl, true, false, 5000, 'dot')
-
-document.getElementsByClassName('roller-container')[0].appendChild(r._getTemplate())
+new RollerRender()
+new NavigationRender()

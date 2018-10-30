@@ -76,15 +76,53 @@
         img {
             width: 20px;
         }
+        .roller-item {
+            line-height: 250px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-<div class="container" onclick="sss(this)">
-
+<div class="container">
+    <owl-nav theme="dark" showall="" onlyone="true">
+        <owl-nav-item icon="layout" active="true">
+            <owl-text>99999</owl-text>
+            <owl-nav-item>
+                <owl-text>88888</owl-text>
+                <owl-nav-item>
+                    <owl-text>77777</owl-text>
+                </owl-nav-item>
+            </owl-nav-item>
+        </owl-nav-item>
+        <owl-nav-item icon="store">
+            <owl-text>99999</owl-text>
+            <owl-nav-item active="true">
+                <owl-text>88888</owl-text>
+                <owl-nav-item active="true">
+                    <owl-text>77777</owl-text>
+                </owl-nav-item>
+            </owl-nav-item>
+        </owl-nav-item>
+    </owl-nav>
 </div>
 <div class="btn-container"></div>
 <div class="page-container"></div>
-<div class="roller-container"></div>
+<div class="roller-container">
+    <owl-roller value="2" loop="true" auto="false" tip="line">
+        <div style="background-color: red;" class="roller-item">
+            1
+        </div>
+        <div style="background-color: orange;" class="roller-item">
+            2
+        </div>
+        <div style="background-color: green;" class="roller-item">
+            3
+        </div>
+        <div style="background-color: blue;" class="roller-item">
+            4
+        </div>
+    </owl-roller>
+</div>
 </body>
 <script>
 function sss(e) {

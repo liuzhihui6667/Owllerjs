@@ -11,7 +11,7 @@ interface NavigationList {
     list?: Array<NavigationList>;
 }
 
-export class NavigationComponent extends Components{
+class NavigationComponent extends Components{
     dir: string;
     showall: boolean;
     onlyone: boolean;
@@ -180,9 +180,9 @@ export class NavigationComponent extends Components{
             let leafActive = node.getElementsByClassName('owl-nav-leaf-active')
             for(let index = 0; index < leafActive.length; index++) {
                 leafActive[index].getElementsByClassName('owl-nav-item-text-wrapper')[0].classList.add('owl-nav-item-v-active')
-                let sCount = leafActive[index].parentNode.childNodes.length
+                let sCount = leafActive[index].parentElement.children.length
                 leafActive[index].parentElement.style.height = itemHeight * sCount + 'px'
-                let rootUl = leafActive[index].parentNode.parentElement.parentElement
+                let rootUl = leafActive[index].parentElement.parentElement.parentElement
                 //小三角
                 leafActive[index].parentElement.parentElement.getElementsByClassName('owl-nav-open-icon')[0].classList.add('owl-nav-open-icon-open')
                 if(rootUl.parentNode.parentNode !== null && OWLNODE.hasClass(rootUl.parentElement.parentElement, 'owl-nav-wrapper-v-root')) {
@@ -268,7 +268,7 @@ export class NavigationComponent extends Components{
                 }
                 liNode.appendChild(this.__getItemNodeV(itemlist[index].list))
             }
-            if(!itemlist[index].hasOwnProperty('list') && itemlist[index].active || window.location.pathname === itemlist[index].to) {
+            if(itemlist[index].list.length === 0 && itemlist[index].active || window.location.pathname === itemlist[index].to) {
                 liNode.classList.add('owl-nav-leaf-active')
             }
             ulNode.appendChild(liNode)
@@ -276,3 +276,5 @@ export class NavigationComponent extends Components{
         return ulNode
     }
 }
+
+export {NavigationComponent, NavigationList}

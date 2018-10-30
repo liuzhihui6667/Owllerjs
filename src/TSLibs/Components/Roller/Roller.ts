@@ -1,5 +1,4 @@
 import {Components} from '../../Interfaces/Component'
-import {OWLNODE} from '../../OwlNode/OWLNODE'
 import '../../../Style/Roller/index.less'
 import {IconComponent} from "../Icon/Icon";
 
@@ -9,8 +8,19 @@ class RollerComponent extends Components {
     auto: boolean;
     speed: number;
     tip: string;
+    height: string;
+    width: string;
     itemList: Array<HTMLElement>;
-    constructor(curVulue?: number, itemList?: Array<HTMLElement>, loop?: boolean, auto?: boolean, speed?: number, tip?: string) {
+    intervel: number;
+    constructor(type?: string,
+                curVulue?: number,
+                itemList?: Array<HTMLElement>,
+                loop?: boolean,
+                auto?: boolean,
+                speed?: number,
+                tip?: string,
+                height?: string,
+                width?: string) {
         super()
         this.curValue = curVulue === undefined ? 0 : curVulue
         this.loop = loop === undefined ? false : loop
@@ -18,6 +28,8 @@ class RollerComponent extends Components {
         this.speed = speed === undefined ? 3000 : speed
         this.tip = tip === undefined ? 'none' : tip
         this.itemList = itemList === undefined ? [] : itemList
+        this.height = height === undefined ? '250px' : height
+        this.width = width === undefined ? '500px' : width
         this.init()
     }
     init(): void {
@@ -35,6 +47,8 @@ class RollerComponent extends Components {
     __getNode(): Element {
         let node = document.createElement('div')
         node.classList.add('owl-roller-container')
+        node.style.height = this.height
+        node.style.width = this.width
         let itemNodeWrapper = document.createElement('div')
         itemNodeWrapper.classList.add('owl-roller-item-container')
         let itemSliderWrapper = document.createElement('div')
@@ -62,9 +76,8 @@ class RollerComponent extends Components {
             }
             itemNode.style.transform = 'translateX(0)'
             let itemel = this.itemList[i]
-            itemel.style.height = '100%'
-            itemel.style.width = '100%'
-            itemNode.appendChild(this.itemList[i])
+            itemel.classList.add('owl-roller-item-box')
+            itemNode.appendChild(itemel)
             itemSliderWrapper.appendChild(itemNode)
             if(this.tip !== 'none') {
                 let tipItem = document.createElement('div')
@@ -100,9 +113,11 @@ class RollerComponent extends Components {
         let that = this
         this.node.getElementsByClassName('owl-roller-tool-next')[0].addEventListener('click', function (e) {
             that.__move('left')
+            e.stopPropagation()
         })
         this.node.getElementsByClassName('owl-roller-tool-pre')[0].addEventListener('click', function (e) {
             that.__move('right')
+            e.stopPropagation()
         })
         let tipNodes = this.node.getElementsByClassName('owl-roller-tip')
         for (let i = 0; i < tipNodes.length; i++) {
@@ -114,14 +129,39 @@ class RollerComponent extends Components {
                 if(value > that.curValue) {
                     that.__move('left', value - that.curValue)
                 }
+                e.stopPropagation()
             })
         }
-        console.log(this.auto)
         if(this.auto) {
-            setInterval(function () {
-                that.__move('left')
-            }, this.speed)
+            this.__registInterval()
+            this.node.getElementsByClassName('owl-roller-tool-next')[0].addEventListener('mouseover', function (e) {
+                that.__clearInterval()
+                e.stopPropagation()
+            })
+            this.node.getElementsByClassName('owl-roller-tool-next')[0].addEventListener('mouseleave', function (e) {
+                that.__registInterval()
+                e.stopPropagation()
+            })
+            this.node.getElementsByClassName('owl-roller-tool-pre')[0].addEventListener('mouseover', function (e) {
+                that.__clearInterval()
+                e.stopPropagation()
+            })
+            this.node.getElementsByClassName('owl-roller-tool-pre')[0].addEventListener('mouseleave', function (e) {
+                that.__registInterval()
+                e.stopPropagation()
+            })
         }
+    }
+
+    __registInterval(): void {
+        let that = this
+        this.intervel = setInterval(function () {
+            that.__move('left')
+        }, this.speed)
+    }
+
+    __clearInterval(): void {
+        clearInterval(this.intervel)
     }
 
     __move(dir: string, moveNum: number = 1): void {
@@ -184,31 +224,12 @@ class RollerComponent extends Components {
             return
         }
         let tipNodes = this.node.getElementsByClassName('owl-roller-tip')
-        if(oldValue < curValue) {
-            let i = oldValue
-            let s = setInterval(function () {
-                tipNodes[i].classList.remove('owl-roller-tip-active')
-                tipNodes[i+1].classList.add('owl-roller-tip-active')
-                i++
-                if(i >= curValue) {
-                    clearInterval(s)
-                }
-            }, 10)
-        } else {
-            for (let i = oldValue; i > curValue; i--) {
-                tipNodes[i].classList.remove('owl-roller-tip-active')
-                tipNodes[i-1].classList.add('owl-roller-tip-active')
-            }
-            let i = oldValue
-            let s = setInterval(function () {
-                tipNodes[i].classList.remove('owl-roller-tip-active')
-                tipNodes[i-1].classList.add('owl-roller-tip-active')
-                i--
-                if(i <= curValue) {
-                    clearInterval(s)
-                }
-            }, 10)
-        }
+        tipNodes[oldValue].classList.remove('owl-roller-tip-active')
+        tipNodes[curValue].classList.add('owl-roller-tip-active')
+    }
+
+    _destroy() {
+
     }
 }
 
