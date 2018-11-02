@@ -5,10 +5,12 @@ import {PaginationComponent} from "./TSLibs/Components/Pagination/Pagination";
 import {RollerComponent} from "./TSLibs/Components/Roller/Roller";
 import {RollerRender} from "./TSLibs/Renders/Roller/Roller";
 import {NavigationRender} from "./TSLibs/Renders/Navigation/Navigation";
+import {PaginationRender} from "./TSLibs/Renders/Pagination/Pagination";
+import {ButtonRender} from "./TSLibs/Renders/Button/Button";
 
-let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light', 'fade')
-
-document.getElementsByTagName('body')[0].appendChild(p.node)
+// let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light', 'fade')
+//
+// document.getElementsByTagName('body')[0].appendChild(p.node)
 //
 // let p2 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter')
 //
@@ -18,110 +20,28 @@ document.getElementsByTagName('body')[0].appendChild(p.node)
 //
 // document.getElementsByClassName('container')[0].appendChild(p3.node)
 
-let u = new NavigationComponent('v', [
-    {
-        text: '一级菜单',
-        active: false,
-        icon: 'layout',
-        list: [
-            {
-                text: '二级菜单',
-                list: []
-            },{
-                text: '二级菜单',
-                list: []
-            },{
-                text: '二级菜单',
-                list: []
-            }
-        ]
-    },
-    {
-        text: '一级菜单',
-        active: false,
-        icon: 'store',
-        list: [
-            {
-                text: '二级菜单',
-                list: [
-                    {
-                        text: '三级菜单',
-                        list: []
-                    },{
-                        text: '三级菜单',
-                        list: [],
-                        active: true
-                    }
-                ]
-            },{
-                text: '二级菜单',
-                list: [
-                    {
-                        text: '三级菜单',
-                        list: []
-                    },{
-                        text: '三级菜单',
-                        list: []
-                    }
-                ]
-            }
-        ]
-    }
-], false, false, false, 'lighter')
 
-document.getElementsByClassName('container')[0].appendChild(u._getTemplate())
 
-let bs = new ButtonComponent('按钮', '', '', 'store')
-// b._getTemplate()
-document.getElementsByClassName('btn-container')[0].appendChild(bs.node)
-let bd = new ButtonComponent('SUCCESS', 'success', 'default', '')
-// b._getTemplate()
-document.getElementsByClassName('btn-container')[0].appendChild(bd.node)
+// document.getElementsByClassName('container')[0].appendChild(u._getTemplate())
 
-let bl = new ButtonComponent('FAIL', 'error', '', '')
-// b._getTemplate()
-document.getElementsByClassName('btn-container')[0].appendChild(bl.node)
-
-let bdis = new ButtonComponent('DISABLED', 'disabled', '', '')
-// b._getTemplate()
-document.getElementsByClassName('btn-container')[0].appendChild(bdis.node)
-
-let a = (pageNum: number): void => {
-
-}
-let pal = new PaginationComponent(120, 10, 2, 'lighter', a)
-
-document.getElementsByClassName('page-container')[0].appendChild(pal._getTemplate())
-document.getElementsByClassName('page-container')[0].appendChild(document.createElement('br'))
-
-let pali = new PaginationComponent(120, 10, 5, 'light', a)
-
-document.getElementsByClassName('page-container')[0].appendChild(pali._getTemplate())
-document.getElementsByClassName('page-container')[0].appendChild(document.createElement('br'))
-
-let pad = new PaginationComponent(120, 10, 6, 'dark', a)
-
-document.getElementsByClassName('page-container')[0].appendChild(pad._getTemplate())
-
-// let rl1 = document.createElement('div')
-// rl1.style.backgroundColor = 'red'
-// let rl2 = document.createElement('div')
-// rl2.style.backgroundColor = 'orange'
-// let rl3 = document.createElement('div')
-// rl3.style.backgroundColor = 'green'
-// let rl4 = document.createElement('img')
-// rl4.src = 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super'
+// let bs = new ButtonComponent('按钮', '', '', 'store')
+// // b._getTemplate()
+// document.getElementsByClassName('btn-container')[0].appendChild(bs.node)
+// let bd = new ButtonComponent('SUCCESS', 'success', 'default', '')
+// // b._getTemplate()
+// document.getElementsByClassName('btn-container')[0].appendChild(bd.node)
 //
-// let rl = [
-//     rl1,
-//     rl2,
-//     rl3,
-//     rl4
-// ]
+// let bl = new ButtonComponent('FAIL', 'error', '', '')
+// // b._getTemplate()
+// document.getElementsByClassName('btn-container')[0].appendChild(bl.node)
 //
-// let r = new RollerComponent(1, rl, true, false, 5000, 'line')
-//
-// document.getElementsByClassName('roller-container')[0].appendChild(r._getTemplate())
+// let bdis = new ButtonComponent('DISABLED', 'disabled', '', '')
+// // b._getTemplate()
+// document.getElementsByClassName('btn-container')[0].appendChild(bdis.node)
+
+
 
 new RollerRender()
 new NavigationRender()
+new PaginationRender()
+new ButtonRender()

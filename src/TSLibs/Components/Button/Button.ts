@@ -8,12 +8,11 @@ class ButtonComponent extends Components {
     size: string;
     icon: string;
     circle: boolean;
-    innerText: string;
-    innerElement: Element;
+    innerHTML: string;
     attr: object;
-    constructor(innerText?: string, type?: string, size?: string, icon?: string, circle?: boolean, attr?:object) {
+    constructor(innerHTML?: string, type?: string, size?: string, icon?: string, circle?: boolean, attr?:object) {
         super();
-        this.innerText = innerText === undefined ? 'Button' : innerText;
+        this.innerHTML = innerHTML === undefined ? 'Button' : innerHTML;
         this.type = type === undefined ? 'default' : type;
         this.size = size === undefined ? 'default' : size;
         this.icon = icon === undefined ? '' : icon;
@@ -55,15 +54,15 @@ class ButtonComponent extends Components {
         switch (this.size) {
             case 'small':
                 node.classList.add('owl-btn-small')
-                btnHeight = '28px';
+                btnHeight = '26px';
                 break
             case 'large':
                 node.classList.add('owl-btn-large')
-                btnHeight = '36px'
+                btnHeight = '34px'
                 break
             default:
                 node.classList.add('owl-btn-default')
-                btnHeight = '32px'
+                btnHeight = '30px'
                 break
         }
         switch (this.type) {
@@ -118,7 +117,7 @@ class ButtonComponent extends Components {
         }
         let textSpan = document.createElement('span');
         textSpan.classList.add('owl-btn-text-wrapper');
-        textSpan.innerText = this.innerText;
+        textSpan.innerHTML = this.innerHTML;
         node.appendChild(textSpan);
         return node
     }

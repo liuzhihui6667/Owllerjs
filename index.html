@@ -105,8 +105,21 @@
         </owl-nav-item>
     </owl-nav>
 </div>
-<div class="btn-container"></div>
-<div class="page-container"></div>
+<div class="btn-container">
+    <owl-button icon="store">按钮</owl-button>
+    <owl-button type="success" size="small">成功</owl-button>
+    <owl-button type="error" size="large">失败</owl-button>
+    <owl-button type="disabled">禁用</owl-button>
+    <owl-button circle="true">圆角</owl-button>
+    <owl-button type="dark">黑色</owl-button>
+</div>
+<div class="page-container">
+    <owl-page total="100"></owl-page>
+    <br>
+    <owl-page total="1000" pagesize="80" curpage="9" theme="dark"></owl-page>
+    <br>
+    <owl-page theme="light" total="9" pagesize="1"></owl-page>
+</div>
 <div class="roller-container">
     <owl-roller value="2" loop="true" auto="false" tip="line">
         <div style="background-color: red;" class="roller-item">
@@ -118,9 +131,7 @@
         <div style="background-color: green;" class="roller-item">
             3
         </div>
-        <div style="background-color: blue;" class="roller-item">
-            4
-        </div>
+        <img src="https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super" alt="">
     </owl-roller>
 </div>
 </body>

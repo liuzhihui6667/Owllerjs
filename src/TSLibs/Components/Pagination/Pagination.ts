@@ -1,7 +1,6 @@
 import {Components} from '../../Interfaces/Component'
 import {OWLNODE} from '../../OwlNode/OWLNODE'
 import '../../../Style/Pagination/index.less'
-import {IconComponent} from "../Icon/Icon";
 
 
 class PaginationComponent extends Components {
@@ -15,7 +14,7 @@ class PaginationComponent extends Components {
     constructor(totalItemCount?: number, pageSize?: number, curPage?: number, theme?: string, onChange?: (pageNum: number) => void) {
         super()
         this.totalItemCount = totalItemCount === undefined ? 0 : totalItemCount
-        this.pageSize = pageSize === undefined ? 1 : pageSize
+        this.pageSize = pageSize === undefined ? 15 : pageSize
         this.curPage = curPage === undefined ? 1 : curPage
         this.totalPage = this.totalItemCount === 0 ? 0 : Math.ceil(this.totalItemCount/this.pageSize)
         this.theme = theme === undefined ? 'dark' : theme
