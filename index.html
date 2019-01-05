@@ -50,6 +50,13 @@
             left: 300px;
             top: 120px;
         }
+        .roller-2-container {
+            width: 500px;
+            height: 600px;
+            position: absolute;
+            left: 300px;
+            top: 400px;
+        }
         .owl-nav-container {
             position: relative;
             width: 100%;
@@ -72,9 +79,6 @@
             line-height: 50px;
             height: 45px;
             text-align: center;
-        }
-        img {
-            width: 20px;
         }
         .roller-item {
             line-height: 250px;
@@ -121,7 +125,7 @@
     <owl-page theme="light" total="9" pagesize="1"></owl-page>
 </div>
 <div class="roller-container">
-    <owl-roller value="2" loop="true" auto="false" tip="line">
+    <owl-roller value="2" loop="true" auto="false" tip="line" speed="1000">
         <div style="background-color: red;" class="roller-item">
             1
         </div>
@@ -131,7 +135,26 @@
         <div style="background-color: green;" class="roller-item">
             3
         </div>
-        <img src="https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super" alt="">
+        <div class="roller-item">
+            <img src="https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super" alt="">
+        </div>
+    </owl-roller>
+</div>
+
+<div class="roller-2-container">
+    <owl-roller dir="h" value="0" loop="true" auto="false" shownum="3">
+        <div style="background-color: red;" class="roller-item">
+            1
+        </div>
+        <div style="background-color: orange;" class="roller-item">
+            2
+        </div>
+        <div style="background-color: green;" class="roller-item">
+            3
+        </div>
+        <div style="background-color: blue;" class="roller-item">
+            4
+        </div>
     </owl-roller>
 </div>
 </body>
