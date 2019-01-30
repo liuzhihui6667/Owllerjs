@@ -17,6 +17,9 @@ abstract class Components implements ComponentsInterface{
     abstract init(): void;
     abstract _setEvent(): void;
     abstract _getTemplate(): Element;
+    _checkParam(value, defaultValue): any {
+        return value === undefined ? defaultValue : value;
+    }
     _destroy(): void {
 
     };

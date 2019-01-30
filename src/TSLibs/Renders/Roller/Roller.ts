@@ -10,6 +10,7 @@ class RollerRender {
     tip: string;
     height: number;
     width: number;
+    type: string;
     itemList: Array<HTMLElement> = [];
     showNum: number;
     constructor() {
@@ -22,7 +23,7 @@ class RollerRender {
         for (let i = 0; i < tagsCount; i++) {
             let itemList = this.getConfig(tags[0])
             let retEl = new RollerComponent(this.dir, this.curValue, itemList, this.loop,
-                this.auto, this.speed, this.tip, this.height, this.width, this.showNum)
+                this.auto, this.speed, this.tip, this.type, this.height, this.width, this.showNum)
             tags[0].replaceWith(retEl.node)
         }
     }

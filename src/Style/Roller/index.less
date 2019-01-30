@@ -25,7 +25,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  display: none;
+  visibility: hidden;
+  transition: transform .5s;
 }
 
 .owl-roller-tool {
@@ -50,14 +51,24 @@
   transition: opacity .3s;
 }
 
-.owl-roller-tool-pre {
+.owl-roller-tool-pre-h {
   top: calc(50% - 20px);
   left: 20px;
 }
 
-.owl-roller-tool-next {
+.owl-roller-tool-pre-v {
+  left: calc(50% - 20px);
+  top: 20px;
+}
+
+.owl-roller-tool-next-h {
   top: calc(50% - 20px);
   right: 20px;
+}
+
+.owl-roller-tool-next-v {
+  right: calc(50% - 20px);
+  bottom: 20px;
 }
 
 .owl-roller-tip-wrapper {

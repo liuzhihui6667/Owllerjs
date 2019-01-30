@@ -44,15 +44,15 @@
             left: 300px;
         }
         .roller-container {
-            width: 500px;
-            height: 250px;
+            width: 800px;
+            height: 400px;
             position: absolute;
             left: 300px;
             top: 120px;
         }
         .roller-2-container {
-            width: 500px;
-            height: 600px;
+            width: 300px;
+            height: 400px;
             position: absolute;
             left: 300px;
             top: 400px;
@@ -82,6 +82,10 @@
         }
         .roller-item {
             line-height: 250px;
+            text-align: center;
+        }
+        .roller-item-v {
+            line-height: 133px;
             text-align: center;
         }
     </style>
@@ -125,24 +129,7 @@
     <owl-page theme="light" total="9" pagesize="1"></owl-page>
 </div>
 <div class="roller-container">
-    <owl-roller value="2" loop="true" auto="false" tip="line" speed="1000">
-        <div style="background-color: red;" class="roller-item">
-            1
-        </div>
-        <div style="background-color: orange;" class="roller-item">
-            2
-        </div>
-        <div style="background-color: green;" class="roller-item">
-            3
-        </div>
-        <div class="roller-item">
-            <img src="https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super" alt="">
-        </div>
-    </owl-roller>
-</div>
-
-<div class="roller-2-container">
-    <owl-roller dir="h" value="0" loop="true" auto="false" shownum="3">
+    <owl-roller value="2" loop="true" auto="false" tip="line" speed="1000" shownum="1">
         <div style="background-color: red;" class="roller-item">
             1
         </div>
@@ -156,6 +143,23 @@
             4
         </div>
     </owl-roller>
+</div>
+
+<div class="roller-2-container">
+    <!--<owl-roller dir="v" value="0" loop="true" auto="false" shownum="3" width="300" height="400">-->
+        <!--<div style="background-color: red;" class="roller-item-v">-->
+            <!--1-->
+        <!--</div>-->
+        <!--<div style="background-color: orange;" class="roller-item-v">-->
+            <!--2-->
+        <!--</div>-->
+        <!--<div style="background-color: green;" class="roller-item-v">-->
+            <!--3-->
+        <!--</div>-->
+        <!--<div style="background-color: blue;" class="roller-item-v">-->
+            <!--4-->
+        <!--</div>-->
+    <!--</owl-roller>-->
 </div>
 </body>
 <script>

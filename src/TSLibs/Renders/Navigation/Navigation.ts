@@ -17,7 +17,7 @@ class NavigationRender {
         let tags = this.getNodes()
         for (let i = 0; i < tags.length; i++) {
             this.getConfig(tags[i])
-            console.log(this.dir, this.itemlist, this.showall, this.onlyone, this.menu, this.theme)
+            // console.log(this.dir, this.itemlist, this.showall, this.onlyone, this.menu, this.theme)
             let retEl = new NavigationComponent(this.dir, this.itemlist, this.showall, this.onlyone, this.menu, this.theme)
             tags[i].replaceWith(retEl.node)
         }
