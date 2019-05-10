@@ -47,8 +47,8 @@
             width: 800px;
             height: 400px;
             position: absolute;
-            left: 300px;
-            top: 120px;
+            left: calc(50% - 400px);
+            top: calc(50% - 200px);
         }
         .roller-2-container {
             width: 300px;
@@ -81,7 +81,7 @@
             text-align: center;
         }
         .roller-item {
-            line-height: 250px;
+            line-height: 400px;
             text-align: center;
         }
         .roller-item-v {
@@ -91,45 +91,45 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <owl-nav theme="dark" showall="" onlyone="true">
-        <owl-nav-item icon="layout" active="true">
-            <owl-text>99999</owl-text>
-            <owl-nav-item>
-                <owl-text>88888</owl-text>
-                <owl-nav-item>
-                    <owl-text>77777</owl-text>
-                </owl-nav-item>
-            </owl-nav-item>
-        </owl-nav-item>
-        <owl-nav-item icon="store">
-            <owl-text>99999</owl-text>
-            <owl-nav-item active="true">
-                <owl-text>88888</owl-text>
-                <owl-nav-item active="true">
-                    <owl-text>77777</owl-text>
-                </owl-nav-item>
-            </owl-nav-item>
-        </owl-nav-item>
-    </owl-nav>
-</div>
-<div class="btn-container">
-    <owl-button icon="store">按钮</owl-button>
-    <owl-button type="success" size="small">成功</owl-button>
-    <owl-button type="error" size="large">失败</owl-button>
-    <owl-button type="disabled">禁用</owl-button>
-    <owl-button circle="true">圆角</owl-button>
-    <owl-button type="dark">黑色</owl-button>
-</div>
-<div class="page-container">
-    <owl-page total="100"></owl-page>
-    <br>
-    <owl-page total="1000" pagesize="80" curpage="9" theme="dark"></owl-page>
-    <br>
-    <owl-page theme="light" total="9" pagesize="1"></owl-page>
-</div>
+<!--<div class="container">-->
+    <!--<owl-nav theme="dark" showall="" onlyone="true">-->
+        <!--<owl-nav-item icon="layout" active="true">-->
+            <!--<owl-text>99999</owl-text>-->
+            <!--<owl-nav-item>-->
+                <!--<owl-text>88888</owl-text>-->
+                <!--<owl-nav-item>-->
+                    <!--<owl-text>77777</owl-text>-->
+                <!--</owl-nav-item>-->
+            <!--</owl-nav-item>-->
+        <!--</owl-nav-item>-->
+        <!--<owl-nav-item icon="store">-->
+            <!--<owl-text>99999</owl-text>-->
+            <!--<owl-nav-item active="true">-->
+                <!--<owl-text>88888</owl-text>-->
+                <!--<owl-nav-item active="true">-->
+                    <!--<owl-text>77777</owl-text>-->
+                <!--</owl-nav-item>-->
+            <!--</owl-nav-item>-->
+        <!--</owl-nav-item>-->
+    <!--</owl-nav>-->
+<!--</div>-->
+<!--<div class="btn-container">-->
+    <!--<owl-button icon="store">按钮</owl-button>-->
+    <!--<owl-button type="success" size="small">成功</owl-button>-->
+    <!--<owl-button type="error" size="large">失败</owl-button>-->
+    <!--<owl-button type="disabled">禁用</owl-button>-->
+    <!--<owl-button circle="true">圆角</owl-button>-->
+    <!--<owl-button type="dark">黑色</owl-button>-->
+<!--</div>-->
+<!--<div class="page-container">-->
+    <!--<owl-page total="100"></owl-page>-->
+    <!--<br>-->
+    <!--<owl-page total="1000" pagesize="80" curpage="9" theme="dark"></owl-page>-->
+    <!--<br>-->
+    <!--<owl-page theme="light" total="9" pagesize="1"></owl-page>-->
+<!--</div>-->
 <div class="roller-container">
-    <owl-roller value="2" loop="true" auto="false" tip="line" speed="1000" shownum="1">
+    <owl-roller value="0" loop="false" auto="false" tip="line" speed="1000" shownum="1" width="800" height="400">
         <div style="background-color: red;" class="roller-item">
             1
         </div>
@@ -145,7 +145,7 @@
     </owl-roller>
 </div>
 
-<div class="roller-2-container">
+<!--<div class="roller-2-container">-->
     <!--<owl-roller dir="v" value="0" loop="true" auto="false" shownum="3" width="300" height="400">-->
         <!--<div style="background-color: red;" class="roller-item-v">-->
             <!--1-->
@@ -160,7 +160,7 @@
             <!--4-->
         <!--</div>-->
     <!--</owl-roller>-->
-</div>
+<!--</div>-->
 </body>
 <script>
 function sss(e) {

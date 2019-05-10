@@ -1,6 +1,16 @@
-import {Components} from '../../Interfaces/Component'
-import '../../../Style/Roller/index.less'
+/**
+ * gai该组件为跑马灯组件
+ * 可实现功能如下
+ * 1. 上下左右滚动
+ * 2. 一屏可展示自定义数量
+ * 3. 分为3d和2d两种样式
+ * 4. 支持手机端/PC端，支持拖动
+ */
+
+import {Components} from '../../Interfaces/Component';
+import '../../../Style/Roller/index.less';
 import {IconComponent} from "../Icon/Icon";
+import {OWLNODE} from "../../OwlNode/OWLNODE"
 
 class RollerComponent extends Components {
     /**
@@ -115,12 +125,18 @@ class RollerComponent extends Components {
     }
 
     __getNode(): Element {
-        let node = document.createElement('div')
-        node.classList.add('owl-roller-container')
+        let node = this._createElement('div', ['owl-roller-container']);
         node.style.height = this.height + 'px'
         node.style.width = this.width + 'px'
-        let itemNodeWrapper = document.createElement('div')
-        itemNodeWrapper.classList.add('owl-roller-item-container')
+        let overflowContainer = this._createElement('div', ['owl-roller-overflow-container']);
+        let itemSlideWrapperA = this._createElement('div', ['owl-roller-item-slider-wrapper', 'owl-roller-slider-show']);
+        itemSlideWrapperA.style.width = this.itemList.length * this.itemWidth + 'px';
+        itemSlideWrapperA.style.transform = 'translateX(-' + this.itemWidth * this.curValue + 'px)';
+        let itemSlideWrapperB = this._createElement('div', ['owl-roller-item-slider-wrapper']);
+        itemSlideWrapperB.style.width = this.itemList.length * this.itemWidth + 'px';
+        itemSlideWrapperB.style.transform = 'translateX(-' + this.itemWidth * this.itemList.length + 'px)';
+        overflowContainer.appendChild(itemSlideWrapperA);
+        overflowContainer.appendChild(itemSlideWrapperB);
         // let tipWrapper = document.createElement('div')
         // tipWrapper.classList.add('owl-roller-tip-wrapper')
         // switch (this.indicator) {
@@ -134,98 +150,38 @@ class RollerComponent extends Components {
         //         tipWrapper.classList.add('owl-roller-tip-dot')
         //         break
         // }
-        // let itemWidth: number, itemHeight: number
-        for (let i = this.curValue; i < (this.curValue + this.itemList.length); i++) {
-            let itemNode = document.createElement('div')
-            itemNode.classList.add('owl-roller-item-wrapper')
-            itemNode.style.width = this.itemWidth + 'px'
-            itemNode.style.height = this.itemHeight + 'px'
-            if(i === this.curValue) {
-                itemNode.classList.add('owl-roller-cur')
-            }
-            if(i >= this.curValue && i < (this.curValue + this.showNum)) {
-                itemNode.style.visibility = 'visible'
-                if(this.dir === 'h') {
-                    itemNode.style.left = ((i - this.curValue)*this.itemWidth).toFixed(2) + 'px'
-                } else {
-                    itemNode.style.top = ((i - this.curValue)*this.itemHeight).toFixed(2) + 'px'
-                }
-            }
-            let itemel = this.itemList[i%this.itemList.length]
-            itemel.classList.add('owl-roller-item-box')
-            itemNode.appendChild(itemel)
-            itemNodeWrapper.appendChild(itemNode)
-            this.itemNodesArr[i%this.itemList.length] = itemNode
+
+        for (let i = 0; i < this.itemList.length; i++) {
+            let itemWrapper = this._createElement('div', ['owl-roller-item-wrapper']);
+            itemWrapper.style.width = this.itemWidth + 'px';
+            itemWrapper.style.height = this.itemHeight + 'px';
+            let itemel = this.itemList[i];
+            itemel.classList.add('owl-roller-item-box');
+            itemWrapper.appendChild(itemel);
+            itemSlideWrapperA.appendChild(itemWrapper);
+            itemSlideWrapperB.appendChild(itemWrapper.cloneNode(true));
         }
-        // for (let i = 0; i < this.itemList.length; i++) {
-        //     let itemNode = document.createElement('div')
-        //     itemNode.classList.add('owl-roller-item-wrapper')
-        //     itemNode.style.width = this.itemWidth + 'px'
-        //     itemNode.style.height = this.itemHeight + 'px'
-        //     if(i === this.curValue) {
-        //         itemNode.classList.add('owl-roller-cur')
-        //     }
-        //     // if(i >= this.curValue && i < this.curValue + this.showNum) {
-        //     //
-        //     //
-        //     //     if(this.dir === 'h') {
-        //     //         itemNode.style.left = ((i - this.curValue)*this.itemWidth).toFixed(2) + 'px'
-        //     //     } else {
-        //     //         itemNode.style.top = ((i - this.curValue)*this.itemHeight).toFixed(2) + 'px'
-        //     //     }
-        //     // }
-        //     // itemNode.style.transform = 'translateX(0)'
-        //     let itemel = this.itemList[i]
-        //     itemel.classList.add('owl-roller-item-box')
-        //     itemNode.appendChild(itemel)
-        //     itemNodeWrapper.appendChild(itemNode)
-        //     // if(this.tip !== 'none') {
-        //     //     let tipItem = document.createElement('div')
-        //     //     tipItem.classList.add('owl-roller-tip')
-        //     //     tipItem.dataset.value = i.toString()
-        //     //     if(i === this.curValue) {
-        //     //         tipItem.classList.add('owl-roller-tip-active')
-        //     //     }
-        //     //     tipWrapper.appendChild(tipItem)
-        //     // }
-        // }
-        // let rollerItemWrapper = itemNodeWrapper.getElementsByClassName('owl-roller-item-box')
-        // // console.log(itemNodeWrapper.getElementsByClassName('owl-roller-item-box')[0])
-        // for (let i = 0; i < this.showNum; i++) {
-        //     let itemEl = rollerItemWrapper[(this.curValue + i)%this.showNum]
-        //     console.log(itemEl instanceof HTMLElement)
-        //
-        //     // itemEl.style.visibility = 'visible'
-        //     console.log(itemEl)
-        // }
-        node.appendChild(itemNodeWrapper)
-        node.appendChild(this.__getToolTemp())
+        node.appendChild(overflowContainer);
+        node.appendChild(this.__getToolTemp());
         // node.appendChild(tipWrapper)
         return node
     }
 
     __getToolTemp(): HTMLElement {
-        let toolWrapper = document.createElement('div')
-        toolWrapper.classList.add('owl-roller-tool-wrapper')
-        let preToolNode = document.createElement('div')
-        preToolNode.classList.add('owl-roller-tool')
-        let nextToolNode = document.createElement('div')
-        nextToolNode.classList.add('owl-roller-tool')
+        let toolWrapper = this._createElement('div', ['owl-roller-tool-wrapper']);
+        let preToolNode = this._createElement('div', ['owl-roller-tool', 'owl-roller-tool-pre']);
+        let nextToolNode = this._createElement('div', ['owl-roller-tool', 'owl-roller-tool-next']);
         let preIcon: IconComponent
         let nextIcon: IconComponent
         if(this.dir === 'v') {
             preIcon = new IconComponent('top', '14px', '40px')
             nextIcon = new IconComponent('bottom', '14px', '40px')
-            preToolNode.classList.add('owl-roller-tool-pre')
             preToolNode.classList.add('owl-roller-tool-pre-v')
-            nextToolNode.classList.add('owl-roller-tool-next')
             nextToolNode.classList.add('owl-roller-tool-next-v')
         } else {
             preIcon = new IconComponent('left', '14px', '40px')
             nextIcon = new IconComponent('right', '14px', '40px')
-            preToolNode.classList.add('owl-roller-tool-pre')
             preToolNode.classList.add('owl-roller-tool-pre-h')
-            nextToolNode.classList.add('owl-roller-tool-next')
             nextToolNode.classList.add('owl-roller-tool-next-h')
         }
         preToolNode.appendChild(preIcon.node)
@@ -290,7 +246,7 @@ class RollerComponent extends Components {
         clearInterval(this.intervel)
     }
 
-    __move(moveDir: string, moveNum: number = 1): void {
+    __move(moveDir: string, moveNum: number = 2): void {
         // 如果不能循环播放则播放到头
         if(!this.loop) {
             if(moveDir === 'next' && (this.curValue + moveNum) > this.itemList.length - 1) {
@@ -302,32 +258,41 @@ class RollerComponent extends Components {
                 return
             }
         }
-        moveNum = moveNum > (this.itemList.length - this.showNum) ? this.itemList.length - this.showNum : moveNum
+
+        if(this.curValue === this.itemList.length - 1) {
+            return;
+        }
+
+        // moveNum = moveNum > (this.itemList.length - this.showNum) ? this.itemList.length - this.showNum : moveNum
 
         switch (moveDir) {
             case 'next':
-                for (let i = 0; i < moveNum; i++) {
-                    let index = (this.curValue + this.showNum + i)%this.itemList.length
-                    console.log(index, this.curValue)
-                    this.itemNodesArr[index].style.left = ((this.showNum + i)*this.itemWidth).toFixed(2) + 'px'
-                    this.itemNodesArr[index].style.visibility = 'visible'
-                }
-                let that = this
-                setTimeout(function () {
-                    for (let i = 0; i < (that.showNum + moveNum); i++) {
-                        let index = (that.curValue + i)%that.itemList.length
-                        that.itemNodesArr[index].style.transform = 'translateX(-'+ moveNum*that.itemWidth +'px)'
-                    }
-                    that.curValue = (that.curValue + moveNum)%that.itemList.length
-                    setTimeout(function () {
-                        for (let i = 0; i < that.itemList.length; i++) {
-                            if(i === that.curValue) {
-                                continue;
-                            }
-                            that.itemNodesArr[i].style.transform='translateX(0px)'
+                if(this.curValue === this.itemList.length - 1) {
+                    let slider = this.node.getElementsByClassName('owl-roller-item-slider-wrapper')
+                    for (let i = 0; i < slider.length; i++) {
+                        if(!OWLNODE.hasClass(slider[i], 'owl-roller-slider-show')) {
+                            slider[i].style.transform = 'translateX('+ this.itemWidth +'px)'
+                            slider[i].style.transition = 'transform 0ms ease 0s'
+                            setTimeout(function () {
+                                slider[i].style.transition = 'transform 500ms ease 0s'
+                                slider[i].style.transform = 'translateX(0px)'
+                                slider[i].classList.add('owl-roller-slider-show')
+                            }, 100)
+                        } else {
+                            let that = this
+                            setTimeout(function () {
+                                slider[i].style.transition = 'transform 500ms ease 0s'
+                                slider[i].style.transform = 'translateX(-'+ that.itemWidth * (that.itemList.length) +'px)'
+                                slider[i].classList.remove('owl-roller-slider-show')
+                            }, 100)
                         }
-                    }, 1000)
-                }, 10)
+                    }
+                } else {
+                    let show = this.node.getElementsByClassName('owl-roller-slider-show')[0]
+                    show.style.transition = 'transform 500ms ease 0s'
+                    show.style.transform = 'translateX(-'+ (this.curValue + moveNum) * this.itemWidth +'px)'
+                }
+                this.curValue = (this.curValue + moveNum)%this.itemList.length
                 break;
             case 'pre':
 
