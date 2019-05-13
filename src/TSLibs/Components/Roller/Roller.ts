@@ -2,9 +2,9 @@
  * gai该组件为跑马灯组件
  * 可实现功能如下
  * 1. 上下左右滚动
- * 2. 一屏可展示自定义数量
+ * todo 2. 一屏可展示自定义数量
  * 3. 分为3d和2d两种样式
- * 4. 支持手机端/PC端，支持拖动
+ * 4. 支持手机端/PC端，todo 支持拖动
  */
 
 import {Components} from '../../Interfaces/Component';
@@ -112,44 +112,67 @@ class RollerComponent extends Components {
         this.init()
     }
     init(): void {
-        this._getTemplate()
-        // this.__move('next', 1)
-        this._setEvent()
+        this._getTemplate();
+        this._setEvent();
     }
     _getTemplate(): Element {
         if(this.node !== undefined) {
             return this.node;
         }
-        this.node = this.__getNode()
+        this.node = this.__getNode();
         return this.node
     }
 
     __getNode(): Element {
         let node = this._createElement('div', ['owl-roller-container']);
-        node.style.height = this.height + 'px'
-        node.style.width = this.width + 'px'
+        node.style.height = this.height + 'px';
+        node.style.width = this.width + 'px';
         let overflowContainer = this._createElement('div', ['owl-roller-overflow-container']);
-        let itemSlideWrapperA = this._createElement('div', ['owl-roller-item-slider-wrapper', 'owl-roller-slider-show']);
-        itemSlideWrapperA.style.width = this.itemList.length * this.itemWidth + 'px';
-        itemSlideWrapperA.style.transform = 'translateX(-' + this.itemWidth * this.curValue + 'px)';
-        let itemSlideWrapperB = this._createElement('div', ['owl-roller-item-slider-wrapper']);
-        itemSlideWrapperB.style.width = this.itemList.length * this.itemWidth + 'px';
-        itemSlideWrapperB.style.transform = 'translateX(-' + this.itemWidth * this.itemList.length + 'px)';
+        let itemSlideWrapperA, itemSlideWrapperB;
+        if(this.dir === 'h') {
+            itemSlideWrapperA = this._createElement('div', ['owl-roller-item-slider-wrapper', 'owl-roller-slider-show']);
+            itemSlideWrapperA.style.width = this.itemList.length * this.itemWidth + 'px';
+            itemSlideWrapperA.style.height = '100%';
+            itemSlideWrapperA.style.transform = 'translateX(-' + this.itemWidth * this.curValue + 'px)';
+            itemSlideWrapperB = this._createElement('div', ['owl-roller-item-slider-wrapper']);
+            itemSlideWrapperB.style.width = this.itemList.length * this.itemWidth + 'px';
+            itemSlideWrapperB.style.height = '100%';
+            itemSlideWrapperB.style.transform = 'translateX(-' + this.itemWidth * this.itemList.length + 'px)';
+        } else {
+            itemSlideWrapperA = this._createElement('div', ['owl-roller-item-slider-wrapper', 'owl-roller-slider-show']);
+            itemSlideWrapperA.style.width = '100%';
+            itemSlideWrapperA.style.height = this.itemList.length * this.itemHeight + 'px';
+            itemSlideWrapperA.style.transform = 'translateY(-' + this.itemHeight * this.curValue + 'px)';
+            itemSlideWrapperB = this._createElement('div', ['owl-roller-item-slider-wrapper']);
+            itemSlideWrapperB.style.width = '100%';
+            itemSlideWrapperB.style.height = this.itemList.length * this.itemHeight + 'px';
+            itemSlideWrapperB.style.transform = 'translateY(-' + this.itemHeight * this.itemList.length + 'px)';
+        }
+
         overflowContainer.appendChild(itemSlideWrapperA);
         overflowContainer.appendChild(itemSlideWrapperB);
-        // let tipWrapper = document.createElement('div')
-        // tipWrapper.classList.add('owl-roller-tip-wrapper')
-        // switch (this.indicator) {
-        //     case 'dot':
-        //         tipWrapper.classList.add('owl-roller-tip-dot')
-        //         break
-        //     case 'line':
-        //         tipWrapper.classList.add('owl-roller-tip-line')
-        //         break
-        //     default:
-        //         tipWrapper.classList.add('owl-roller-tip-dot')
-        //         break
-        // }
+        let tipWrapper = this._createElement('div', ['owl-roller-tip-wrapper']);
+        tipWrapper.style.width = this.itemHeight + 'px'
+        if(this.dir === 'h') {
+            tipWrapper.style.left = 'calc(50% - ' + this.itemHeight/2 + 'px)'
+        } else {
+            tipWrapper.style.transform = 'rotate(90deg) rotateX(180deg)'
+            tipWrapper.style.margin = 'unset'
+            tipWrapper.style.right = '10px'
+            tipWrapper.style.transformOrigin = 'bottom right'
+            tipWrapper.style.bottom = '0px'
+        }
+        switch (this.indicator) {
+            case 'dot':
+                tipWrapper.classList.add('owl-roller-tip-dot');
+                break
+            case 'line':
+                tipWrapper.classList.add('owl-roller-tip-line');
+                break
+            default:
+                tipWrapper.classList.add('owl-roller-tip-dot');
+                break
+        }
 
         for (let i = 0; i < this.itemList.length; i++) {
             let itemWrapper = this._createElement('div', ['owl-roller-item-wrapper']);
@@ -160,10 +183,18 @@ class RollerComponent extends Components {
             itemWrapper.appendChild(itemel);
             itemSlideWrapperA.appendChild(itemWrapper);
             itemSlideWrapperB.appendChild(itemWrapper.cloneNode(true));
+            if(this.indicator !== 'none') {
+                let tipEl = this._createElement('div', ['owl-roller-tip']);
+                tipEl.dataset.value = i.toString();
+                if(i === this.curValue) {
+                    tipEl.classList.add('owl-roller-tip-active')
+                }
+                tipWrapper.appendChild(tipEl);
+            }
         }
         node.appendChild(overflowContainer);
         node.appendChild(this.__getToolTemp());
-        // node.appendChild(tipWrapper)
+        node.appendChild(tipWrapper)
         return node
     }
 
@@ -201,44 +232,44 @@ class RollerComponent extends Components {
             that.__move('pre')
             e.stopPropagation()
         })
-        // let tipNodes = this.node.getElementsByClassName('owl-roller-tip')
-        // for (let i = 0; i < tipNodes.length; i++) {
-        //     tipNodes[i].addEventListener('click', function (e) {
-        //         let value = parseInt(this.dataset.value)
-        //         if(value < that.curValue) {
-        //             that.__move('right', that.curValue - value)
-        //         }
-        //         if(value > that.curValue) {
-        //             that.__move('left', value - that.curValue)
-        //         }
-        //         e.stopPropagation()
-        //     })
-        // }
-        // if(this.auto) {
-        //     this.__registInterval()
-        //     this.node.getElementsByClassName('owl-roller-tool-next')[0].addEventListener('mouseover', function (e) {
-        //         that.__clearInterval()
-        //         e.stopPropagation()
-        //     })
-        //     this.node.getElementsByClassName('owl-roller-tool-next')[0].addEventListener('mouseleave', function (e) {
-        //         that.__registInterval()
-        //         e.stopPropagation()
-        //     })
-        //     this.node.getElementsByClassName('owl-roller-tool-pre')[0].addEventListener('mouseover', function (e) {
-        //         that.__clearInterval()
-        //         e.stopPropagation()
-        //     })
-        //     this.node.getElementsByClassName('owl-roller-tool-pre')[0].addEventListener('mouseleave', function (e) {
-        //         that.__registInterval()
-        //         e.stopPropagation()
-        //     })
-        // }
+        let tipNodes = this.node.getElementsByClassName('owl-roller-tip')
+        for (let i = 0; i < tipNodes.length; i++) {
+            tipNodes[i].addEventListener('click', function (e) {
+                let value = parseInt(this.dataset.value)
+                if(value < that.curValue) {
+                    that.__move('pre', that.curValue - value)
+                }
+                if(value > that.curValue) {
+                    that.__move('next', value - that.curValue)
+                }
+                e.stopPropagation()
+            })
+        }
+        if(this.auto) {
+            this.__registInterval()
+            this.node.getElementsByClassName('owl-roller-tool-next')[0].addEventListener('mouseover', function (e) {
+                that.__clearInterval()
+                e.stopPropagation()
+            })
+            this.node.getElementsByClassName('owl-roller-tool-next')[0].addEventListener('mouseleave', function (e) {
+                that.__registInterval()
+                e.stopPropagation()
+            })
+            this.node.getElementsByClassName('owl-roller-tool-pre')[0].addEventListener('mouseover', function (e) {
+                that.__clearInterval()
+                e.stopPropagation()
+            })
+            this.node.getElementsByClassName('owl-roller-tool-pre')[0].addEventListener('mouseleave', function (e) {
+                that.__registInterval()
+                e.stopPropagation()
+            })
+        }
     }
 
     __registInterval(): void {
         let that = this
         this.intervel = setInterval(function () {
-            that.__move('left')
+            that.__move('next')
         }, this.speed)
     }
 
@@ -246,7 +277,7 @@ class RollerComponent extends Components {
         clearInterval(this.intervel)
     }
 
-    __move(moveDir: string, moveNum: number = 2): void {
+    __move(moveDir: string, moveNum: number = 1): void {
         // 如果不能循环播放则播放到头
         if(!this.loop) {
             if(moveDir === 'next' && (this.curValue + moveNum) > this.itemList.length - 1) {
@@ -257,32 +288,42 @@ class RollerComponent extends Components {
                 this.__move('pre', this.curValue)
                 return
             }
+            if(this.curValue === this.itemList.length - 1) {
+                return;
+            }
         }
-
-        if(this.curValue === this.itemList.length - 1) {
-            return;
-        }
-
-        // moveNum = moveNum > (this.itemList.length - this.showNum) ? this.itemList.length - this.showNum : moveNum
-
+        let newValue;
         switch (moveDir) {
             case 'next':
-                if(this.curValue === this.itemList.length - 1) {
+                newValue = (this.curValue + moveNum)%this.itemList.length;
+                if(this.curValue + moveNum > this.itemList.length - 1) {
                     let slider = this.node.getElementsByClassName('owl-roller-item-slider-wrapper')
+                    let that = this
                     for (let i = 0; i < slider.length; i++) {
                         if(!OWLNODE.hasClass(slider[i], 'owl-roller-slider-show')) {
-                            slider[i].style.transform = 'translateX('+ this.itemWidth +'px)'
                             slider[i].style.transition = 'transform 0ms ease 0s'
+                            if(this.dir === 'h') {
+                                slider[i].style.transform = 'translateX('+ this.itemWidth * (this.itemList.length - this.curValue) +'px)'
+                            } else {
+                                slider[i].style.transform = 'translateY('+ this.itemHeight * (this.itemList.length - this.curValue) +'px)'
+                            }
                             setTimeout(function () {
                                 slider[i].style.transition = 'transform 500ms ease 0s'
-                                slider[i].style.transform = 'translateX(0px)'
+                                if(that.dir === 'h') {
+                                    slider[i].style.transform = 'translateX(-'+ that.itemWidth * (newValue) +'px)'
+                                } else {
+                                    slider[i].style.transform = 'translateY(-'+ that.itemHeight * (newValue) +'px)'
+                                }
                                 slider[i].classList.add('owl-roller-slider-show')
                             }, 100)
                         } else {
-                            let that = this
                             setTimeout(function () {
                                 slider[i].style.transition = 'transform 500ms ease 0s'
-                                slider[i].style.transform = 'translateX(-'+ that.itemWidth * (that.itemList.length) +'px)'
+                                if(that.dir === 'h') {
+                                    slider[i].style.transform = 'translateX(-'+ that.itemWidth * (newValue + that.itemList.length) +'px)'
+                                } else {
+                                    slider[i].style.transform = 'translateY(-'+ that.itemHeight * (newValue + that.itemList.length) +'px)'
+                                }
                                 slider[i].classList.remove('owl-roller-slider-show')
                             }, 100)
                         }
@@ -290,68 +331,73 @@ class RollerComponent extends Components {
                 } else {
                     let show = this.node.getElementsByClassName('owl-roller-slider-show')[0]
                     show.style.transition = 'transform 500ms ease 0s'
-                    show.style.transform = 'translateX(-'+ (this.curValue + moveNum) * this.itemWidth +'px)'
+                    if(this.dir === 'h') {
+                        show.style.transform = 'translateX(-'+ newValue * this.itemWidth +'px)'
+                    } else {
+                        show.style.transform = 'translateY(-'+ newValue * this.itemHeight +'px)'
+                    }
+
                 }
-                this.curValue = (this.curValue + moveNum)%this.itemList.length
                 break;
             case 'pre':
+                newValue = (this.curValue + this.itemList.length - moveNum)%this.itemList.length;
+                if(this.curValue - moveNum < 0) {
+                    let slider = this.node.getElementsByClassName('owl-roller-item-slider-wrapper')
+                    let that = this
+                    for (let i = 0; i < slider.length; i++) {
+                        if(!OWLNODE.hasClass(slider[i], 'owl-roller-slider-show')) {
+                            slider[i].style.transition = 'transform 0ms ease 0s';
+                            if(this.dir === 'h') {
+                                slider[i].style.transform = 'translateX(-'+ this.itemWidth * (this.curValue + this.itemList.length) +'px)'
+                            } else {
+                                slider[i].style.transform = 'translateY(-'+ this.itemHeight * (this.curValue + this.itemList.length) +'px)'
+                            }
+                            setTimeout(function () {
+                                slider[i].style.transition = 'transform 500ms ease 0s'
+                                if(that.dir === 'h') {
+                                    slider[i].style.transform = 'translateX(-'+ that.itemWidth * (newValue) +'px)'
+                                } else {
+                                    slider[i].style.transform = 'translateY(-'+ that.itemHeight * (newValue) +'px)'
+                                }
+                                slider[i].classList.add('owl-roller-slider-show')
+                            }, 100)
+                        } else {
+                            setTimeout(function () {
+                                slider[i].style.transition = 'transform 500ms ease 0s'
+                                if(that.dir === 'h') {
+                                    slider[i].style.transform = 'translateX('+ that.itemWidth * (that.itemList.length - newValue) +'px)'
+                                } else {
+                                    slider[i].style.transform = 'translateY('+ that.itemHeight * (that.itemList.length - newValue) +'px)'
+                                }
+                                slider[i].classList.remove('owl-roller-slider-show')
+                            }, 100)
+                        }
+                    }
+                } else {
+                    let show = this.node.getElementsByClassName('owl-roller-slider-show')[0]
+                    show.style.transition = 'transform 500ms ease 0s'
+                    if(this.dir === 'h') {
+                        show.style.transform = 'translateX(-'+ newValue * this.itemWidth +'px)'
+                    } else {
+                        show.style.transform = 'translateY(-'+ newValue * this.itemHeight +'px)'
+                    }
 
+                }
                 break;
             default:
                 break;
         }
-        // let itemElList = wrapper.children
-        // for (let i = 0; i < this.itemList.length; i++) {
-        //     // itemElList[i].style.width = 1/(1+moveNum)*100 + '%'
-        //     itemElList[i].style.transform = 'translateX(0%)'
-        //     if(i < this.curValue && i >= this.curValue + this.showNum) {
-        //         itemElList[i].style.display = 'none'
-        //     }
-        // }
-        // let newValue: number
-        // switch (dir) {
-        //     case 'left':
-        //         newValue = (this.curValue + moveNum) % this.itemList.length
-        //         this.__tipShow(this.curValue, newValue)
-        //         wrapper.style.left = '0px'
-        //         for (let i = 1; i <= moveNum; i++) {
-        //             let j = (this.curValue + this.showNum + i - 1) % this.itemList.length
-        //             itemElList[j].style.display = 'block'
-        //             itemElList[j].style.transform = 'translateX('+((this.showNum + i - 1) * this.itemWidth).toFixed(2)+'px)'
-        //         }
-        //         // return
-        //         this.curValue = newValue
-        //         let that = this
-        //         setTimeout(function () {
-        //             wrapper.style.transition = 'transform .3s'
-        //             wrapper.style.transform = 'translateX(-' + ((that.itemWidth * moveNum).toFixed(2)) + 'px)'
-        //         }, 10)
-        //         break
-        //     case 'right':
-        //         newValue = (this.curValue - moveNum + this.itemList.length) % this.itemList.length
-        //         this.__tipShow(this.curValue, newValue)
-        //         wrapper.style.right = '0px'
-        //         for (let i = 1; i <= moveNum; i++) {
-        //             let j = (this.curValue - i + this.itemList.length) % this.itemList.length
-        //             itemElList[j].style.display = 'block'
-        //             itemElList[j].style.transform = 'translateX(-'+100*i+'%)'
-        //         }
-        //         this.curValue = newValue
-        //         setTimeout(() => {
-        //             wrapper.style.transition = 'transform .3s'
-        //             wrapper.style.transform = 'translateX(' + 100 * moveNum/(moveNum + 1) + '%)'
-        //         }, 10)
-        //         break
-        // }
+        this.__tipShow(this.curValue, newValue);
+        this.curValue = newValue;
     }
 
     __tipShow(oldValue: number, curValue: number): void {
-        // if(this.tip === 'none') {
-        //     return
-        // }
-        // let tipNodes = this.node.getElementsByClassName('owl-roller-tip')
-        // tipNodes[oldValue].classList.remove('owl-roller-tip-active')
-        // tipNodes[curValue].classList.add('owl-roller-tip-active')
+        if(this.indicator === 'none') {
+            return
+        }
+        let tipNodes = this.node.getElementsByClassName('owl-roller-tip');
+        tipNodes[oldValue].classList.remove('owl-roller-tip-active');
+        tipNodes[curValue].classList.add('owl-roller-tip-active');
     }
 
     _destroy() {
