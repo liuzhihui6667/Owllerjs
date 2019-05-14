@@ -20,10 +20,14 @@ abstract class Components implements ComponentsInterface{
     _checkParam(value, defaultValue): any {
         return value === undefined ? defaultValue : value;
     }
-    _createElement(type: string, classList: Array<string>): HTMLElement {
+    _createElement(type: string, classList?: Array<string>): HTMLElement {
         let el = document.createElement(type);
-        for (let i = 0; i < classList.length; i++) {
-            el.classList.add(classList[i]);
+        if(classList !== undefined) {
+            for (let i = 0; i < classList.length; i++) {
+                if(classList[i] !== '') {
+                    el.classList.add(classList[i]);
+                }
+            }
         }
         return el
     }

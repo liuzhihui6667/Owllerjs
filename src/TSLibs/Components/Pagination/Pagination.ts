@@ -1,24 +1,47 @@
+/**
+ * 该组件为分页器
+ * 实现功能如下
+ * 1. 分页器基本功能
+ * 2. 支持不同主题更换
+ */
+
 import {Components} from '../../Interfaces/Component'
-import {OWLNODE} from '../../OwlNode/OWLNODE'
 import '../../../Style/Pagination/index.less'
+import {OWLNODE} from '../../OwlNode/OWLNODE'
 
 
 class PaginationComponent extends Components {
-
+    /**
+     * item总数
+     */
     totalItemCount: number;
+    /**
+     * 当前页码数
+     */
     curPage: number;
+    /**
+     * 每页展示item数量
+     */
     pageSize: number;
+    /**
+     * 总页数,不需要传入，自动计算得出
+     */
     totalPage: number;
+    /**
+     * 主题
+     */
     theme: string;
-    onChangCallback: (pageNum: number) => void;
-    constructor(totalItemCount?: number, pageSize?: number, curPage?: number, theme?: string, onChange?: (pageNum: number) => void) {
+    onChangeCallback: (pageNum: number) => void;
+    constructor(totalItemCount?: number,
+                pageSize?: number,
+                curPage?: number,
+                theme?: string) {
         super()
         this.totalItemCount = totalItemCount === undefined ? 0 : totalItemCount
         this.pageSize = pageSize === undefined ? 15 : pageSize
         this.curPage = curPage === undefined ? 1 : curPage
         this.totalPage = this.totalItemCount === 0 ? 0 : Math.ceil(this.totalItemCount/this.pageSize)
         this.theme = theme === undefined ? 'dark' : theme
-        this.onChangCallback = onChange === undefined ? undefined : onChange
         this.init()
     }
     init(): void {
@@ -34,12 +57,9 @@ class PaginationComponent extends Components {
     }
 
     __getNode(): Element {
-        let node = document.createElement('div')
-        node.classList.add('owl-page-container')
-        node.classList.add('owl-page-theme-' + this.theme)
-        let ulNode = document.createElement('ul')
-        ulNode.classList.add('owl-page-wrapper')
-        let preLi = document.createElement('li')
+        let node = this._createElement('div', ['owl-page-container', 'owl-page-theme-' + this.theme]);
+        let ulNode = this._createElement('ul', ['owl-page-wrapper']);
+        let preLi = this._createElement('li');
         preLi.setAttribute('title', '上一页')
         if(this.curPage === 1) {
             preLi.classList.add('owl-page-item-disabled')
@@ -58,37 +78,32 @@ class PaginationComponent extends Components {
                     let liNode = this.__createCommonLiNode(i)
                     ulNode.appendChild(liNode)
                 } else {
-                    let liMorePre = document.createElement('li')
-                    liMorePre.setAttribute('title', '向前五页')
-                    liMorePre.dataset.page = (this.curPage-5).toString()
-                    liMorePre.classList.add('owl-page-item')
-                    liMorePre.classList.add('owl-page-item-more-pre')
-                    liMorePre.innerText = '...'
-                    ulNode.appendChild(liMorePre)
+                    let liMorePre = this._createElement('li', ['owl-page-item', 'owl-page-item-more-pre']);
+                    liMorePre.setAttribute('title', '向前五页');
+                    liMorePre.dataset.page = (this.curPage-5).toString();
+                    liMorePre.innerText = '...';
+                    ulNode.appendChild(liMorePre);
                 }
             } else if(i - this.curPage === 3 && this.curPage < this.totalPage) {
                 if(i === this.totalPage - 1) {
                     let liNode = this.__createCommonLiNode(i)
                     ulNode.appendChild(liNode)
                 } else {
-                    let liMoreNext = document.createElement('li')
-                    liMoreNext.setAttribute('title', '向后五页')
-                    liMoreNext.dataset.page = (this.curPage+5).toString()
-                    liMoreNext.classList.add('owl-page-item')
-                    liMoreNext.classList.add('owl-page-item-more-next')
-                    liMoreNext.innerText = '...'
-                    ulNode.appendChild(liMoreNext)
+                    let liMoreNext = this._createElement('li', ['owl-page-item', 'owl-page-item-more-next']);
+                    liMoreNext.setAttribute('title', '向后五页');
+                    liMoreNext.dataset.page = (this.curPage+5).toString();
+                    liMoreNext.innerText = '...';
+                    ulNode.appendChild(liMoreNext);
                 }
             }
         }
-        let nextLi = document.createElement('li')
+        let nextLi = this._createElement('li', ['owl-page-item-next']);
         nextLi.setAttribute('title', '下一页')
         if(this.curPage === this.totalPage) {
             nextLi.classList.add('owl-page-item-disabled')
         } else {
             nextLi.classList.add('owl-page-item')
         }
-        nextLi.classList.add('owl-page-item-next')
         nextLi.innerText = '下一页'
         ulNode.appendChild(nextLi)
         node.appendChild(ulNode)
@@ -96,8 +111,7 @@ class PaginationComponent extends Components {
     }
 
     __createCommonLiNode(pageNum: number): Element {
-        let liNode = document.createElement('li')
-        liNode.classList.add('owl-page-item')
+        let liNode = this._createElement('li', ['owl-page-item']);
         liNode.dataset.page = pageNum.toString()
         if(this.curPage === pageNum) {
             liNode.classList.add('owl-page-item-cur')
@@ -115,10 +129,6 @@ class PaginationComponent extends Components {
                 if(that.curPage === pageNum) {
                     return
                 }
-                if(that.onChangCallback !== undefined) {
-                    that.onChangCallback(pageNum)
-                }
-                let activeNode = that.node.getElementsByClassName('owl-page-item-cur')
                 if(OWLNODE.hasClass(this, 'owl-page-item-pre') && that.curPage > 1) {
                     that.curPage--
                 } else if(OWLNODE.hasClass(this, 'owl-page-item-next') && that.curPage < that.totalPage) {
@@ -126,10 +136,17 @@ class PaginationComponent extends Components {
                 } else if(this.dataset.hasOwnProperty('page')){
                     that.curPage = parseInt(this.dataset.page)
                 }
+                if(that.onChangeCallback !== undefined) {
+                    that.onChangeCallback(that.curPage)
+                }
                 that.node.replaceChild(that.__getNode().getElementsByClassName('owl-page-wrapper')[0], that.node.getElementsByClassName('owl-page-wrapper')[0])
                 that._setEvent()
             })
         }
+    }
+
+    setChangeCallback(callback): void {
+        this.onChangeCallback = callback
     }
 
 }
