@@ -1,7 +1,15 @@
+/**
+ * 该组件为导航栏组件
+ * 实现如下功能
+ * 1. 水平与垂直方向的导航栏功能
+ * 2. 不同的主题风格
+ */
+
 import {Components} from '../../Interfaces/Component'
-import {OWLNODE} from '../../OwlNode/OWLNODE'
-import {IconComponent} from '../../Components/Icon/Icon'
 import '../../../Style/Navigation/index.less'
+import {OWLNODE} from '../../OwlNode/OWLNODE'
+import {IconComponent} from '../Icon/Icon'
+
 
 interface NavigationList {
     text?: string;
@@ -12,13 +20,36 @@ interface NavigationList {
 }
 
 class NavigationComponent extends Components{
+    /**
+     * 导航栏方向
+     */
     dir: string;
+    /**
+     * 初始是否显示全部item
+     */
     showall: boolean;
+    /**
+     * 是否只显示一个item
+     */
     onlyone: boolean;
+    /**
+     * 是否展示为菜单模式(不可收缩)
+     */
     menu: boolean;
+    /**
+     * item数组，用以渲染组件
+     */
     itemlist: Array<NavigationList>;
+    /**
+     * 组件主题风格
+     */
     theme: string;
-    constructor(dir?: string, itemlist?: Array<NavigationList>, showall?: boolean, onlyone?: boolean, menu?: boolean, theme?: string) {
+    constructor(dir?: string,
+                itemlist?: Array<NavigationList>,
+                showall?: boolean,
+                onlyone?: boolean,
+                menu?: boolean,
+                theme?: string) {
         super()
         this.dir = dir === undefined ? 'v' : dir
         this.itemlist = itemlist === undefined ? [] : itemlist
@@ -154,11 +185,9 @@ class NavigationComponent extends Components{
     }
 
     __getTemplateV(): HTMLElement {
-        let node = document.createElement('div')
-        node.classList.add('owl-nav-container')
-        node.classList.add('owl-nav-theme-' + this.theme)
-        let ulNode = this.__getItemNodeV(this.itemlist, true)
-        node.appendChild(ulNode)
+        let node = this._createElement('div', ['owl-nav-container', 'owl-nav-theme-' + this.theme])
+        let ulNode = this.__getItemNodeV(this.itemlist, true);
+        node.appendChild(ulNode);
         let itemHeight = 45
         if(this.showall || this.menu) {
             let u = node.getElementsByTagName('ul')
@@ -208,37 +237,34 @@ class NavigationComponent extends Components{
     }
 
     __getItemNodeV(itemlist: Array<NavigationList>, root: boolean = false): HTMLElement {
-        let ulNode = document.createElement('ul')
-        ulNode.classList.add('owl-nav-wrapper')
-        ulNode.classList.add('owl-nav-wrapper-v')
+        let ulNode = this._createElement('ul', ['owl-nav-wrapper', 'owl-nav-wrapper-v']);
         if(root) {
             ulNode.classList.add('owl-nav-wrapper-v-root')
         }
         for (let index in itemlist) {
-            let liNode = document.createElement('li')
-            liNode.classList.add('owl-nav-item-v')
+            let liNode = this._createElement('li', ['owl-nav-item-v']);
             if(root) {
                 liNode.classList.add('owl-nav-first')
             }
-            let spanNode = document.createElement('span')
-            spanNode.classList.add('owl-nav-item-text-wrapper')
-            spanNode.classList.add('owl-nav-v-item-text-wrapper')
-            let cSpanNode = document.createElement('span')
-            cSpanNode.classList.add('owl-nav-item-text')
-            cSpanNode.innerText = itemlist[index]['text']
+            let spanNode = this._createElement('span', ['owl-nav-item-text-wrapper', 'owl-nav-v-item-text-wrapper']);
+            let cSpanNode = this._createElement('span', ['owl-nav-item-text']);
+            cSpanNode.innerText = itemlist[index]['text'];
             if(itemlist[index].hasOwnProperty('icon') && itemlist[index].icon !== '') {
                 let icon = new IconComponent(itemlist[index].icon, '16px', '16px')
-                var iconNode = icon._getTemplate()
-                iconNode.classList.add('owl-nav-icon')
-                spanNode.appendChild(iconNode)
+                var iconNode = icon._getTemplate();
+                iconNode.classList.add('owl-nav-icon');
+                spanNode.appendChild(iconNode);
             }
             spanNode.appendChild(cSpanNode)
             liNode.appendChild(spanNode)
+
+            //可有可无，可以由绑定事件来解决
             if(itemlist[index].hasOwnProperty('to') && itemlist[index].to !== '') {
                 liNode.addEventListener('click', function () {
                     window.location.href = itemlist[index].to
                 })
             }
+
             if(itemlist[index].hasOwnProperty('list') && itemlist[index].list.length > 0) {
                 // todo 优化这儿
                 if(!this.menu) {

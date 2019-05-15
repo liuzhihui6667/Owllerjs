@@ -17,21 +17,21 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: darkgreen;
+            background-color: dodgerblue;
         }
         .container {
-            width: 250px;
-            position: fixed;
-            top: 50px;
-            left: 0px;
+            width: 800px;
+            height: 400px;
+            position: absolute;
+            left: calc(50% - 400px);
+            top: calc(50% - 200px);
         }
         .btn-container {
-            width: 400px;
-            position: fixed;
-            top: 50px;
-            left: 300px;
-            display: flex;
-            justify-content: left;
+            width: 800px;
+            height: 400px;
+            position: absolute;
+            left: calc(50% - 400px);
+            top: calc(50% - 200px);
         }
         .btn-container div {
             margin-right: 5px;
@@ -91,43 +91,62 @@
     </style>
 </head>
 <body>
-<!--<div class="container">-->
-    <!--<owl-nav theme="dark" showall="" onlyone="true">-->
-        <!--<owl-nav-item icon="layout" active="true">-->
-            <!--<owl-text>99999</owl-text>-->
-            <!--<owl-nav-item>-->
-                <!--<owl-text>88888</owl-text>-->
-                <!--<owl-nav-item>-->
-                    <!--<owl-text>77777</owl-text>-->
-                <!--</owl-nav-item>-->
-            <!--</owl-nav-item>-->
-        <!--</owl-nav-item>-->
-        <!--<owl-nav-item icon="store">-->
-            <!--<owl-text>99999</owl-text>-->
-            <!--<owl-nav-item active="true">-->
-                <!--<owl-text>88888</owl-text>-->
-                <!--<owl-nav-item active="true">-->
-                    <!--<owl-text>77777</owl-text>-->
-                <!--</owl-nav-item>-->
-            <!--</owl-nav-item>-->
-        <!--</owl-nav-item>-->
-    <!--</owl-nav>-->
-<!--</div>-->
-<!--<div class="btn-container">-->
-    <!--<owl-button icon="store">按钮</owl-button>-->
-    <!--<owl-button type="success" size="small">成功</owl-button>-->
-    <!--<owl-button type="error" size="large">失败</owl-button>-->
-    <!--<owl-button type="disabled">禁用</owl-button>-->
-    <!--<owl-button circle="true">圆角</owl-button>-->
-    <!--<owl-button type="dark">黑色</owl-button>-->
-<!--</div>-->
-<div class="page-container">
-    <owl-page total="100" on-change="pageChange"></owl-page>
-    <br>
-    <owl-page total="1000" pagesize="80" curpage="9" theme="dark" on-change="pageChange"></owl-page>
-    <br>
-    <owl-page theme="light" total="9" pagesize="1" on-change="pageChange"></owl-page>
+<div class="container">
+    <owl-nav theme="dark" menu="true">
+        <owl-nav-item icon="layout" active="true">
+            <owl-text>99999</owl-text>
+            <owl-nav-item>
+                <owl-text>88888</owl-text>
+                <owl-nav-item>
+                    <owl-text>77777</owl-text>
+                </owl-nav-item>
+            </owl-nav-item>
+        </owl-nav-item>
+        <owl-nav-item icon="store">
+            <owl-text>99999</owl-text>
+            <owl-nav-item active="true">
+                <owl-text>88888</owl-text>
+                <owl-nav-item active="true">
+                    <owl-text>77777</owl-text>
+                </owl-nav-item>
+            </owl-nav-item>
+        </owl-nav-item>
+    </owl-nav>
 </div>
+<!--<div class="btn-container">-->
+    <!--<owl-button icon="store" size="small" style="vertical-align: bottom;">按钮</owl-button>-->
+    <!--<owl-button icon="store" size="default" style="vertical-align: bottom;">按钮</owl-button>-->
+    <!--<owl-button icon="store" size="large" style="vertical-align: bottom;">按钮</owl-button>-->
+    <!--<owl-button icon="store" circle="true">按钮</owl-button>-->
+    <!--<br><br>-->
+    <!--<owl-button type="success" size="small" style="vertical-align: bottom;">成功</owl-button>-->
+    <!--<owl-button type="success" size="default" style="vertical-align: bottom;">成功</owl-button>-->
+    <!--<owl-button type="success" size="large" style="vertical-align: bottom;">成功</owl-button>-->
+    <!--<owl-button type="success" circle="true">成功</owl-button>-->
+    <!--<br><br>-->
+    <!--<owl-button type="error" size="small" style="vertical-align: bottom;">失败</owl-button>-->
+    <!--<owl-button type="error" size="default" style="vertical-align: bottom;">失败</owl-button>-->
+    <!--<owl-button type="error" size="large" style="vertical-align: bottom;">失败</owl-button>-->
+    <!--<owl-button type="error" circle="true">失败</owl-button>-->
+    <!--<br><br>-->
+    <!--<owl-button type="disabled" size="small" style="vertical-align: bottom;">禁用</owl-button>-->
+    <!--<owl-button type="disabled" size="default" style="vertical-align: bottom;">禁用</owl-button>-->
+    <!--<owl-button type="disabled" size="large" style="vertical-align: bottom;">禁用</owl-button>-->
+    <!--<owl-button type="disabled" circle="true">禁用</owl-button>-->
+    <!--<br><br>-->
+    <!--<owl-button icon="store" type="dark" size="small" style="vertical-align: bottom;">黑色</owl-button>-->
+    <!--<owl-button type="dark" size="default" style="vertical-align: bsottom;">黑色</owl-button>-->
+    <!--<owl-button type="dark" size="large" style="vertical-align: bottom;width: 200px;">黑色</owl-button>-->
+    <!--<owl-button type="dark" circle="true">黑色</owl-button>-->
+    <!--<br><br>-->
+<!--</div> -->
+<!--<div class="page-container">-->
+    <!--<owl-page total="100" on-change="pageChange"></owl-page>-->
+    <!--<br>-->
+    <!--<owl-page total="1000" pagesize="80" curpage="9" theme="dark" on-change="pageChange"></owl-page>-->
+    <!--<br>-->
+    <!--<owl-page theme="light" total="9" pagesize="1" on-change="pageChange"></owl-page>-->
+<!--</div>-->
 <!--<div class="roller-container">-->
     <!--<owl-roller dir="h" value="0" loop="true" auto="false" tip="dot" speed="1000" shownum="1" width="900" height="400">-->
         <!--<div style="background-color: red;" class="roller-item" onclick="alert(777777)">-->

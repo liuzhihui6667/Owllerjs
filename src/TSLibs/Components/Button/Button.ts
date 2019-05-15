@@ -1,3 +1,11 @@
+/**
+ * 该组件为按钮组件
+ * 功能如下
+ * 1. 不同主题
+ * 2. 不同大小
+ * 3. 可以带icon
+ */
+
 import {Components} from '../../Interfaces/Component'
 import {OWLNODE} from '../../OwlNode/OWLNODE'
 import '../../../Style/Button/index.less'
@@ -10,7 +18,12 @@ class ButtonComponent extends Components {
     circle: boolean;
     innerHTML: string;
     attr: object;
-    constructor(innerHTML?: string, type?: string, size?: string, icon?: string, circle?: boolean, attr?:object) {
+    constructor(innerHTML?: string,
+                type?: string,
+                size?: string,
+                icon?: string,
+                circle?: boolean,
+                attr?:object) {
         super();
         this.innerHTML = innerHTML === undefined ? 'Button' : innerHTML;
         this.type = type === undefined ? 'default' : type;
@@ -35,8 +48,7 @@ class ButtonComponent extends Components {
     }
 
     __getNode(): Element {
-        let node = document.createElement('div');
-        node.classList.add('owl-btn-container');
+        let node = this._createElement('div', ['owl-btn-container']);
         for (let index in this.attr) {
             if(this.attr[index].name === 'class') {
                 let class_list = this.attr[index].value.split(' ')
@@ -44,8 +56,9 @@ class ButtonComponent extends Components {
                     node.classList.add(class_list[i])
                 }
                 continue
+            } else if(this.attr[index].name === 'style') {
+                node.setAttribute(this.attr[index].name, this.attr[index].value)
             }
-            node.setAttribute(this.attr[index].name, this.attr[index].value)
         }
         if(this.circle) {
             node.classList.add('owl-btn-circle');
@@ -115,8 +128,7 @@ class ButtonComponent extends Components {
             iconNode.classList.add('owl-btn-icon')
             node.appendChild(iconNode)
         }
-        let textSpan = document.createElement('span');
-        textSpan.classList.add('owl-btn-text-wrapper');
+        let textSpan = this._createElement('span', ['owl-btn-text-wrapper']);
         textSpan.innerHTML = this.innerHTML;
         node.appendChild(textSpan);
         return node
