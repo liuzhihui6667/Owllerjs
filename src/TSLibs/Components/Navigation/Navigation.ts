@@ -44,6 +44,10 @@ class NavigationComponent extends Components{
      * 组件主题风格
      */
     theme: string;
+    /**
+     * 单元格高度
+     */
+    itemHeight: number = 45;
     constructor(dir?: string,
                 itemlist?: Array<NavigationList>,
                 showall?: boolean,
@@ -185,23 +189,23 @@ class NavigationComponent extends Components{
     }
 
     __getTemplateV(): HTMLElement {
-        let node = this._createElement('div', ['owl-nav-container', 'owl-nav-theme-' + this.theme])
-        let ulNode = this.__getItemNodeV(this.itemlist, true);
+        let node = this._createElement('div', ['owl-nav-container', 'owl-nav-theme-' + this.theme]);
+        let ulNode = this.__getItemNodeV(this.itemlist, 0);
         node.appendChild(ulNode);
-        let itemHeight = 45
+        let itemHeight = 45;
         if(this.showall || this.menu) {
             let u = node.getElementsByTagName('ul')
             for(let index = 0; index < u.length; index++) {
                 if(OWLNODE.hasClass(u[index], 'owl-nav-wrapper-v-root')) {
                     continue
                 }
-                let lCount = u[index].getElementsByTagName('li').length
+                let lCount = u[index].getElementsByTagName('li').length;
                 u[index].style.height = lCount * itemHeight + 'px'
             }
             if(node.getElementsByClassName('owl-nav-leaf-active').length > 0) {
                 node.getElementsByClassName('owl-nav-leaf-active')[0].getElementsByClassName('owl-nav-item-text-wrapper')[0].classList.add('owl-nav-item-v-active')
             }
-            let open = node.getElementsByClassName('owl-nav-open-icon')
+            let open = node.getElementsByClassName('owl-nav-open-icon');
             for (let index = 0; index < open.length; index++) {
                 open[index].classList.add('owl-nav-open-icon-open')
             }
@@ -236,64 +240,66 @@ class NavigationComponent extends Components{
         return template
     }
 
-    __getItemNodeV(itemlist: Array<NavigationList>, root: boolean = false): HTMLElement {
+    __getItemNodeV(itemlist: Array<NavigationList>, depth: number): HTMLElement {
         let ulNode = this._createElement('ul', ['owl-nav-wrapper', 'owl-nav-wrapper-v']);
-        if(root) {
+        if(depth === 0) {
             ulNode.classList.add('owl-nav-wrapper-v-root')
         }
         for (let index in itemlist) {
             let liNode = this._createElement('li', ['owl-nav-item-v']);
-            if(root) {
+            if(depth === 0) {
                 liNode.classList.add('owl-nav-first')
             }
             let spanNode = this._createElement('span', ['owl-nav-item-text-wrapper', 'owl-nav-v-item-text-wrapper']);
+            if(depth === 0) {
+                spanNode.style.height = '47px';
+                spanNode.style.lineHeight = '47px'
+            }
             let cSpanNode = this._createElement('span', ['owl-nav-item-text']);
             cSpanNode.innerText = itemlist[index]['text'];
             if(itemlist[index].hasOwnProperty('icon') && itemlist[index].icon !== '') {
-                let icon = new IconComponent(itemlist[index].icon, '16px', '16px')
+                let icon = new IconComponent(itemlist[index].icon, '16px', '16px');
                 var iconNode = icon._getTemplate();
                 iconNode.classList.add('owl-nav-icon');
                 spanNode.appendChild(iconNode);
             }
-            spanNode.appendChild(cSpanNode)
-            liNode.appendChild(spanNode)
+            spanNode.appendChild(cSpanNode);
+            liNode.appendChild(spanNode);
 
             //可有可无，可以由绑定事件来解决
             if(itemlist[index].hasOwnProperty('to') && itemlist[index].to !== '') {
                 liNode.addEventListener('click', function () {
-                    window.location.href = itemlist[index].to
+                    window.location.href = itemlist[index].to;
                 })
             }
 
             if(itemlist[index].hasOwnProperty('list') && itemlist[index].list.length > 0) {
-                // todo 优化这儿
                 if(!this.menu) {
-                    let openIcon = new IconComponent('bottom')
-                    let openIconNode = openIcon._getTemplate()
-                    openIconNode.classList.add('owl-nav-open-icon')
-                    spanNode.appendChild(openIconNode)
+                    let openIcon = new IconComponent('bottom');
+                    let openIconNode = openIcon._getTemplate();
+                    openIconNode.classList.add('owl-nav-open-icon');
+                    spanNode.appendChild(openIconNode);
                 } else {
-                    if(root) {
-                        spanNode.style.fontSize = '15px'
-                        spanNode.style.paddingLeft = '20px'
-                    } else {
-                        spanNode.style.paddingLeft = '30px'
+                    if(depth === 0) {
+                        spanNode.style.fontSize = '15px';
                     }
-                    spanNode.style.cursor = 'initial'
-                    let fColor = ''
+                    spanNode.style.cursor = 'initial';
+                    let fColor = '';
                     if(this.theme === 'light') {
                         fColor = '#fff'
                     } else {
                         fColor = '#999'
                     }
-                    spanNode.style.color = fColor
+                    spanNode.style.color = fColor;
                     if(typeof iconNode === 'object') {
-                        iconNode.getElementsByTagName('path')[0].style.fill = fColor
+                        iconNode.getElementsByTagName('path')[0].style.fill = fColor;
                         iconNode.getElementsByTagName('path')[0].style.stroke = fColor
                     }
                 }
-                liNode.appendChild(this.__getItemNodeV(itemlist[index].list))
+                liNode.appendChild(this.__getItemNodeV(itemlist[index].list, depth + 1));
             }
+
+            spanNode.style.paddingLeft = (depth * 11) + 20 + 'px';
             if(itemlist[index].list.length === 0 && itemlist[index].active || window.location.pathname === itemlist[index].to) {
                 liNode.classList.add('owl-nav-leaf-active')
             }
