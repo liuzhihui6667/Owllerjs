@@ -19,6 +19,12 @@ interface NavigationList {
     list?: Array<NavigationList>;
 }
 
+interface NavigationItemAttr {
+    el: HTMLElement,
+    itemLiCount: number,
+    active: boolean
+}
+
 class NavigationComponent extends Components{
     /**
      * 导航栏方向
@@ -47,7 +53,7 @@ class NavigationComponent extends Components{
     /**
      * 单元格高度
      */
-    itemHeight: number = 45;
+    itemHeight: number = 50;
     constructor(dir?: string,
                 itemlist?: Array<NavigationList>,
                 showall?: boolean,
@@ -190,48 +196,9 @@ class NavigationComponent extends Components{
 
     __getTemplateV(): HTMLElement {
         let node = this._createElement('div', ['owl-nav-container', 'owl-nav-theme-' + this.theme]);
-        let ulNode = this.__getItemNodeV(this.itemlist, 0);
-        node.appendChild(ulNode);
-        let itemHeight = 45;
-        if(this.showall || this.menu) {
-            let u = node.getElementsByTagName('ul')
-            for(let index = 0; index < u.length; index++) {
-                if(OWLNODE.hasClass(u[index], 'owl-nav-wrapper-v-root')) {
-                    continue
-                }
-                let lCount = u[index].getElementsByTagName('li').length;
-                u[index].style.height = lCount * itemHeight + 'px'
-            }
-            if(node.getElementsByClassName('owl-nav-leaf-active').length > 0) {
-                node.getElementsByClassName('owl-nav-leaf-active')[0].getElementsByClassName('owl-nav-item-text-wrapper')[0].classList.add('owl-nav-item-v-active')
-            }
-            let open = node.getElementsByClassName('owl-nav-open-icon');
-            for (let index = 0; index < open.length; index++) {
-                open[index].classList.add('owl-nav-open-icon-open')
-            }
-        } else {
-            let leafActive = node.getElementsByClassName('owl-nav-leaf-active')
-            for(let index = 0; index < leafActive.length; index++) {
-                leafActive[index].getElementsByClassName('owl-nav-item-text-wrapper')[0].classList.add('owl-nav-item-v-active')
-                let sCount = leafActive[index].parentElement.children.length
-                leafActive[index].parentElement.style.height = itemHeight * sCount + 'px'
-                let rootUl = leafActive[index].parentElement.parentElement.parentElement
-                //小三角
-                leafActive[index].parentElement.parentElement.getElementsByClassName('owl-nav-open-icon')[0].classList.add('owl-nav-open-icon-open')
-                if(rootUl.parentNode.parentNode !== null && OWLNODE.hasClass(rootUl.parentElement.parentElement, 'owl-nav-wrapper-v-root')) {
-                    rootUl.parentElement.getElementsByClassName('owl-nav-open-icon')[0].classList.add('owl-nav-open-icon-open')
-                }
-                if(OWLNODE.hasClass(rootUl, 'owl-nav-wrapper-v-root')) {
-                    let pNodeHeight = 0
-                    let u = rootUl.getElementsByTagName('ul')
-                    for(let index = 0; index < u.length; index++) {
-                        pNodeHeight += isNaN(parseInt(u[index].style.height)) ? 0 : parseInt(u[index].style.height)
-                    }
-                    pNodeHeight += rootUl.childNodes.length * itemHeight
-                    // rootUl.style.height = pNodeHeight + 'px'
-                }
-            }
-        }
+        console.log(this.itemlist)
+        let ulNodeAttr = this.__getItemNodeV(this.itemlist, 0);
+        node.appendChild(ulNodeAttr.el);
         return node
     }
 
@@ -240,20 +207,31 @@ class NavigationComponent extends Components{
         return template
     }
 
-    __getItemNodeV(itemlist: Array<NavigationList>, depth: number): HTMLElement {
+    __getItemNodeV(itemlist: Array<NavigationList>, depth: number): NavigationItemAttr {
         let ulNode = this._createElement('ul', ['owl-nav-wrapper', 'owl-nav-wrapper-v']);
-        if(depth === 0) {
-            ulNode.classList.add('owl-nav-wrapper-v-root')
-        }
+        let isLeaf = true;
+        let itemLiCount = 0;
+        let itemActive: boolean = false;
         for (let index in itemlist) {
-            let liNode = this._createElement('li', ['owl-nav-item-v']);
-            if(depth === 0) {
-                liNode.classList.add('owl-nav-first')
+            let active = false;
+            let leaf = true;
+            if(itemlist[index].hasOwnProperty('list') && itemlist[index].list.length > 0) {
+                isLeaf = false;
+                leaf = false;
             }
-            let spanNode = this._createElement('span', ['owl-nav-item-text-wrapper', 'owl-nav-v-item-text-wrapper']);
+            if(itemlist[index].list.length === 0 && (itemlist[index].active || window.location.pathname === itemlist[index].to)) {
+                itemActive = true;
+                active = true;
+            }
+            //li标签
+            let liNode = this._createElement('li', ['owl-nav-item-v']);
+            let spanNode = this._createElement('span', ['owl-nav-item-text-wrapper']);
             if(depth === 0) {
-                spanNode.style.height = '47px';
-                spanNode.style.lineHeight = '47px'
+                spanNode.style.height = this.itemHeight + 2 + 'px';
+                spanNode.style.lineHeight = this.itemHeight + 2 + 'px';
+            } else {
+                spanNode.style.height = this.itemHeight + 'px';
+                spanNode.style.lineHeight = this.itemHeight + 'px';
             }
             let cSpanNode = this._createElement('span', ['owl-nav-item-text']);
             cSpanNode.innerText = itemlist[index]['text'];
@@ -266,6 +244,15 @@ class NavigationComponent extends Components{
             spanNode.appendChild(cSpanNode);
             liNode.appendChild(spanNode);
 
+            //阶梯状处理
+
+            if(active && leaf) {
+                spanNode.style.paddingLeft = (depth * 13) + 16 + 'px';
+                spanNode.classList.add('owl-nav-item-v-active');
+            } else {
+                spanNode.style.paddingLeft = (depth * 13) + 20 + 'px';
+            }
+
             //可有可无，可以由绑定事件来解决
             if(itemlist[index].hasOwnProperty('to') && itemlist[index].to !== '') {
                 liNode.addEventListener('click', function () {
@@ -274,10 +261,16 @@ class NavigationComponent extends Components{
             }
 
             if(itemlist[index].hasOwnProperty('list') && itemlist[index].list.length > 0) {
+                let itemAttr = this.__getItemNodeV(itemlist[index].list, depth + 1);
+                itemLiCount = itemLiCount + itemAttr.itemLiCount;
+                itemActive = itemActive ? itemActive : itemAttr.active;
                 if(!this.menu) {
                     let openIcon = new IconComponent('bottom');
                     let openIconNode = openIcon._getTemplate();
                     openIconNode.classList.add('owl-nav-open-icon');
+                    if(this.showall || itemAttr.active) {
+                        openIconNode.classList.add('owl-nav-open-icon-open');
+                    }
                     spanNode.appendChild(openIconNode);
                 } else {
                     if(depth === 0) {
@@ -296,16 +289,27 @@ class NavigationComponent extends Components{
                         iconNode.getElementsByTagName('path')[0].style.stroke = fColor
                     }
                 }
-                liNode.appendChild(this.__getItemNodeV(itemlist[index].list, depth + 1));
+                liNode.appendChild(itemAttr.el);
             }
 
-            spanNode.style.paddingLeft = (depth * 11) + 20 + 'px';
-            if(itemlist[index].list.length === 0 && itemlist[index].active || window.location.pathname === itemlist[index].to) {
-                liNode.classList.add('owl-nav-leaf-active')
-            }
             ulNode.appendChild(liNode)
         }
-        return ulNode
+        //返回的li节点数量
+        if(itemActive) {
+            if(isLeaf) {
+                itemLiCount = itemlist.length;
+            } else {
+                itemLiCount = itemlist.length + itemLiCount;
+            }
+        }
+        if(depth !== 0) {
+            ulNode.style.height = this.itemHeight * itemLiCount + 'px';
+        }
+        return {
+            el: ulNode,
+            itemLiCount: itemLiCount,
+            active: itemActive
+        }
     }
 }
 

@@ -21,7 +21,7 @@
         }
         .container {
             width: 800px;
-            height: 400px;
+            height: 1000px;
             position: absolute;
             left: calc(50% - 400px);
             top: calc(50% - 200px);
@@ -97,16 +97,34 @@
             <owl-text>99999</owl-text>
             <owl-nav-item>
                 <owl-text>88888</owl-text>
-                <owl-nav-item>
+                <owl-nav-item active="true">
                     <owl-text>77777</owl-text>
                     <owl-nav-item>
-                        <owl-text>88888</owl-text>
-                        <owl-nav-item>
-                            <owl-text>77777</owl-text>
+                        <owl-text>66666</owl-text>
+                        <owl-nav-item active="true">
+                            <owl-text>55555</owl-text>
                         </owl-nav-item>
-                        <owl-nav-item>
-                            <owl-text>77777</owl-text>
+                        <owl-nav-item active="false">
+                            <owl-text>55555</owl-text>
                         </owl-nav-item>
+                    </owl-nav-item>
+                    <owl-nav-item>
+                        <owl-text>66666</owl-text>
+                    </owl-nav-item>
+                </owl-nav-item>
+                <owl-nav-item active="false">
+                    <owl-text>77777</owl-text>
+                    <owl-nav-item>
+                        <owl-text>66666</owl-text>
+                        <owl-nav-item active="false">
+                            <owl-text>55555</owl-text>
+                        </owl-nav-item>
+                        <owl-nav-item active="false">
+                            <owl-text>55555</owl-text>
+                        </owl-nav-item>
+                    </owl-nav-item>
+                    <owl-nav-item active="true">
+                        <owl-text>66666</owl-text>
                     </owl-nav-item>
                 </owl-nav-item>
             </owl-nav-item>
@@ -119,7 +137,7 @@
                         <owl-nav-item>
                             <owl-text>77777</owl-text>
                         </owl-nav-item>
-                        <owl-nav-item>
+                        <owl-nav-item active="true">
                             <owl-text>77777</owl-text>
                         </owl-nav-item>
                     </owl-nav-item>
@@ -128,9 +146,9 @@
         </owl-nav-item>
         <owl-nav-item icon="store">
             <owl-text>99999</owl-text>
-            <owl-nav-item active="true">
+            <owl-nav-item active="false">
                 <owl-text>88888</owl-text>
-                <owl-nav-item active="true">
+                <owl-nav-item active="false">
                     <owl-text>77777</owl-text>
                 </owl-nav-item>
             </owl-nav-item>
