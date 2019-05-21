@@ -53,7 +53,7 @@ class NavigationComponent extends Components{
     /**
      * 单元格高度
      */
-    itemHeight: number = 50;
+    itemHeight: number = 45;
     constructor(dir?: string,
                 itemlist?: Array<NavigationList>,
                 showall?: boolean,
@@ -79,82 +79,68 @@ class NavigationComponent extends Components{
         let that = this
         let li = that.node.getElementsByTagName('li')
         if(this.dir === 'v') {
-            let itemHeight = 45
             for (let index = 0; index < li.length; index++) {
                 li[index].addEventListener('click', function (e) {
                     //展开
                     if(this.getElementsByTagName('ul').length > 0) {
                         if(!that.menu) {
-                            let pNode = this.parentElement     //父节点
-                            let firstUl = this.getElementsByTagName('ul')[0]
-                            let sCount = pNode.childElementCount    //兄弟节点数量
-                            let cCount = firstUl.childElementCount   //子节点数量
-                            let isOpen = parseInt(firstUl.style.height) > 0 ? true : false
+                            let firstUl = this.getElementsByTagName('ul')[0];
+                            let cCount = firstUl.childElementCount;   //子节点数量
+                            let open = parseInt(firstUl.style.height) <= 0;
                             if(that.onlyone) {
-                                let ul = that.node.getElementsByTagName('ul')
-                                for (let index = 0; index < ul.length; index++) {
-                                    if(!OWLNODE.hasClass(ul[index], 'owl-nav-wrapper-v-root')) {
-                                        ul[index].style.height = '0px'
+                                let opHeight = 0;
+                                if(open) {
+                                    opHeight = that.itemHeight * cCount;
+                                    let ul = that.node.getElementsByTagName('ul')
+                                    for (let index = 0; index < ul.length; index++) {
+                                        if(!OWLNODE.hasClass(ul[index], 'owl-nav-wrapper-v-root')) {
+                                            ul[index].style.height = '0px'
+                                        }
                                     }
-                                }
-                                let openNodes = that.node.getElementsByClassName('owl-nav-open-icon-open'), openNodesLength = openNodes.length
-                                for (let i = 0; i < openNodesLength; i++) {
-                                    openNodes[0].classList.remove('owl-nav-open-icon-open')
-                                }
-                                if(isOpen) {
-                                    if(OWLNODE.hasClass(this.parentElement.parentElement, 'owl-nav-first')) {
-                                        this.parentElement.parentElement.getElementsByClassName('owl-nav-open-icon')[0].classList.add('owl-nav-open-icon-open')
+                                    let openNodes = that.node.getElementsByClassName('owl-nav-open-icon-open'), openNodesLength = openNodes.length
+                                    for (let i = 0; i < openNodesLength; i++) {
+                                        openNodes[0].classList.remove('owl-nav-open-icon-open')
                                     }
-                                    let open = this.getElementsByClassName('owl-nav-open-icon')
-                                    for(let index = 0; index < open.length; index++ ) {
-                                        open[index].classList.remove('owl-nav-open-icon-open')
-                                    }
-                                    if(!OWLNODE.hasClass(pNode, 'owl-nav-wrapper-v-root')) {
-                                        pNode.style.height = itemHeight * sCount + 'px'
-                                    }
-                                    firstUl.style.height = '0px'
                                 } else {
-                                    this.getElementsByClassName('owl-nav-open-icon')[0].classList.add('owl-nav-open-icon-open')
-                                    if(OWLNODE.hasClass(this.parentElement.parentElement, 'owl-nav-first')) {
-                                        this.parentElement.parentElement.getElementsByClassName('owl-nav-open-icon')[0].classList.add('owl-nav-open-icon-open')
-                                    }
-                                    if(!OWLNODE.hasClass(pNode, 'owl-nav-wrapper-v-root')) {
-                                        pNode.style.height = itemHeight * (sCount + cCount) + 'px'
-                                    }
-                                    firstUl.style.height = itemHeight * cCount + 'px'
-                                }
-                            } else {
-                                if(isOpen) {
+                                    opHeight = isNaN(parseInt(firstUl.style.height)) ? 0 : parseInt(firstUl.style.height);
                                     let l = this.getElementsByClassName('owl-nav-open-icon')
                                     for(let index = 0; index < l.length; index++ ) {
                                         l[index].classList.remove('owl-nav-open-icon-open')
                                     }
-                                    let u = this.getElementsByTagName('ul')
-                                    for(let index = 0; index < u.length; index++ ) {
-                                        u[index].style.height = '0px'
+                                    let childrenUls = this.getElementsByTagName('ul');
+                                    for(let index = 0; index < childrenUls.length; index++ ) {
+                                        childrenUls[index].style.height = '0px'
                                     }
-                                } else {
+                                }
+                                that.__setParentUlNodeHeight(firstUl, opHeight, open);
+                            } else {
+                                let opHeight = 0;
+                                if(open) {
                                     this.getElementsByClassName('owl-nav-open-icon')[0].classList.add('owl-nav-open-icon-open')
-                                    firstUl.style.height = itemHeight * cCount + 'px'
-                                }
-                                if(!OWLNODE.hasClass(pNode, 'owl-nav-wrapper-v-root')) {
-                                    let pNodeHeight = 0
-                                    let u = pNode.getElementsByTagName('ul')
-                                    for(let index = 0; index < u.length; index++ ) {
-                                        pNodeHeight += isNaN(parseInt(u[index].style.height)) ? 0 : parseInt(u[index].style.height)
+                                    opHeight = that.itemHeight * cCount;
+                                } else {
+                                    opHeight = isNaN(parseInt(firstUl.style.height)) ? 0 : parseInt(firstUl.style.height);
+                                    let l = this.getElementsByClassName('owl-nav-open-icon')
+                                    for(let index = 0; index < l.length; index++ ) {
+                                        l[index].classList.remove('owl-nav-open-icon-open')
                                     }
-                                    pNodeHeight += sCount * itemHeight
-                                    pNode.style.height = pNodeHeight + 'px'
+                                    let childrenUls = this.getElementsByTagName('ul');
+                                    for(let index = 0; index < childrenUls.length; index++ ) {
+                                        childrenUls[index].style.height = '0px'
+                                    }
                                 }
+                                that.__setParentUlNodeHeight(firstUl, opHeight, open);
                             }
                         }
                     } else {
                         //字体变为active
-                        let e = that.node.getElementsByClassName('owl-nav-item-v-active')
-                        for(let index = 0; index < e.length; index++) {
-                            e[index].classList.remove('owl-nav-item-v-active')
+                        let activeEls = that.node.getElementsByClassName('owl-nav-item-v-active');
+                        let activeCount = activeEls.length;
+                        for(let index = 0; index < activeCount; index++) {
+                            activeEls[0].classList.remove('owl-nav-item-v-active')
                         }
-                        this.getElementsByTagName('span')[0].classList.add('owl-nav-item-v-active')
+                        let activeEl = this.getElementsByTagName('span')[0];
+                        activeEl.classList.add('owl-nav-item-v-active');
                         //子节点
                         console.log('leaf')
                     }
@@ -173,6 +159,39 @@ class NavigationComponent extends Components{
                 })
             }
         }
+    }
+
+    __setParentUlNodeHeight(ulNode: HTMLElement, opHeight: number, open: boolean): void {
+        if(OWLNODE.hasClass(ulNode, 'owl-nav-wrapper-v-root')) {
+            return
+        }
+        let pNode = ulNode.parentElement.parentElement;
+        if(this.onlyone) {
+            let cCount = pNode.childElementCount
+            let opH = 0;
+            if(open) {
+                let iconEl = ulNode.parentElement.getElementsByClassName('owl-nav-open-icon')[0]
+                iconEl.classList.add('owl-nav-open-icon-open');
+                ulNode.style.height = opHeight + 'px';
+                opH = opHeight + this.itemHeight * cCount;
+            } else {
+                let ulNodeHeight = isNaN(parseInt(ulNode.style.height)) ? 0 : parseInt(ulNode.style.height);
+                ulNode.style.height = ulNodeHeight - opHeight + 'px';
+                opH = opHeight;
+            }
+            this.__setParentUlNodeHeight(pNode, opH, open);
+        } else {
+            let ulNodeHeight = isNaN(parseInt(ulNode.style.height)) ? 0 : parseInt(ulNode.style.height);
+            if(open) {
+                ulNode.style.height = ulNodeHeight + opHeight + 'px';
+            } else {
+                ulNode.style.height = ulNodeHeight - opHeight + 'px';
+            }
+            if(!OWLNODE.hasClass(pNode, 'owl-nav-wrapper-v-root')) {
+                this.__setParentUlNodeHeight(pNode, opHeight, open);
+            }
+        }
+
     }
 
     _getTemplate() {
@@ -196,7 +215,6 @@ class NavigationComponent extends Components{
 
     __getTemplateV(): HTMLElement {
         let node = this._createElement('div', ['owl-nav-container', 'owl-nav-theme-' + this.theme]);
-        console.log(this.itemlist)
         let ulNodeAttr = this.__getItemNodeV(this.itemlist, 0);
         node.appendChild(ulNodeAttr.el);
         return node
@@ -209,19 +227,22 @@ class NavigationComponent extends Components{
 
     __getItemNodeV(itemlist: Array<NavigationList>, depth: number): NavigationItemAttr {
         let ulNode = this._createElement('ul', ['owl-nav-wrapper', 'owl-nav-wrapper-v']);
-        let isLeaf = true;
-        let itemLiCount = 0;
-        let itemActive: boolean = false;
+        if(depth === 0) {
+            ulNode.classList.add('owl-nav-wrapper-v-root');
+        }
+        let allLeaf = true;//假设都为子节点
+        let itemLiCount = 0;//需要展开的li节点数量
+        let active: boolean = false;//该节点是否展开
         for (let index in itemlist) {
-            let active = false;
-            let leaf = true;
+            let isActive = false;
+            let isLeaf = true;
             if(itemlist[index].hasOwnProperty('list') && itemlist[index].list.length > 0) {
+                allLeaf = false;
                 isLeaf = false;
-                leaf = false;
             }
             if(itemlist[index].list.length === 0 && (itemlist[index].active || window.location.pathname === itemlist[index].to)) {
-                itemActive = true;
                 active = true;
+                isActive = true;
             }
             //li标签
             let liNode = this._createElement('li', ['owl-nav-item-v']);
@@ -245,12 +266,9 @@ class NavigationComponent extends Components{
             liNode.appendChild(spanNode);
 
             //阶梯状处理
-
-            if(active && leaf) {
-                spanNode.style.paddingLeft = (depth * 13) + 16 + 'px';
+            spanNode.style.paddingLeft = (depth * 13) + 20 + 'px';
+            if(isActive && isLeaf) {
                 spanNode.classList.add('owl-nav-item-v-active');
-            } else {
-                spanNode.style.paddingLeft = (depth * 13) + 20 + 'px';
             }
 
             //可有可无，可以由绑定事件来解决
@@ -263,7 +281,7 @@ class NavigationComponent extends Components{
             if(itemlist[index].hasOwnProperty('list') && itemlist[index].list.length > 0) {
                 let itemAttr = this.__getItemNodeV(itemlist[index].list, depth + 1);
                 itemLiCount = itemLiCount + itemAttr.itemLiCount;
-                itemActive = itemActive ? itemActive : itemAttr.active;
+                active = active ? active : itemAttr.active;
                 if(!this.menu) {
                     let openIcon = new IconComponent('bottom');
                     let openIconNode = openIcon._getTemplate();
@@ -291,24 +309,28 @@ class NavigationComponent extends Components{
                 }
                 liNode.appendChild(itemAttr.el);
             }
-
             ulNode.appendChild(liNode)
         }
         //返回的li节点数量
-        if(itemActive) {
-            if(isLeaf) {
-                itemLiCount = itemlist.length;
-            } else {
-                itemLiCount = itemlist.length + itemLiCount;
+        if(this.menu || this.showall) {
+            itemLiCount = itemLiCount + itemlist.length;
+        } else {
+            if(active) {
+                if(allLeaf) {
+                    itemLiCount = itemlist.length;
+                } else {
+                    itemLiCount = itemlist.length + itemLiCount;
+                }
             }
         }
         if(depth !== 0) {
             ulNode.style.height = this.itemHeight * itemLiCount + 'px';
         }
+
         return {
             el: ulNode,
             itemLiCount: itemLiCount,
-            active: itemActive
+            active: active
         }
     }
 }

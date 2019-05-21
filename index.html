@@ -20,7 +20,7 @@
             background-color: dodgerblue;
         }
         .container {
-            width: 800px;
+            width: 250px;
             height: 1000px;
             position: absolute;
             left: calc(50% - 400px);
@@ -92,7 +92,7 @@
 </head>
 <body>
 <div class="container">
-    <owl-nav theme="dark" menu="false" showall="false">
+    <owl-nav theme="light" menu="false" showall="false" onlyone="true">
         <owl-nav-item icon="layout" active="true">
             <owl-text>99999</owl-text>
             <owl-nav-item>
@@ -101,7 +101,7 @@
                     <owl-text>77777</owl-text>
                     <owl-nav-item>
                         <owl-text>66666</owl-text>
-                        <owl-nav-item active="true">
+                        <owl-nav-item active="false">
                             <owl-text>55555</owl-text>
                         </owl-nav-item>
                         <owl-nav-item active="false">
@@ -137,7 +137,7 @@
                         <owl-nav-item>
                             <owl-text>77777</owl-text>
                         </owl-nav-item>
-                        <owl-nav-item active="true">
+                        <owl-nav-item active="false">
                             <owl-text>77777</owl-text>
                         </owl-nav-item>
                     </owl-nav-item>
