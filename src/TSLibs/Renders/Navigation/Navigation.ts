@@ -9,16 +9,19 @@ class NavigationRender {
     menu: boolean;
     theme: string;
     itemlist: Array<NavigationList> = [];
+    fit: boolean;
+    itemHeight: number;
+    itemWidth: number;
     constructor() {
         this.render()
     }
 
     render(): void {
-        let tags = this.getNodes()
-        for (let i = 0; i < tags.length; i++) {
-            this.getConfig(tags[i])
-            // console.log(this.dir, this.itemlist, this.showall, this.onlyone, this.menu, this.theme)
-            let retEl = new NavigationComponent(this.dir, this.itemlist, this.showall, this.onlyone, this.menu, this.theme)
+        let tags = this.getNodes();
+        let tagsCount = tags.length
+        for (let i = 0; i < tagsCount; i++) {
+            this.getConfig(tags[0]);
+            let retEl = new NavigationComponent(this.dir, this.itemlist, this.showall, this.onlyone, this.menu, this.theme, this.fit, this.itemHeight, this.itemWidth);
             tags[i].replaceWith(retEl.node)
         }
     }
@@ -33,7 +36,10 @@ class NavigationRender {
         this.showall = tag.getAttribute('showall') === null ? false : (tag.getAttribute('showall') === 'true')
         this.onlyone = tag.getAttribute('onlyone') === null ? false : (tag.getAttribute('onlyone') === 'true')
         this.menu = tag.getAttribute('menu') === null ? false : (tag.getAttribute('menu') === 'true')
+        this.fit = tag.getAttribute('fit') === null ? false : (tag.getAttribute('fit') === 'true')
         this.theme = tag.getAttribute('theme') === null ? 'lighter' : tag.getAttribute('theme')
+        this.itemHeight = tag.getAttribute('itemheight') === null ? 0 : parseInt(tag.getAttribute('itemheight'))
+        this.itemWidth = tag.getAttribute('itemwidth') === null ? 0 : parseInt(tag.getAttribute('itemwidth'))
         this.itemlist = this.__getConfigOfChildren(tag)
     }
 

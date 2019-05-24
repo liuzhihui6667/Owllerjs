@@ -14,8 +14,8 @@ class ButtonRender {
     }
 
     render(): void {
-        let tags = this.getNodes()
-        let tagsNum = tags.length
+        let tags = this.getNodes();
+        let tagsNum = tags.length;
         for (let i = 0; i < tagsNum; i++) {
             let tag = tags[0]
             this.getConfig(tag)

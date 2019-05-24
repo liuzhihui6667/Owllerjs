@@ -7,6 +7,7 @@ import {RollerRender} from "./TSLibs/Renders/Roller/Roller";
 import {NavigationRender} from "./TSLibs/Renders/Navigation/Navigation";
 import {PaginationRender} from "./TSLibs/Renders/Pagination/Pagination";
 import {ButtonRender} from "./TSLibs/Renders/Button/Button";
+import {TreeRender} from "./TSLibs/Renders/Tree/Tree";
 
 // let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light', 'fade')
 //
@@ -45,3 +46,4 @@ new RollerRender()
 new NavigationRender()
 new PaginationRender()
 new ButtonRender()
+new TreeRender()

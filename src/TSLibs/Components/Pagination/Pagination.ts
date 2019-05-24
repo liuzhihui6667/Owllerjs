@@ -56,7 +56,7 @@ class PaginationComponent extends Components {
         return this.node
     }
 
-    __getNode(): Element {
+    __getNode(): HTMLElement {
         let node = this._createElement('div', ['owl-page-container', 'owl-page-theme-' + this.theme]);
         let ulNode = this._createElement('ul', ['owl-page-wrapper']);
         let preLi = this._createElement('li');
