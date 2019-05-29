@@ -3,8 +3,7 @@ import {TreeComponent} from "../../Components/Tree/Tree";
 
 class TreeRender {
     fit: boolean;
-    itemHeight: number;
-    itemWidth: number;
+    itemHeight: string;
     itemList: Array<any>;
     constructor() {
         this.render()
@@ -16,7 +15,7 @@ class TreeRender {
         for (let i = 0; i < tagsNum; i++) {
             let tag = tags[0];
             this.getConfig(tag);
-            let retEl = new TreeComponent();
+            let retEl = new TreeComponent(this.itemList, this.itemHeight);
             console.log(retEl);
             tag.replaceWith(retEl.node)
         }
@@ -28,9 +27,20 @@ class TreeRender {
 
     getConfig(tag: Element): void {
         this.fit = tag.getAttribute('fit') === null ? false : (tag.getAttribute('fit') === 'true');
-        this.itemHeight = tag.getAttribute('itemheight') === null ? 0 : parseInt(tag.getAttribute('itemheight'));
-        this.itemWidth = tag.getAttribute('itemwidth') === null ? 0 : parseInt(tag.getAttribute('itemwidth'));
+        this.itemHeight = tag.getAttribute('itemheight') === null ? "" : tag.getAttribute('itemheight');
         this.itemList = tag.getAttribute('itemlist') === null ? [] : window[tag.getAttribute('itemlist')];
+        this.itemList = [
+            {
+                text: 'Root'
+            }, {
+                text: 'Root2',
+                children: [
+                    {
+                        text: 'children'
+                    }
+                ]
+            }
+        ];
     }
 }
 

@@ -18,23 +18,12 @@ interface TreeItemList {
 class TreeComponent extends Components {
 
     fit: boolean;
-    itemHeight: number;
-    itemWidth: number;
+    itemHeight: string;
     itemList: Array<TreeItemList>;
-    constructor() {
+    constructor(itemList: Array<TreeItemList>, itemHeight?: string) {
         super();
-        this.itemList = [
-            {
-                text: 'Root'
-            }, {
-                text: 'Root2',
-                children: [
-                    {
-                        text: 'children'
-                    }
-                ]
-            }
-        ];
+        this.itemList = itemList;
+        this.itemHeight = this._checkParam(itemHeight, '34px');
         this.init()
     }
     init(): void {
@@ -62,11 +51,13 @@ class TreeComponent extends Components {
         for (let i = 0; i < itemList.length; i++) {
             let liNode = this._createElement('li', ['owl-tree-item-wrapper']);
             let liDivNode = this._createElement('div', ['owl-tree-item-box']);
+            liDivNode.style.height = this.itemHeight;
+            liDivNode.style.lineHeight = this.itemHeight;
             let spanTipNode = this._createElement('span', ['owl-tree-tip-icon']);
             let spanIconNode = this._createElement('span', ['owl-tree-item-icon']);
             let spanTextNode = this._createElement('span', ['owl-tree-text']);
-            let tipIcon = new IconComponent('triangle', '16px', '34px', '#666');
-            let folderIcon = new IconComponent('folder', '20px', '34px', '#666');
+            let tipIcon = new IconComponent('triangle', '16px', this.itemHeight, '#666');
+            let folderIcon = new IconComponent('folder', '20px', this.itemHeight, '#666');
             liNode.appendChild(liDivNode);
             liDivNode.appendChild(spanTipNode);
             liDivNode.appendChild(spanIconNode);
