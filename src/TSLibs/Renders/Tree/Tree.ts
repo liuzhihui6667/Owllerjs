@@ -31,12 +31,37 @@ class TreeRender {
         this.itemList = tag.getAttribute('itemlist') === null ? [] : window[tag.getAttribute('itemlist')];
         this.itemList = [
             {
-                text: 'Root'
+                text: 'Root',
+                leaf: true,
+                open: false
             }, {
                 text: 'Root2',
+                open: true,
+                leaf: false,
                 children: [
                     {
-                        text: 'children'
+                        text: 'children',
+                        open: false,
+                        leaf: true
+                    },{
+                        text: 'children2',
+                        open: false,
+                        leaf: true
+                    }
+                ]
+            }, {
+                text: 'Root3',
+                open: true,
+                leaf: false,
+                children: [
+                    {
+                        text: 'children',
+                        open: false,
+                        leaf: true
+                    },{
+                        text: 'children2',
+                        open: false,
+                        leaf: true
                     }
                 ]
             }

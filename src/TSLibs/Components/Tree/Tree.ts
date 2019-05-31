@@ -12,18 +12,24 @@ import {OWLNODE} from "../../OwlNode/OWLNODE"
 
 interface TreeItemList {
     text: string;
+    open: boolean,
+    leaf: boolean,
     children?: Array<TreeItemList>
 }
 
 class TreeComponent extends Components {
-
-    fit: boolean;
-    itemHeight: string;
+    /**
+     * item高度
+     */
+    itemHeight: string = '34px';
+    /**
+     * item列表实现TreeItemList接口
+     */
     itemList: Array<TreeItemList>;
     constructor(itemList: Array<TreeItemList>, itemHeight?: string) {
         super();
         this.itemList = itemList;
-        this.itemHeight = this._checkParam(itemHeight, '34px');
+        this.itemHeight = this._checkParam(itemHeight, this.itemHeight);
         this.init()
     }
     init(): void {
@@ -54,18 +60,31 @@ class TreeComponent extends Components {
             liDivNode.style.height = this.itemHeight;
             liDivNode.style.lineHeight = this.itemHeight;
             let spanTipNode = this._createElement('span', ['owl-tree-tip-icon']);
+            if(!itemList[i].leaf) {
+                if(itemList[i].open) {
+                    spanTipNode.classList.add('owl-tree-tip-open')
+                }
+            } else {
+                spanTipNode.style.visibility = 'hidden'
+            }
             let spanIconNode = this._createElement('span', ['owl-tree-item-icon']);
             let spanTextNode = this._createElement('span', ['owl-tree-text']);
             let tipIcon = new IconComponent('triangle', '16px', this.itemHeight, '#666');
-            let folderIcon = new IconComponent('folder', '20px', this.itemHeight, '#666');
+            let icon;
+            if(itemList[i].leaf) {
+                icon = new IconComponent('file', '20px', this.itemHeight, '#666');
+            } else {
+                icon = new IconComponent('folder', '20px', this.itemHeight, '#666');
+            }
+
             liNode.appendChild(liDivNode);
             liDivNode.appendChild(spanTipNode);
             liDivNode.appendChild(spanIconNode);
             liDivNode.appendChild(spanTextNode);
             spanTipNode.appendChild(tipIcon.node);
-            spanIconNode.appendChild(folderIcon.node);
+            spanIconNode.appendChild(icon.node);
             spanTextNode.innerText = itemList[i].text;
-            if(itemList[i].hasOwnProperty('children') && itemList[i].children.length > 0) {
+            if(itemList[i].hasOwnProperty('open') && itemList[i].open) {
                 let ul = this.__getNodeOfItemUl(itemList[i].children, depth + 1);
                 liNode.appendChild(ul);
             }
@@ -75,7 +94,22 @@ class TreeComponent extends Components {
     }
 
     _setEvent(): void {
-
+        let liEls = this.node.getElementsByTagName('li');
+        for (let i = 0; i < liEls.length; i++) {
+            let liEl = liEls[i];
+            let ulEl = liEl.parentElement;
+            let tipEl = liEl.getElementsByClassName('owl-tree-tip-icon')[0];
+            let textEl = liEl.getElementsByClassName('owl-tree-text')[0];
+            tipEl.addEventListener('click', function (e) {
+                let isOpen = OWLNODE.hasClass(this, 'owl-tree-tip-open');
+                if(isOpen) {
+                    this.classList.remove('owl-tree-tip-open')
+                } else {
+                    this.classList.add('owl-tree-tip-open')
+                }
+                e.stopPropagation();
+            })
+        }
     }
 
     _destroy() {

@@ -36,23 +36,23 @@ class PaginationComponent extends Components {
                 pageSize?: number,
                 curPage?: number,
                 theme?: string) {
-        super()
-        this.totalItemCount = totalItemCount === undefined ? 0 : totalItemCount
-        this.pageSize = pageSize === undefined ? 15 : pageSize
-        this.curPage = curPage === undefined ? 1 : curPage
-        this.totalPage = this.totalItemCount === 0 ? 0 : Math.ceil(this.totalItemCount/this.pageSize)
-        this.theme = theme === undefined ? 'dark' : theme
+        super();
+        this.totalItemCount = totalItemCount === undefined ? 0 : totalItemCount;
+        this.pageSize = pageSize === undefined ? 15 : pageSize;
+        this.curPage = curPage === undefined ? 1 : curPage;
+        this.totalPage = this.totalItemCount === 0 ? 0 : Math.ceil(this.totalItemCount/this.pageSize);
+        this.theme = theme === undefined ? 'dark' : theme;
         this.init()
     }
     init(): void {
-        this._getTemplate()
+        this._getTemplate();
         this._setEvent()
     }
     _getTemplate(): Element {
         if(this.node !== undefined) {
             return this.node
         }
-        this.node = this.__getNode()
+        this.node = this.__getNode();
         return this.node
     }
 
@@ -60,22 +60,22 @@ class PaginationComponent extends Components {
         let node = this._createElement('div', ['owl-page-container', 'owl-page-theme-' + this.theme]);
         let ulNode = this._createElement('ul', ['owl-page-wrapper']);
         let preLi = this._createElement('li');
-        preLi.setAttribute('title', '上一页')
+        preLi.setAttribute('title', '上一页');
         if(this.curPage === 1) {
             preLi.classList.add('owl-page-item-disabled')
         } else {
             preLi.classList.add('owl-page-item')
         }
-        preLi.classList.add('owl-page-item-pre')
-        preLi.innerText = '上一页'
-        ulNode.appendChild(preLi)
+        preLi.classList.add('owl-page-item-pre');
+        preLi.innerText = '上一页';
+        ulNode.appendChild(preLi);
         for (let i = 1; i <= this.totalPage; i++) {
             if((this.curPage - i < 3 && i - this.curPage < 3) || i === 1 || i === this.totalPage) {
-                let liNode = this.__createCommonLiNode(i)
+                let liNode = this.__createCommonLiNode(i);
                 ulNode.appendChild(liNode)
             } else if(this.curPage - i === 3 && this.curPage > 1) {
                 if(i === 2) {
-                    let liNode = this.__createCommonLiNode(i)
+                    let liNode = this.__createCommonLiNode(i);
                     ulNode.appendChild(liNode)
                 } else {
                     let liMorePre = this._createElement('li', ['owl-page-item', 'owl-page-item-more-pre']);
@@ -86,7 +86,7 @@ class PaginationComponent extends Components {
                 }
             } else if(i - this.curPage === 3 && this.curPage < this.totalPage) {
                 if(i === this.totalPage - 1) {
-                    let liNode = this.__createCommonLiNode(i)
+                    let liNode = this.__createCommonLiNode(i);
                     ulNode.appendChild(liNode)
                 } else {
                     let liMoreNext = this._createElement('li', ['owl-page-item', 'owl-page-item-more-next']);
@@ -98,34 +98,34 @@ class PaginationComponent extends Components {
             }
         }
         let nextLi = this._createElement('li', ['owl-page-item-next']);
-        nextLi.setAttribute('title', '下一页')
+        nextLi.setAttribute('title', '下一页');
         if(this.curPage === this.totalPage) {
             nextLi.classList.add('owl-page-item-disabled')
         } else {
             nextLi.classList.add('owl-page-item')
         }
-        nextLi.innerText = '下一页'
-        ulNode.appendChild(nextLi)
-        node.appendChild(ulNode)
+        nextLi.innerText = '下一页';
+        ulNode.appendChild(nextLi);
+        node.appendChild(ulNode);
         return node
     }
 
     __createCommonLiNode(pageNum: number): Element {
         let liNode = this._createElement('li', ['owl-page-item']);
-        liNode.dataset.page = pageNum.toString()
+        liNode.dataset.page = pageNum.toString();
         if(this.curPage === pageNum) {
             liNode.classList.add('owl-page-item-cur')
         }
-        liNode.innerText = pageNum.toString()
+        liNode.innerText = pageNum.toString();
         return liNode
     }
 
     _setEvent(): void {
-        let numNodes = this.node.getElementsByClassName('owl-page-item')
-        let that = this
+        let numNodes = this.node.getElementsByClassName('owl-page-item');
+        let that = this;
         for (let i = 0; i < numNodes.length; i++) {
-            numNodes[i].addEventListener('click', function (e) {
-                let pageNum = parseInt(this.dataset.page)
+            numNodes[i].addEventListener('click', function () {
+                let pageNum = parseInt(this.dataset.page);
                 if(that.curPage === pageNum) {
                     return
                 }
@@ -139,7 +139,7 @@ class PaginationComponent extends Components {
                 if(that.onChangeCallback !== undefined) {
                     that.onChangeCallback(that.curPage)
                 }
-                that.node.replaceChild(that.__getNode().getElementsByClassName('owl-page-wrapper')[0], that.node.getElementsByClassName('owl-page-wrapper')[0])
+                that.node.replaceChild(that.__getNode().getElementsByClassName('owl-page-wrapper')[0], that.node.getElementsByClassName('owl-page-wrapper')[0]);
                 that._setEvent()
             })
         }
