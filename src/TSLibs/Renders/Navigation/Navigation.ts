@@ -48,7 +48,7 @@ class NavigationRender {
         if(chilrenTags.length === 0) {
             return undefined
         }
-        let cnf: Array<NavigationList> = []
+        let cnf: Array<NavigationList> = [];
         for (let i = 0; i < chilrenTags.length; i++) {
             if(chilrenTags[i].nodeName !== 'OWL-NAV-ITEM') {
                 continue

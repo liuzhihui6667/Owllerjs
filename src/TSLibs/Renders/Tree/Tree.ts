@@ -3,7 +3,7 @@ import {TreeComponent} from "../../Components/Tree/Tree";
 
 class TreeRender {
     fit: boolean;
-    itemHeight: string;
+    itemHeight: number;
     itemList: Array<any>;
     constructor() {
         this.render()
@@ -16,7 +16,6 @@ class TreeRender {
             let tag = tags[0];
             this.getConfig(tag);
             let retEl = new TreeComponent(this.itemList, this.itemHeight);
-            console.log(retEl);
             tag.replaceWith(retEl.node)
         }
     }
@@ -27,7 +26,7 @@ class TreeRender {
 
     getConfig(tag: Element): void {
         this.fit = tag.getAttribute('fit') === null ? false : (tag.getAttribute('fit') === 'true');
-        this.itemHeight = tag.getAttribute('itemheight') === null ? "" : tag.getAttribute('itemheight');
+        this.itemHeight = tag.getAttribute('itemheight') === null ? 34 : parseInt(tag.getAttribute('itemheight'));
         this.itemList = tag.getAttribute('itemlist') === null ? [] : window[tag.getAttribute('itemlist')];
         this.itemList = [
             {
@@ -41,10 +40,25 @@ class TreeRender {
                 children: [
                     {
                         text: 'children',
+                        open: true,
+                        leaf: false,
+                        children: [
+                            {
+                                text: 'children',
+                                open: false,
+                                leaf: true
+                            },{
+                                text: 'children2',
+                                open: false,
+                                leaf: true
+                            }
+                        ]
+                    },{
+                        text: 'children2',
                         open: false,
                         leaf: true
                     },{
-                        text: 'children2',
+                        text: 'children3',
                         open: false,
                         leaf: true
                     }

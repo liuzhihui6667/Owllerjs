@@ -109,7 +109,7 @@ class NavigationComponent extends Components{
 
     __setEventV() {
         let that = this
-        let li = that.node.getElementsByTagName('li')
+        let li = that.node.getElementsByTagName('li');
         for (let index = 0; index < li.length; index++) {
             li[index].addEventListener('click', function (e) {
                 //展开
@@ -216,7 +216,7 @@ class NavigationComponent extends Components{
         if(this.node !== undefined) {
             return this.node
         }
-        this.node = this.__getNode()
+        this.node = this.__getNode();
         return this.node
     }
 
