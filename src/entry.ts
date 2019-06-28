@@ -1,8 +1,3 @@
-import {NavigationComponent} from './TSLibs/Components/Navigation/Navigation'
-import {ButtonComponent} from "./TSLibs/Components/Button/Button";
-import {PopupComponent} from "./TSLibs/Components/Popup/Popup";
-import {PaginationComponent} from "./TSLibs/Components/Pagination/Pagination";
-import {RollerComponent} from "./TSLibs/Components/Roller/Roller";
 import {RollerRender} from "./TSLibs/Renders/Roller/Roller";
 import {NavigationRender} from "./TSLibs/Renders/Navigation/Navigation";
 import {PaginationRender} from "./TSLibs/Renders/Pagination/Pagination";
@@ -39,11 +34,43 @@ import {TreeRender} from "./TSLibs/Renders/Tree/Tree";
 // let bdis = new ButtonComponent('DISABLED', 'disabled', '', '')
 // // b._getTemplate()
 // document.getElementsByClassName('btn-container')[0].appendChild(bdis.node)
+class OwllerUI {
+    renders: Array<any> = [RollerRender, NavigationRender, PaginationRender, ButtonRender, TreeRender];
+    instants: Array<any> = [];
+    constructor() {
+        this.init();
+    }
+
+    init(): void {
+        if(this.instants.length > 0) {
+            return;
+        }
+        for (let i = 0; i < this.renders.length; i++) {
+            this.instants.push(new this.renders[i]);
+        }
+    }
+
+    render(): void {
+        for (let i = 0; i < this.instants.length; i++) {
+            this.instants[i].render();
+        }
+    }
+}
 
 
 
-new RollerRender()
-new NavigationRender()
-new PaginationRender()
-new ButtonRender()
-new TreeRender()
+(function (e, t) {
+    new t();
+    return t;
+})(this, OwllerUI);
+
+// new OwllerUI();
+
+// window.OwllerUI = OwllerUI;
+
+
+// new RollerRender()
+// new NavigationRender()
+// new PaginationRender()
+// new ButtonRender()
+// new TreeRender()

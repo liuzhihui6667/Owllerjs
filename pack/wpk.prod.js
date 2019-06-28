@@ -25,12 +25,13 @@ function resolve (dir) {
 const wpkconfig = {
     entry: {
         app: [
-            './src/index.js'
+            './src/entry.ts'
         ]
     },
     output: {
         path: path.resolve(__dirname, '../dist/'),
-        filename: 'owller.js'
+        filename: 'owller.js',
+        library: 'OwllerUI'
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -77,11 +78,15 @@ const wpkconfig = {
         ])
     ],
     resolve: {
-        extensions: ['.js']
+        extensions: ['.js', '.ts']
     },
 
     module: {
         rules: [
+            {
+                test: /\.tsx?$/,
+                loader: "ts-loader"
+            },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',

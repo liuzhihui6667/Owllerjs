@@ -18,7 +18,7 @@ class NavigationRender {
 
     render(): void {
         let tags = this.getNodes();
-        let tagsCount = tags.length
+        let tagsCount = tags.length;
         for (let i = 0; i < tagsCount; i++) {
             this.getConfig(tags[0]);
             let retEl = new NavigationComponent(this.dir, this.itemlist, this.showall, this.onlyone, this.menu, this.theme, this.fit, this.itemHeight, this.itemWidth);
@@ -60,8 +60,8 @@ class NavigationRender {
                 to: '',
                 list: []
             }
-            if(chilrenTags[i].getElementsByTagName('owl-text').length > 0) {
-                item.text = chilrenTags[i].getElementsByTagName('owl-text')[0].innerHTML
+            if(chilrenTags[i].getElementsByTagName('owl-nav-text').length > 0) {
+                item.text = chilrenTags[i].getElementsByTagName('owl-nav-text')[0].innerHTML
             } else {
                 item.text = ''
             }

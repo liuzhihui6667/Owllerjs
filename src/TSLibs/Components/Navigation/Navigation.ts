@@ -90,25 +90,15 @@ class NavigationComponent extends Components{
     }
 
     _setEvent() {
-
         if(this.dir === 'v') {
             this.__setEventV();
         } else {
-            // for (let index = 0; index < li.length; index++) {
-            //     li[index].addEventListener('click', function (e) {
-            //         let ha = that.node.getElementsByClassName('owl-nav-item-h-active')
-            //         for(let index = 0; index < ha.length; index++) {
-            //             ha[index].classList.remove('owl-nav-item-h-active')
-            //         }
-            //         this.getElementsByTagName('span')[0].classList.add('owl-nav-item-h-active')
-            //         e.stopPropagation()
-            //     })
-            // }
+
         }
     }
 
     __setEventV() {
-        let that = this
+        let that = this;
         let li = that.node.getElementsByTagName('li');
         for (let index = 0; index < li.length; index++) {
             li[index].addEventListener('click', function (e) {
