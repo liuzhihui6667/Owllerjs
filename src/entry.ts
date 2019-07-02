@@ -59,10 +59,10 @@ class OwllerUI {
 
 
 
-(function (e, t) {
-    new t();
-    return t;
-})(this, OwllerUI);
+// (function (e, t) {
+//     new t();
+//     return 1;
+// })(this, OwllerUI);
 
 // new OwllerUI();
 
@@ -74,3 +74,5 @@ class OwllerUI {
 // new PaginationRender()
 // new ButtonRender()
 // new TreeRender()
+let o = new OwllerUI();
+export {OwllerUI};

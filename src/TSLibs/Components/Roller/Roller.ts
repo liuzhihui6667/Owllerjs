@@ -62,6 +62,14 @@ class RollerComponent extends Components {
      */
     width: number;
     /**
+     * 是否自适应
+     */
+    fit: boolean;
+    /**
+     * 单位，默认为px，当fit为true时单位为 %
+     */
+    unit: string;
+    /**
      * 子元素数组列表
      */
     itemList: Array<HTMLElement>;
@@ -86,6 +94,7 @@ class RollerComponent extends Components {
                 type?: string,
                 height?: number,
                 width?: number,
+                fit?: boolean,
                 showNum?: number,
                 scrollNum?: number) {
         super();
@@ -101,14 +110,27 @@ class RollerComponent extends Components {
         this.itemList = this._checkParam(itemList, []);
         this.showNum = this._checkParam(showNum, 1);
         this.scrollNum = this._checkParam(scrollNum, 1);
-        if(this.dir === 'h') {
-            this.itemWidth = 1/this.showNum*this.width
-            this.itemHeight = this.height
+        this.fit = this._checkParam(fit, false);
+        if(this.fit) {
+            this.unit = '%';
+            if(this.dir === 'h') {
+                this.itemWidth = 1/(this.itemList.length) * 100;
+                this.itemHeight = 100;
+            } else {
+                this.itemWidth = 100;
+                this.itemHeight = 1/(this.itemList.length) * 100;
+            }
         } else {
-            this.itemWidth = this.width
-            this.itemHeight = 1/this.showNum*this.height
+            this.unit = 'px';
+            if(this.dir === 'h') {
+                this.itemWidth = 1/this.showNum*this.width;
+                this.itemHeight = this.height
+            } else {
+                this.itemWidth = this.width;
+                this.itemHeight = 1/this.showNum*this.height
+            }
         }
-        this.itemNodesArr = []
+        this.itemNodesArr = [];
         this.init()
     }
     init(): void {
@@ -125,66 +147,99 @@ class RollerComponent extends Components {
 
     __getNode(): Element {
         let node = this._createElement('div', ['owl-roller-container']);
-        node.style.height = this.height + 'px';
-        node.style.width = this.width + 'px';
+        if(this.fit) {
+            node.style.width = '100%';
+            node.style.height = '100%';
+        } else {
+            node.style.height = this.height + 'px';
+            node.style.width = this.width + 'px';
+        }
         let overflowContainer = this._createElement('div', ['owl-roller-overflow-container']);
         let itemSlideWrapperA, itemSlideWrapperB;
         if(this.dir === 'h') {
             itemSlideWrapperA = this._createElement('div', ['owl-roller-item-slider-wrapper', 'owl-roller-slider-show']);
-            itemSlideWrapperA.style.width = this.itemList.length * this.itemWidth + 'px';
-            itemSlideWrapperA.style.height = '100%';
-            itemSlideWrapperA.style.transform = 'translateX(-' + this.itemWidth * this.curValue + 'px)';
             itemSlideWrapperB = this._createElement('div', ['owl-roller-item-slider-wrapper']);
-            itemSlideWrapperB.style.width = this.itemList.length * this.itemWidth + 'px';
+            if(this.fit) {
+                itemSlideWrapperA.style.width = this.itemList.length/this.showNum * 100 + this.unit;
+                itemSlideWrapperB.style.width = this.itemList.length/this.showNum * 100 + this.unit;
+            } else {
+                itemSlideWrapperA.style.width = this.itemList.length * this.itemWidth + this.unit;
+                itemSlideWrapperB.style.width = this.itemList.length * this.itemWidth + this.unit;
+            }
+            itemSlideWrapperA.style.height = '100%';
+            itemSlideWrapperA.style.transform = 'translateX(-' + this.itemWidth * this.curValue + this.unit + ')';
             itemSlideWrapperB.style.height = '100%';
-            itemSlideWrapperB.style.transform = 'translateX(-' + this.itemWidth * this.itemList.length + 'px)';
+            itemSlideWrapperB.style.transform = 'translateX(-' + this.itemWidth * this.itemList.length + this.unit + ')';
         } else {
             itemSlideWrapperA = this._createElement('div', ['owl-roller-item-slider-wrapper', 'owl-roller-slider-show']);
-            itemSlideWrapperA.style.width = '100%';
-            itemSlideWrapperA.style.height = this.itemList.length * this.itemHeight + 'px';
-            itemSlideWrapperA.style.transform = 'translateY(-' + this.itemHeight * this.curValue + 'px)';
             itemSlideWrapperB = this._createElement('div', ['owl-roller-item-slider-wrapper']);
+            if(this.fit) {
+                itemSlideWrapperA.style.height = this.itemList.length/this.showNum * 100 + this.unit;
+                itemSlideWrapperB.style.height = this.itemList.length/this.showNum * 100 + this.unit;
+            }
+            itemSlideWrapperA.style.width = '100%';
+
+            itemSlideWrapperA.style.transform = 'translateY(-' + this.itemHeight * this.curValue + this.unit + ')';
+
             itemSlideWrapperB.style.width = '100%';
-            itemSlideWrapperB.style.height = this.itemList.length * this.itemHeight + 'px';
-            itemSlideWrapperB.style.transform = 'translateY(-' + this.itemHeight * this.itemList.length + 'px)';
+
+            itemSlideWrapperB.style.transform = 'translateY(-' + this.itemHeight * this.itemList.length + this.unit + ')';
         }
 
         overflowContainer.appendChild(itemSlideWrapperA);
         overflowContainer.appendChild(itemSlideWrapperB);
+        let tipWrapper = this.__getTipTemp();
+
+        for (let i = 0; i < this.itemList.length; i++) {
+            let itemWrapper = this._createElement('div', ['owl-roller-item-wrapper']);
+            itemWrapper.style.width = this.itemWidth + this.unit;
+            itemWrapper.style.height = this.itemHeight + this.unit;
+            let itemel = this.itemList[i];
+            itemel.classList.add('owl-roller-item-box');
+            itemWrapper.appendChild(itemel);
+            itemSlideWrapperA.appendChild(itemWrapper);
+            itemSlideWrapperB.appendChild(itemWrapper.cloneNode(true));
+
+        }
+        node.appendChild(overflowContainer);
+        node.appendChild(this.__getToolTemp());
+        node.appendChild(tipWrapper)
+        return node
+    }
+
+    __getTipTemp(): HTMLElement {
         let tipWrapper = this._createElement('div', ['owl-roller-tip-wrapper']);
-        tipWrapper.style.width = this.itemHeight + 'px'
         if(this.dir === 'h') {
-            tipWrapper.style.left = 'calc(50% - ' + this.itemHeight/2 + 'px)'
+            tipWrapper.classList.add('owl-roller-tip-wrapper-h');
         } else {
-            tipWrapper.style.transform = 'rotate(90deg) rotateX(180deg)'
-            tipWrapper.style.margin = 'unset'
-            tipWrapper.style.right = '10px'
-            tipWrapper.style.transformOrigin = 'bottom right'
-            tipWrapper.style.bottom = '0px'
+            tipWrapper.classList.add('owl-roller-tip-wrapper-v');
         }
         switch (this.indicator) {
             case 'dot':
                 tipWrapper.classList.add('owl-roller-tip-dot');
-                break
+                if(this.dir === 'v') {
+                    tipWrapper.style.top = 'calc(50% - ' + (this.itemList.length * 14)/2 + 'px)'
+                }
+                break;
             case 'line':
                 tipWrapper.classList.add('owl-roller-tip-line');
-                break
+                if(this.dir === 'v') {
+                    tipWrapper.style.top = 'calc(50% - ' + (this.itemList.length * 24)/2 + 'px)'
+                }
+                break;
             default:
                 tipWrapper.classList.add('owl-roller-tip-dot');
                 break
         }
 
         for (let i = 0; i < this.itemList.length; i++) {
-            let itemWrapper = this._createElement('div', ['owl-roller-item-wrapper']);
-            itemWrapper.style.width = this.itemWidth + 'px';
-            itemWrapper.style.height = this.itemHeight + 'px';
-            let itemel = this.itemList[i];
-            itemel.classList.add('owl-roller-item-box');
-            itemWrapper.appendChild(itemel);
-            itemSlideWrapperA.appendChild(itemWrapper);
-            itemSlideWrapperB.appendChild(itemWrapper.cloneNode(true));
             if(this.indicator !== 'none') {
                 let tipEl = this._createElement('div', ['owl-roller-tip']);
+                if(this.dir === 'h') {
+                    tipEl.classList.add('owl-roller-tip-h')
+                } else {
+                    tipEl.classList.add('owl-roller-tip-v')
+                }
                 tipEl.dataset.value = i.toString();
                 if(i === this.curValue) {
                     tipEl.classList.add('owl-roller-tip-active')
@@ -192,10 +247,7 @@ class RollerComponent extends Components {
                 tipWrapper.appendChild(tipEl);
             }
         }
-        node.appendChild(overflowContainer);
-        node.appendChild(this.__getToolTemp());
-        node.appendChild(tipWrapper)
-        return node
+        return tipWrapper
     }
 
     __getToolTemp(): HTMLElement {
@@ -280,39 +332,42 @@ class RollerComponent extends Components {
     __move(moveDir: string, moveNum: number = 1): void {
         // 如果不能循环播放则播放到头
         if(!this.loop) {
+            if(moveDir === 'pre' && this.curValue === 0) {
+                return;
+            }
+            if(moveDir === 'next' && this.curValue === this.itemList.length - 1) {
+                return;
+            }
             if(moveDir === 'next' && (this.curValue + moveNum) > this.itemList.length - 1) {
                 this.__move('next', this.itemList.length - this.curValue - 1)
                 return
             }
             if(moveDir === 'pre' && (this.curValue - moveNum) < 0) {
-                this.__move('pre', this.curValue)
+                this.__move('pre', this.curValue);
                 return
-            }
-            if(this.curValue === this.itemList.length - 1) {
-                return;
             }
         }
         let newValue;
         switch (moveDir) {
             case 'next':
                 newValue = (this.curValue + moveNum)%this.itemList.length;
-                if(this.curValue + moveNum > this.itemList.length - 1) {
-                    let slider = this.node.getElementsByClassName('owl-roller-item-slider-wrapper')
-                    let that = this
+                if(this.curValue + moveNum + this.showNum - 1 > this.itemList.length - 1) {
+                    let slider = this.node.getElementsByClassName('owl-roller-item-slider-wrapper');
+                    let that = this;
                     for (let i = 0; i < slider.length; i++) {
                         if(!OWLNODE.hasClass(slider[i], 'owl-roller-slider-show')) {
                             slider[i].style.transition = 'transform 0ms ease 0s'
                             if(this.dir === 'h') {
-                                slider[i].style.transform = 'translateX('+ this.itemWidth * (this.itemList.length - this.curValue) +'px)'
+                                slider[i].style.transform = 'translateX('+ this.itemWidth * (this.itemList.length - this.curValue) + this.unit +')';
                             } else {
-                                slider[i].style.transform = 'translateY('+ this.itemHeight * (this.itemList.length - this.curValue) +'px)'
+                                slider[i].style.transform = 'translateY('+ this.itemHeight * (this.itemList.length - this.curValue) + this.unit +')'
                             }
                             setTimeout(function () {
                                 slider[i].style.transition = 'transform 500ms ease 0s'
                                 if(that.dir === 'h') {
-                                    slider[i].style.transform = 'translateX(-'+ that.itemWidth * (newValue) +'px)'
+                                    slider[i].style.transform = 'translateX(-'+ that.itemWidth * (newValue) + that.unit +')'
                                 } else {
-                                    slider[i].style.transform = 'translateY(-'+ that.itemHeight * (newValue) +'px)'
+                                    slider[i].style.transform = 'translateY(-'+ that.itemHeight * (newValue) + that.unit +')'
                                 }
                                 slider[i].classList.add('owl-roller-slider-show')
                             }, 100)
@@ -320,9 +375,9 @@ class RollerComponent extends Components {
                             setTimeout(function () {
                                 slider[i].style.transition = 'transform 500ms ease 0s'
                                 if(that.dir === 'h') {
-                                    slider[i].style.transform = 'translateX(-'+ that.itemWidth * (newValue + that.itemList.length) +'px)'
+                                    slider[i].style.transform = 'translateX(-'+ that.itemWidth * (newValue + that.itemList.length) + that.unit +')'
                                 } else {
-                                    slider[i].style.transform = 'translateY(-'+ that.itemHeight * (newValue + that.itemList.length) +'px)'
+                                    slider[i].style.transform = 'translateY(-'+ that.itemHeight * (newValue + that.itemList.length) + that.unit +')'
                                 }
                                 slider[i].classList.remove('owl-roller-slider-show')
                             }, 100)
@@ -332,11 +387,10 @@ class RollerComponent extends Components {
                     let show = this.node.getElementsByClassName('owl-roller-slider-show')[0]
                     show.style.transition = 'transform 500ms ease 0s'
                     if(this.dir === 'h') {
-                        show.style.transform = 'translateX(-'+ newValue * this.itemWidth +'px)'
+                        show.style.transform = 'translateX(-'+ newValue * this.itemWidth + this.unit +')'
                     } else {
-                        show.style.transform = 'translateY(-'+ newValue * this.itemHeight +'px)'
+                        show.style.transform = 'translateY(-'+ newValue * this.itemHeight + this.unit +')'
                     }
-
                 }
                 break;
             case 'pre':
@@ -348,16 +402,16 @@ class RollerComponent extends Components {
                         if(!OWLNODE.hasClass(slider[i], 'owl-roller-slider-show')) {
                             slider[i].style.transition = 'transform 0ms ease 0s';
                             if(this.dir === 'h') {
-                                slider[i].style.transform = 'translateX(-'+ this.itemWidth * (this.curValue + this.itemList.length) +'px)'
+                                slider[i].style.transform = 'translateX(-'+ this.itemWidth * (this.curValue + this.itemList.length) + this.unit +')'
                             } else {
-                                slider[i].style.transform = 'translateY(-'+ this.itemHeight * (this.curValue + this.itemList.length) +'px)'
+                                slider[i].style.transform = 'translateY(-'+ this.itemHeight * (this.curValue + this.itemList.length) + this.unit +')'
                             }
                             setTimeout(function () {
                                 slider[i].style.transition = 'transform 500ms ease 0s'
                                 if(that.dir === 'h') {
-                                    slider[i].style.transform = 'translateX(-'+ that.itemWidth * (newValue) +'px)'
+                                    slider[i].style.transform = 'translateX(-'+ that.itemWidth * (newValue) + that.unit +')'
                                 } else {
-                                    slider[i].style.transform = 'translateY(-'+ that.itemHeight * (newValue) +'px)'
+                                    slider[i].style.transform = 'translateY(-'+ that.itemHeight * (newValue) + that.unit +')'
                                 }
                                 slider[i].classList.add('owl-roller-slider-show')
                             }, 100)
@@ -365,23 +419,22 @@ class RollerComponent extends Components {
                             setTimeout(function () {
                                 slider[i].style.transition = 'transform 500ms ease 0s'
                                 if(that.dir === 'h') {
-                                    slider[i].style.transform = 'translateX('+ that.itemWidth * (that.itemList.length - newValue) +'px)'
+                                    slider[i].style.transform = 'translateX('+ that.itemWidth * (that.itemList.length - newValue) + that.unit +')'
                                 } else {
-                                    slider[i].style.transform = 'translateY('+ that.itemHeight * (that.itemList.length - newValue) +'px)'
+                                    slider[i].style.transform = 'translateY('+ that.itemHeight * (that.itemList.length - newValue) + that.unit +'px)'
                                 }
                                 slider[i].classList.remove('owl-roller-slider-show')
                             }, 100)
                         }
                     }
                 } else {
-                    let show = this.node.getElementsByClassName('owl-roller-slider-show')[0]
-                    show.style.transition = 'transform 500ms ease 0s'
+                    let show = this.node.getElementsByClassName('owl-roller-slider-show')[0];
+                    show.style.transition = 'transform 500ms ease 0s';
                     if(this.dir === 'h') {
-                        show.style.transform = 'translateX(-'+ newValue * this.itemWidth +'px)'
+                        show.style.transform = 'translateX(-'+ newValue * this.itemWidth + this.unit +')'
                     } else {
-                        show.style.transform = 'translateY(-'+ newValue * this.itemHeight +'px)'
+                        show.style.transform = 'translateY(-'+ newValue * this.itemHeight + this.unit +')'
                     }
-
                 }
                 break;
             default:

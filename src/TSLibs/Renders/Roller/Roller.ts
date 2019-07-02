@@ -11,8 +11,8 @@ class RollerRender {
     height: number;
     width: number;
     type: string;
-    itemList: Array<HTMLElement> = [];
     showNum: number;
+    fit: boolean;
     constructor() {
         this.render()
     }
@@ -23,7 +23,7 @@ class RollerRender {
         for (let i = 0; i < tagsCount; i++) {
             let itemList = this.getConfig(tags[0])
             let retEl = new RollerComponent(this.dir, this.curValue, itemList, this.loop,
-                this.auto, this.speed, this.tip, this.type, this.height, this.width, this.showNum)
+                this.auto, this.speed, this.tip, this.type, this.height, this.width, this.fit, this.showNum)
             tags[0].replaceWith(retEl.node)
         }
     }
@@ -43,6 +43,7 @@ class RollerRender {
         this.height = tag.getAttribute('height') === null ? 250 : parseInt(tag.getAttribute('height'))
         this.width = tag.getAttribute('width') === null ? 500 : parseInt(tag.getAttribute('width'))
         this.showNum = tag.getAttribute('shownum') === null ? 1 : parseInt(tag.getAttribute('shownum'))
+        this.fit = tag.getAttribute('fit') === null ? false : (tag.getAttribute('fit') === 'true')
         let tagLength = tag.children.length
         let itemList: Array<HTMLElement> = []
         for (let i = 0; i < tagLength; i++) {

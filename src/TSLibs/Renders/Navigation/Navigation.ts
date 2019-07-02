@@ -22,7 +22,7 @@ class NavigationRender {
         for (let i = 0; i < tagsCount; i++) {
             this.getConfig(tags[0]);
             let retEl = new NavigationComponent(this.dir, this.itemlist, this.showall, this.onlyone, this.menu, this.theme, this.fit, this.itemHeight, this.itemWidth);
-            tags[i].replaceWith(retEl.node)
+            tags[0].replaceWith(retEl.node)
         }
     }
 

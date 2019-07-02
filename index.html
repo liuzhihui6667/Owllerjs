@@ -44,7 +44,7 @@
             top: calc(50% - 200px);
         }
         .roller-container {
-            width: 900px;
+            width: 50%;
             height: 400px;
             position: absolute;
             left: calc(50% - 450px);
@@ -55,7 +55,7 @@
             height: 400px;
             position: absolute;
             left: 300px;
-            top: 400px;
+            top: 0px;
         }
         .owl-nav-container {
             position: relative;
@@ -198,31 +198,31 @@
     <!--<br>-->
     <!--<owl-page theme="light" total="9" pagesize="1" on-change="pageChange"></owl-page>-->
 <!--</div>-->
-<!--<div class="roller-container">-->
-    <!--<owl-roller dir="h" value="0" loop="true" auto="false" tip="dot" speed="1000" shownum="1" width="900" height="400">-->
-        <!--<div style="background-color: red;" class="roller-item" onclick="alert(777777)">-->
-            <!--1-->
-        <!--</div>-->
-        <!--<div style="background-color: orange;" class="roller-item" onclick="alert(9999)">-->
-            <!--2-->
-        <!--</div>-->
-        <!--<div style="background-color: green;" class="roller-item">-->
-            <!--3-->
-        <!--</div>-->
-        <!--<div style="background-color: blue;" class="roller-item">-->
-            <!--4-->
-        <!--</div>-->
-        <!--<div style="background-color: gold;" class="roller-item">-->
-            <!--5-->
-        <!--</div>-->
-        <!--<div style="background-color: brown;" class="roller-item">-->
-            <!--6-->
-        <!--</div>-->
-    <!--</owl-roller>-->
-<!--</div>-->
+<div class="roller-container">
+    <owl-roller dir="h" value="0" loop="true" auto="false" tip="line" speed="1000" shownum="3" fit="true">
+        <div style="background-color: red;" class="roller-item" onclick="alert(777777)">
+            1
+        </div>
+        <div style="background-color: orange;" class="roller-item" onclick="alert(9999)">
+            2
+        </div>
+        <div style="background-color: green;" class="roller-item">
+            3
+        </div>
+        <div style="background-color: blue;" class="roller-item">
+            4
+        </div>
+        <div style="background-color: gold;" class="roller-item">
+            5
+        </div>
+        <div style="background-color: brown;" class="roller-item">
+            6
+        </div>
+    </owl-roller>
+</div>
 
 <!--<div class="roller-2-container">-->
-    <!--<owl-roller dir="v" value="0" loop="true" auto="false" shownum="3" width="300" height="400">-->
+    <!--<owl-roller dir="v" value="0" loop="true" auto="false" shownum="1" width="300" height="400">-->
         <!--<div style="background-color: red;" class="roller-item-v">-->
             <!--1-->
         <!--</div>-->
@@ -238,11 +238,11 @@
     <!--</owl-roller>-->
 <!--</div>-->
 
-<div class="container">
-    <owl-tree>
+<!--<div class="container">-->
+    <!--<owl-tree>-->
 
-    </owl-tree>
-</div>
+    <!--</owl-tree>-->
+<!--</div>-->
 </body>
 <script>
 function pageChange(pageNum) {

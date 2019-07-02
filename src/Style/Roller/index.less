@@ -76,18 +76,26 @@
 }
 
 .owl-roller-tip-wrapper {
-  width: 100%;
   box-sizing: border-box;
-  height: 20px;
-  line-height: 20px;
   position: absolute;
-  bottom: 10px;
-  text-align: center;
-  margin: auto;
   z-index: 3;
 }
 
-.owl-roller-tip-dot .owl-roller-tip {
+.owl-roller-tip-wrapper-h {
+  width: 100%;
+  height: 20px;
+  line-height: 20px;
+  bottom: 10px;
+  text-align: center;
+}
+
+.owl-roller-tip-wrapper-v {
+  width: 20px;
+  right: 10px;
+  top: 0;
+}
+
+.owl-roller-tip-dot .owl-roller-tip-h {
   width: 8px;
   height: 8px;
   border-radius: 8px;
@@ -99,7 +107,19 @@
   transition: opacity .3s;
 }
 
-.owl-roller-tip-line .owl-roller-tip {
+.owl-roller-tip-dot .owl-roller-tip-v {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background-color: #000000;
+  margin: auto;
+  margin-bottom: 6px;
+  opacity: .2;
+  cursor: pointer;
+  transition: opacity .3s;
+}
+
+.owl-roller-tip-line .owl-roller-tip-h {
   width: 18px;
   height: 100%;
   display: inline-block;
@@ -108,7 +128,15 @@
   position: relative;
 }
 
-.owl-roller-tip-line .owl-roller-tip::before {
+.owl-roller-tip-line .owl-roller-tip-v {
+  height: 18px;
+  width: 100%;
+  margin-bottom: 6px;
+  cursor: pointer;
+  position: relative;
+}
+
+.owl-roller-tip-line .owl-roller-tip-h::before {
   content: "";
   width: 100%;
   height: 3px;
@@ -122,17 +150,40 @@
   top: calc(50% - 1px);
 }
 
+.owl-roller-tip-line .owl-roller-tip-v::before {
+  content: "";
+  height: 100%;
+  width: 3px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: #000000;
+  opacity: .2;
+  transition: all .3s;
+  display: block;
+  position: absolute;
+  left: calc(50% - 1px);
+}
+
 .owl-roller-tip-dot .owl-roller-tip-active {
   opacity: .5;
 }
 
-.owl-roller-tip-line .owl-roller-tip-active {
+.owl-roller-tip-line .owl-roller-tip-h.owl-roller-tip-active {
   width: 24px;
 }
 
-.owl-roller-tip-line .owl-roller-tip-active:before {
+.owl-roller-tip-line .owl-roller-tip-v.owl-roller-tip-active {
+  height: 24px;
+}
+
+.owl-roller-tip-line .owl-roller-tip-h.owl-roller-tip-active:before {
   opacity: .7;
   transform: translateY(-1px);
+}
+
+.owl-roller-tip-line .owl-roller-tip-v.owl-roller-tip-active:before {
+  opacity: .7;
+  transform: translateX(-1px);
 }
 
 .owl-roller-item-box {

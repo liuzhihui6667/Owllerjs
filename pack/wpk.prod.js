@@ -31,7 +31,8 @@ const wpkconfig = {
     output: {
         path: path.resolve(__dirname, '../dist/'),
         filename: 'owller.js',
-        library: 'OwllerUI'
+        library: 'OwllerUI',
+        libraryTarget: 'var'
     },
     plugins: [
         new webpack.DefinePlugin({
