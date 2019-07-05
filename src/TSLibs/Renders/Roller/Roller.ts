@@ -39,7 +39,7 @@ class RollerRender {
         this.loop = tag.getAttribute('loop') === null ? false : (tag.getAttribute('loop') === 'true')
         this.auto = tag.getAttribute('auto') === null ? false : (tag.getAttribute('auto') === 'true')
         this.speed = tag.getAttribute('speed') === null ? 3000 : parseInt(tag.getAttribute('speed'))
-        this.tip = tag.getAttribute('tip') === null ? 'dot' : tag.getAttribute('tip')
+        this.tip = tag.getAttribute('tip') === null ? 'none' : tag.getAttribute('tip')
         this.height = tag.getAttribute('height') === null ? 250 : parseInt(tag.getAttribute('height'))
         this.width = tag.getAttribute('width') === null ? 500 : parseInt(tag.getAttribute('width'))
         this.showNum = tag.getAttribute('shownum') === null ? 1 : parseInt(tag.getAttribute('shownum'))

@@ -148,7 +148,6 @@ class PaginationComponent extends Components {
     setChangeCallback(callback): void {
         this.onChangeCallback = callback
     }
-
 }
 
 export {PaginationComponent}
