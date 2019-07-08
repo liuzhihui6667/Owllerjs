@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body {
+        background-color: #1e9fff;
+    }
+    .owl-tip-container {
+        display: inline-block;
+        width: auto;
+        height: auto;
+        position: relative;
+    }
+
+    .owl-tip-wrapper {
+        position: absolute;
+        left: 100%;
+        top: 0%;
+        height: auto;
+        width: 300px;
+    }
+    .owl-tip-text-wrapper {
+        position: absolute;
+        left: 18px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 1px rgba(211, 211, 211, 0.5);
+        background-color: #ffffff;
+    }
+
+    .owl-tip-text-title {
+        font-size: 18px;
+        line-height: 32px;
+        border-bottom: 1px solid rgba(211, 211, 211, 0.7);
+        white-space: nowrap;
+    }
+    .owl-tip-text {
+        font-size: 14px;
+        line-height: 26px;
+    }
+
+    .owl-tip-tip-wrapper {
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        top: 15px;
+        left: 4px;
+        border-width: 7px;
+        border-color: transparent;
+        border-right-color: #ffffff;
+        border-style: solid;
+        box-sizing: border-box;
+        z-index: 33;
+
+    }
+
+</style>
+<body>
+    <div class="owl-tip-container" style="margin-left: 400px; margin-top: 300px;">
+        <div style="width: 230px;height: 300px;background-color: #e9381e"></div>
+        <div class="owl-tip-wrapper">
+            <div class="owl-tip-tip-wrapper"></div>
+            <div class="owl-tip-text-wrapper">
+                <div class="owl-tip-text-title">
+                    我是一个标题呀呀呀呀呀呀呀
+                </div>
+                <div class="owl-tip-text">
+                    我是一个提示框我是一个提示框我是一个提示框我是一个提示框我是一个提示框我是一个提示框
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -3,6 +3,7 @@ import {NavigationRender} from "./TSLibs/Renders/Navigation/Navigation";
 import {PaginationRender} from "./TSLibs/Renders/Pagination/Pagination";
 import {ButtonRender} from "./TSLibs/Renders/Button/Button";
 import {TreeRender} from "./TSLibs/Renders/Tree/Tree";
+import {TipsRender} from "./TSLibs/Renders/Tips/Tips";
 
 // let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light', 'fade')
 //
@@ -35,7 +36,7 @@ import {TreeRender} from "./TSLibs/Renders/Tree/Tree";
 // // b._getTemplate()
 // document.getElementsByClassName('btn-container')[0].appendChild(bdis.node)
 class OwllerUI {
-    renders: Array<any> = [RollerRender, NavigationRender, PaginationRender, ButtonRender, TreeRender];
+    renders: Array<any> = [RollerRender, NavigationRender, PaginationRender, ButtonRender, TreeRender, TipsRender];
     instants: Array<any> = [];
     constructor() {
         this.init();
