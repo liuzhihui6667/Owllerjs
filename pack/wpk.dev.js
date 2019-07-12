@@ -29,7 +29,8 @@ const wpkconfig = {
         app: ['./src/entry.ts']
     },
     output: {
-
+        library: 'OwllerUI',
+        libraryTarget: 'var'
     },
     devServer: {
         clientLogLevel: 'warning',

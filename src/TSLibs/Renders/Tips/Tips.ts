@@ -2,6 +2,13 @@ import {TipsComponent} from "../../Components/Tips/Tips";
 
 
 class TipsRender {
+
+    componentInstances: Array<TipsComponent> = [];
+    tagsParams: Array<object> = [];
+    /**
+     * 初始是否显示，默认不显示
+     */
+    show: boolean;
     /**
      * 弹出方向
      * top-right, top-left, center...
@@ -42,19 +49,29 @@ class TipsRender {
      * tip高度，若是自定义tip，则必须传这个值
      */
     height: number = 100;
+    /**
+     * backgroundColor
+     */
+    bgc: string = '#ffffff';
+    /**
+     * 组件大小
+     */
+    size: string = 'default';
     constructor() {
-        this.render()
+        this.render();
+        this.bindEvents();
     }
 
     render(): void {
         let tags = this.getNodes();
         let tagsCount = tags.length;
         for (let i = 0; i < tagsCount; i++) {
-            let itemList = this.getConfig(tags[0]);
-            let retEl = new TipsComponent(this.content, this.dir, this.theme, this.title,
+            let itemList = this.getConfig(tags[0], i);
+            let component = new TipsComponent(this.content, this.dir, this.theme, this.title,
                 this.text, this.showType, this.width,
-                this.custom, this.customElement, this.height);
-            tags[0].replaceWith(retEl.node)
+                this.custom, this.customElement, this.height, this.bgc, this.size, this.show);
+            this.componentInstances[i] = component;
+            tags[0].replaceWith(component.node)
         }
     }
 
@@ -62,11 +79,15 @@ class TipsRender {
         return document.getElementsByTagName('owl-tip');
     }
 
-    getConfig(tag: Element): void {
+    getConfig(tag: Element, index: number): void {
         this.dir = tag.getAttribute('dir') === null ? 'right-top' : tag.getAttribute('dir');
         this.theme = tag.getAttribute('theme') === null ? 'light' : tag.getAttribute('theme');
+        this.bgc = tag.getAttribute('color') === null ? '#ffffff' : tag.getAttribute('color');
+        this.size = tag.getAttribute('size') === null ? 'default' : tag.getAttribute('size');
         this.showType = tag.getAttribute('trigger') === null ? 'click' : tag.getAttribute('trigger');
-        this.width = tag.getAttribute('width') === null ? 160 : parseFloat(tag.getAttribute('width'));
+        this.width = tag.getAttribute('width') === null ? 0 : parseFloat(tag.getAttribute('width'));
+        this.height = tag.getAttribute('height') === null ? 0 : parseFloat(tag.getAttribute('height'));
+        this.show = tag.getAttribute('show') === null ? false : tag.getAttribute('show') === 'true';
         let tipContent = tag.getElementsByTagName('owl-tip-content');
         if(tipContent.length > 0) {
             this.content = tipContent[0].children;
@@ -93,9 +114,24 @@ class TipsRender {
             } else {
                 this.customElement = tag.getElementsByTagName('owl-tip')
             }
-            this.height = tag.getAttribute('height') === null ? 100 : parseFloat(tag.getAttribute('height'));
         } else {
             this.customElement = tag.getElementsByTagName('owl-tip')
+        }
+        let onChange = tag.getAttribute('on-change') === null ? '' : tag.getAttribute('on-change')
+        this.tagsParams[index] = {
+            onChange: onChange
+        }
+    }
+
+    bindEvents(): void {
+        document.onreadystatechange = () => {
+            if(document.readyState == 'complete') {
+                for (let i = 0; i < this.componentInstances.length; i++) {
+                    if(this.tagsParams[i]['onChange'] !== '') {
+                        this.componentInstances[i].setChangeCallback(this.tagsParams[i]['onChange'])
+                    }
+                }
+            }
         }
     }
 }

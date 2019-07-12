@@ -17,14 +17,15 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #dddddd;
+            background-color: #fff;
         }
         .container {
             width: 500px;
-            height: 1000px;
-            position: absolute;
-            left: calc(50% - 400px);
-            top: calc(50% - 200px);
+            margin-top: 180px;
+            margin-left: 400px;
+            /*position: absolute;*/
+            /*left: calc(50% - 400px);*/
+            /*top: calc(50% - 200px);*/
         }
         .btn-container {
             width: 800px;
@@ -242,13 +243,39 @@
 <!--    <owl-tree>-->
 
 <!--    </owl-tree>-->
-    <owl-tip width="420" dir="right" custom="true" height="150">
+    <owl-tip custom="false" size="large" color="#1e9876" on-change="tipShow" show="true">
         <owl-tip-content>
-            <div style="background-color: #e9381e;width: 200px;height: 130px;">
+            <div style="background-color: #e9381e;width: 200px;height: 130px;text-align: center;line-height: 30px;">
+                我是一个内容
             </div>
         </owl-tip-content>
         <owl-tip-custom-content>
-            <div style="background-color: #1e9fff;width: 420px;height: 150px;"></div>
+            <div style="background-color: #fff;width: 420px;height: 150px;">
+                woshi yige 这是一个提示框这是一个提示框这是一个提示框
+            </div>
+        </owl-tip-custom-content>
+<!--        <owl-tip-title>-->
+<!--            我是一个标题-->
+<!--        </owl-tip-title>-->
+        <owl-tip-text>
+            这是一个提示框
+        </owl-tip-text>
+<!--        <owl-tip-text>-->
+<!--            这是一个提示框这是一个提示框这是一个提示框-->
+<!--        </owl-tip-text>-->
+    </owl-tip>
+</div>
+<div style="margin-top: 180px;margin-left: 300px;">
+    <owl-tip dir="" size="large" custom="false" theme="error" on-change="yyy" show="2">
+        <owl-tip-content>
+            <div class="www" style="background-color: #e9381e;width: 200px;height: 130px;text-align: center;line-height: 30px;">
+                我是一个内容
+            </div>
+        </owl-tip-content>
+        <owl-tip-custom-content>
+            <div style="background-color: #fff;width: 420px;height: 150px;">
+                woshi yige 这是一个提示框这是一个提示框这是一个提示框
+            </div>
         </owl-tip-custom-content>
         <owl-tip-title>
             我是一个标题
@@ -263,9 +290,30 @@
 </div>
 </body>
 <script>
-function pageChange(pageNum) {
-    console.log(pageNum)
-    // console.log(e.children[0] instanceof HTMLElement)
-}
+    function pageChange(pageNum) {
+        console.log(pageNum)
+    }
+    let t = false;
+    document.getElementsByClassName('www')[0].addEventListener('mouseenter', function (e) {
+        owller.methods.yyy(true);
+        e.stopPropagation()
+        e.preventDefault()
+    });
+    document.getElementsByClassName('www')[0].addEventListener('mouseleave', function () {
+        owller.methods.yyy(false);
+    });
+    var owller = new OwllerUI.OwllerUI({
+        data: {
+            e:9
+        },
+        methods: {
+            tipShow: function (isShow) {
+                console.log(isShow)
+            },
+            yyy: function (isShow) {
+                console.log(isShow)
+            }
+        }
+    });
 </script>
 </html>

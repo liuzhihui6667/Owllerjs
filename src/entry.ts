@@ -1,3 +1,5 @@
+import {owller} from "./TSLibs/global";
+
 import {RollerRender} from "./TSLibs/Renders/Roller/Roller";
 import {NavigationRender} from "./TSLibs/Renders/Navigation/Navigation";
 import {PaginationRender} from "./TSLibs/Renders/Pagination/Pagination";
@@ -35,10 +37,20 @@ import {TipsRender} from "./TSLibs/Renders/Tips/Tips";
 // let bdis = new ButtonComponent('DISABLED', 'disabled', '', '')
 // // b._getTemplate()
 // document.getElementsByClassName('btn-container')[0].appendChild(bdis.node)
+
 class OwllerUI {
+    option: object;
+    methods: object;
     renders: Array<any> = [RollerRender, NavigationRender, PaginationRender, ButtonRender, TreeRender, TipsRender];
     instants: Array<any> = [];
-    constructor() {
+    constructor(option?: object) {
+        owller.renderOption = option;
+        this.option = option;
+        this.methods = owller.renderOption.methods;
+        if(null !== owller.renderInstance) {
+            return
+        }
+        owller.renderInstance = this;
         this.init();
     }
 
@@ -58,7 +70,7 @@ class OwllerUI {
     }
 }
 
-
+// console.log(owller === null)
 
 // (function (e, t) {
 //     new t();
@@ -75,5 +87,5 @@ class OwllerUI {
 // new PaginationRender()
 // new ButtonRender()
 // new TreeRender()
-let o = new OwllerUI();
+// new OwllerUI();
 export {OwllerUI};

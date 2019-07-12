@@ -1,38 +1,73 @@
 .owl-tip-container {
-  display: inline-block;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   position: relative;
+  float: left;
+  margin-top: 0;
+  margin-left: 0;
 }
 
 .owl-tip-wrapper {
   position: absolute;
   height: auto;
+  transition: opacity .3s ease;
+  visibility: hidden;
+  opacity: 0;
 }
 .owl-tip-text-wrapper {
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 6px;
   box-shadow: 0px 0px 10px 1px rgba(211, 211, 211, 0.5);
   background-color: #ffffff;
   vertical-align: top;
   box-sizing: border-box;
-  display: inline-block;
   position: relative;
+  text-align: left;
+  width: auto;
 }
 
 .owl-tip-text-title {
-  font-size: 18px;
-  line-height: 32px;
   border-bottom: 1px solid rgba(211, 211, 211, 0.7);
   white-space: nowrap;
   box-sizing: border-box;
 }
+
+.owl-tip-text-title-small {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.owl-tip-text-title-default {
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.owl-tip-text-title-large {
+  font-size: 18px;
+  line-height: 30px;
+}
+
 .owl-tip-text {
   font-size: 14px;
   line-height: 26px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.owl-tip-text-small {
+  font-size: 10px;
+  line-height: 18px;
+}
+
+.owl-tip-text-default {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.owl-tip-text-large {
+  font-size: 16px;
+  line-height: 26px;
 }
 
 .owl-tip-tip-wrapper {
