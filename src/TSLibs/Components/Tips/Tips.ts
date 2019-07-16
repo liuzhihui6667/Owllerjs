@@ -141,12 +141,10 @@ class TipsComponent extends Components {
             node = this._createElement('div');
         }
         let tipNode = this._createElement('div', ['owl-tip-container']);
-        tipNode.append(node.innerHTML);
-        node.innerHTML = '';
         let tipWrapper = this._createElement('div', ['owl-tip-wrapper']);
         if(this.show) {
             tipWrapper.style.opacity = '1';
-            tipWrapper.style.visibility = 'visible';
+            tipWrapper.style.display = 'block';
         }
         let tipTextWrapper = this._createElement('div', ['owl-tip-text-wrapper']);
         tipTextWrapper.style.backgroundColor = this.bgc;
@@ -357,8 +355,16 @@ class TipsComponent extends Components {
 
     visit(isShow: boolean): void {
         let that = this;
-        that.node.getElementsByClassName('owl-tip-wrapper')[0].style.opacity = isShow ? 1 : 0;
-        that.node.getElementsByClassName('owl-tip-wrapper')[0].style.visibility = isShow ? 'visible' : 'hidden';
+        if(isShow) {
+            that.node.getElementsByClassName('owl-tip-wrapper')[0].style.display = isShow ? 'block' : 'none';
+            that.node.getElementsByClassName('owl-tip-wrapper')[0].style.opacity = isShow ? 1 : 0;
+        } else {
+            that.node.getElementsByClassName('owl-tip-wrapper')[0].style.opacity = isShow ? 1 : 0;
+            setTimeout(function () {
+                that.node.getElementsByClassName('owl-tip-wrapper')[0].style.display = isShow ? 'block' : 'none';
+            }, 300)
+        }
+
     }
 
     setChangeCallback(callback): void {

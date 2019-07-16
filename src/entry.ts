@@ -1,4 +1,4 @@
-import {owller} from "./TSLibs/global";
+import {owller, renderOption} from "./TSLibs/global";
 
 import {RollerRender} from "./TSLibs/Renders/Roller/Roller";
 import {NavigationRender} from "./TSLibs/Renders/Navigation/Navigation";
@@ -44,11 +44,25 @@ class OwllerUI {
     renders: Array<any> = [RollerRender, NavigationRender, PaginationRender, ButtonRender, TreeRender, TipsRender];
     instants: Array<any> = [];
     constructor(option?: object) {
-        owller.renderOption = option;
-        this.option = option;
-        this.methods = owller.renderOption.methods;
+        let op = {
+            data: {},
+            methods: {}
+        }
+        if(option !== undefined)  {
+            op = {
+                data: option.hasOwnProperty('data') ? option['data'] : {},
+                methods: option.hasOwnProperty('methods') ? option['methods'] : {}
+            }
+        }
+        owller.renderOption.data = op.data;
+        owller.renderOption.methods = op.methods;
         if(null !== owller.renderInstance) {
-            return
+            owller.renderInstance.option = op;
+            owller.renderInstance.methods = owller.renderOption.methods;
+            return owller.renderInstance;
+        } else {
+            this.option = op;
+            this.methods =  owller.renderOption.methods;
         }
         owller.renderInstance = this;
         this.init();
@@ -69,23 +83,5 @@ class OwllerUI {
         }
     }
 }
-
-// console.log(owller === null)
-
-// (function (e, t) {
-//     new t();
-//     return 1;
-// })(this, OwllerUI);
-
-// new OwllerUI();
-
-// window.OwllerUI = OwllerUI;
-
-
-// new RollerRender()
-// new NavigationRender()
-// new PaginationRender()
-// new ButtonRender()
-// new TreeRender()
-// new OwllerUI();
+new OwllerUI();
 export {OwllerUI};

@@ -96,6 +96,7 @@ class TipsRender {
         }
 
         let textNodes = tag.getElementsByTagName('owl-tip-text');
+        this.text = [];
         for (let i = 0; i < textNodes.length; i++) {
             this.text.push(textNodes[i].textContent.toString().trim());
         }
@@ -105,6 +106,8 @@ class TipsRender {
         let titleNode = tag.getElementsByTagName('owl-tip-title');
         if(titleNode.length > 0) {
             this.title = titleNode[0].textContent.trim();
+        } else {
+            this.title = '';
         }
         this.custom = tag.getAttribute('custom') === null ? false : tag.getAttribute('custom') === 'true';
         if(this.custom) {

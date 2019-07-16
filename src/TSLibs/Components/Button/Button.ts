@@ -30,7 +30,7 @@ class ButtonComponent extends Components {
         this.size = size === undefined ? 'default' : size;
         this.icon = icon === undefined ? '' : icon;
         this.circle = circle === undefined ? false : circle;
-        this.attr = attr === undefined ? {} : attr
+        this.attr = attr === undefined ? {} : attr;
         this.init();
     }
 
