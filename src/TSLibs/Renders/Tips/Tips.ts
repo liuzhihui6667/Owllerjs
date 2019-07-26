@@ -130,8 +130,8 @@ class TipsRender {
         document.onreadystatechange = () => {
             if(document.readyState == 'complete') {
                 for (let i = 0; i < this.componentInstances.length; i++) {
-                    if(this.tagsParams[i]['onChange'] !== '') {
-                        this.componentInstances[i].setChangeCallback(this.tagsParams[i]['onChange'])
+                    if(this.tagsParams[i]['on-change'] !== '') {
+                        this.componentInstances[i].setChangeCallback(this.tagsParams[i]['on-change'])
                     }
                 }
             }

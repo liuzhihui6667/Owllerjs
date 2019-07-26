@@ -8,6 +8,7 @@
 import {Components} from '../../Interfaces/Component'
 import '../../../Style/Pagination/index.less'
 import {OWLNODE} from '../../OwlNode/OWLNODE'
+import {owller} from "../../global";
 
 
 class PaginationComponent extends Components {
@@ -31,17 +32,24 @@ class PaginationComponent extends Components {
      * 主题
      */
     theme: string;
-    onChangeCallback: (pageNum: number) => void;
+    /**
+     * 对齐方式
+     */
+    align: string;
+
+    onChangeCallback: string = '';
     constructor(totalItemCount?: number,
                 pageSize?: number,
                 curPage?: number,
-                theme?: string) {
+                theme?: string,
+                align?: string) {
         super();
         this.totalItemCount = totalItemCount === undefined ? 0 : totalItemCount;
         this.pageSize = pageSize === undefined ? 15 : pageSize;
         this.curPage = curPage === undefined ? 1 : curPage;
         this.totalPage = this.totalItemCount === 0 ? 0 : Math.ceil(this.totalItemCount/this.pageSize);
         this.theme = theme === undefined ? 'dark' : theme;
+        this.align = align === undefined ? 'left' : align;
         this.init()
     }
     init(): void {
@@ -59,12 +67,21 @@ class PaginationComponent extends Components {
     __getNode(): HTMLElement {
         let node = this._createElement('div', ['owl-page-container', 'owl-page-theme-' + this.theme]);
         let ulNode = this._createElement('ul', ['owl-page-wrapper']);
-        let preLi = this._createElement('li');
+        switch (this.align) {
+            case 'right':
+                ulNode.style.cssFloat = 'right';
+                break;
+            case 'left':
+                ulNode.style.cssFloat = 'left';
+                break;
+            default:
+                ulNode.style.cssFloat = 'left';
+                break;
+        }
+        let preLi = this._createElement('li', ['owl-page-item']);
         preLi.setAttribute('title', '上一页');
         if(this.curPage === 1) {
             preLi.classList.add('owl-page-item-disabled')
-        } else {
-            preLi.classList.add('owl-page-item')
         }
         preLi.classList.add('owl-page-item-pre');
         preLi.innerText = '上一页';
@@ -97,7 +114,7 @@ class PaginationComponent extends Components {
                 }
             }
         }
-        let nextLi = this._createElement('li', ['owl-page-item-next']);
+        let nextLi = this._createElement('li', ['owl-page-item-next', 'owl-page-item']);
         nextLi.setAttribute('title', '下一页');
         if(this.curPage === this.totalPage) {
             nextLi.classList.add('owl-page-item-disabled')
@@ -136,8 +153,8 @@ class PaginationComponent extends Components {
                 } else if(this.dataset.hasOwnProperty('page')){
                     that.curPage = parseInt(this.dataset.page)
                 }
-                if(that.onChangeCallback !== undefined) {
-                    that.onChangeCallback(that.curPage)
+                if(that.onChangeCallback !== '') {
+                    owller.renderOption.methods[that.onChangeCallback](that.curPage);
                 }
                 that.node.replaceChild(that.__getNode().getElementsByClassName('owl-page-wrapper')[0], that.node.getElementsByClassName('owl-page-wrapper')[0]);
                 that._setEvent()
@@ -146,7 +163,7 @@ class PaginationComponent extends Components {
     }
 
     setChangeCallback(callback): void {
-        this.onChangeCallback = callback
+        this.onChangeCallback = callback;
     }
 }
 

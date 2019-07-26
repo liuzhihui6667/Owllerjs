@@ -17,7 +17,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #fff;
+            background-color: #aaa;
         }
         .container {
             width: 500px;
@@ -192,13 +192,13 @@
     <!--<owl-button type="dark" circle="true">黑色</owl-button>-->
     <!--<br><br>-->
 <!--</div>-->
-<!--<div class="page-container">-->
-    <!--<owl-page total="100" on-change="pageChange"></owl-page>-->
-    <!--<br>-->
-    <!--<owl-page total="1000" pagesize="80" curpage="9" theme="dark" on-change="pageChange"></owl-page>-->
-    <!--<br>-->
-    <!--<owl-page theme="light" total="9" pagesize="1" on-change="pageChange"></owl-page>-->
-<!--</div>-->
+<div class="page-container">
+    <owl-page total="100" on-change="pageChange" align="right"></owl-page>
+    <br>
+    <owl-page total="1000" pagesize="80" curpage="9" theme="dark" on-change="pageChange"></owl-page>
+    <br>
+    <owl-page theme="light" total="9" pagesize="1" on-change="pageChange"></owl-page>
+</div>
 <!--<div class="roller-container">-->
     <!--<owl-roller dir="h" tip="dot" loop="true" shownum="3" fit="true">-->
         <!--<div style="background-color: red;" class="roller-item" onclick="alert(777777)">-->
@@ -292,10 +292,6 @@
 <!--</div>-->
 </body>
 <script>
-    function pageChange(pageNum) {
-        console.log(pageNum)
-    }
-    let t = false;
 
     var owller = new OwllerUI.OwllerUI({
         data: {
@@ -307,14 +303,17 @@
             },
             yyy: function (isShow) {
                 console.log(isShow)
+            },
+            pageChange: function (page) {
+                console.log(page)
             }
         }
     });
-    document.getElementsByClassName('www')[0].addEventListener('mouseenter', function (e) {
-        owller.methods.yyy(true);
-    });
-    document.getElementsByClassName('www')[0].addEventListener('mouseleave', function () {
-        owller.methods.yyy(false);
-    });
+    // document.getElementsByClassName('www')[0].addEventListener('mouseenter', function (e) {
+    //     owller.methods.yyy(true);
+    // });
+    // document.getElementsByClassName('www')[0].addEventListener('mouseleave', function () {
+    //     owller.methods.yyy(false);
+    // });
 </script>
 </html>

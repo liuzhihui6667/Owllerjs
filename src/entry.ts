@@ -28,7 +28,7 @@ import {TipsRender} from "./TSLibs/Renders/Tips/Tips";
 // document.getElementsByClassName('btn-container')[0].appendChild(bs.node)
 // let bd = new ButtonComponent('SUCCESS', 'success', 'default', '')
 // // b._getTemplate()
-// document.getElementsByClassName('btn-container')[0].appendChild(bd.node)
+// document.getElementsByClassName('btn-container')[0].appendChild(b d.node)
 //
 // let bl = new ButtonComponent('FAIL', 'error', '', '')
 // // b._getTemplate()
