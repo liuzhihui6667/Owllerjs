@@ -7,9 +7,11 @@ import {ButtonRender} from "./TSLibs/Renders/Button/Button";
 import {TreeRender} from "./TSLibs/Renders/Tree/Tree";
 import {TipsRender} from "./TSLibs/Renders/Tips/Tips";
 
-// let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'light', 'fade')
-//
-// document.getElementsByTagName('body')[0].appendChild(p.node)
+import {PopupComponent} from "./TSLibs/Components/Popup/Popup";
+
+let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter', 'fade')
+
+document.getElementsByTagName('body')[0].appendChild(p.node)
 //
 // let p2 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter')
 //
