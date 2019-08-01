@@ -9,7 +9,7 @@ import {TipsRender} from "./TSLibs/Renders/Tips/Tips";
 
 import {PopupComponent} from "./TSLibs/Components/Popup/Popup";
 
-let p = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter', 'fade')
+let p = new PopupComponent('', 'folder', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter', 'rotate')
 
 document.getElementsByTagName('body')[0].appendChild(p.node)
 //

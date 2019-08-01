@@ -28,7 +28,7 @@ class PopupComponent extends Components {
      * 自定义窗口
      * 当 type 为 "custom" 时有效
      */
-    innerHtml: string;
+    innerHtml: HTMLElement;
     /**
      * 出现与消失动画
      */
@@ -49,12 +49,12 @@ class PopupComponent extends Components {
                 theme?: string,
                 animation?: string) {
         super();
-        this.title = title === undefined ? '信息' : title;
-        this.type = type === undefined ? 'default' : type;
-        this.innerText = innerText === undefined ? '请点击确定' : innerText;
-        this.innerHtml = innerHtml === undefined ? '请点击确定' : innerHtml;
-        this.theme = theme === undefined ? 'lighter' : theme;
-        this.animation = animation === undefined ? 'scale' : animation;
+        this.title = this._checkParam(title, '');
+        this.type = this._checkParam(type, 'alert');
+        this.innerText = this._checkParam(innerText, '');
+        this.innerHtml = this._checkParam(innerHtml, null);
+        this.theme = this._checkParam(theme, 'lighter');
+        this.animation = this._checkParam(animation, 'scale');
         this.init()
     }
     _getTemplate(): Element {
@@ -81,6 +81,26 @@ class PopupComponent extends Components {
         titleNode.appendChild(closeIcon.node);
         node.appendChild(titleNode);
 
+        let popBodyNode = this.__getAlertNode();
+        switch (this.type) {
+            case 'alert':
+                popBodyNode = this.__getAlertNode();
+                break;
+            case 'folder':
+                popBodyNode = this.__getFolderNode();
+                break;
+            case 'custom':
+                popBodyNode = this.__getCustomNode();
+                break;
+            default:
+                popBodyNode = this.__getAlertNode();
+                break;
+        }
+        node.appendChild(popBodyNode);
+        return node
+    }
+
+    __getAlertNode(): HTMLElement {
         let popBodyNode = document.createElement('div');
         popBodyNode.classList.add('owl-pop-body-wrapper');
         let popBodyTextNode = document.createElement('p');
@@ -92,13 +112,15 @@ class PopupComponent extends Components {
         confirmNode.innerText = '确定';
         popBodyNode.appendChild(popBodyTextNode);
         popBodyNode.appendChild(confirmNode);
-        node.appendChild(popBodyNode);
-        return node
+        return popBodyNode
     }
 
-    __getAlertNode(): HTMLElement {
-        
-        return null
+    __getFolderNode(): HTMLElement {
+        return this._createElement('div');
+    }
+
+    __getCustomNode(): HTMLElement {
+        return null;
     }
 
     _setEvent(): void {
@@ -151,9 +173,9 @@ class PopupComponent extends Components {
         this.node.getElementsByClassName('owl-pop-close')[0].addEventListener('mousedown', function (e) {
             e.stopPropagation()
         });
-        this.node.getElementsByClassName('confirm')[0].addEventListener('click', function (e) {
-
-        })
+        // this.node.getElementsByClassName('confirm')[0].addEventListener('click', function (e) {
+        //
+        // })
     }
 
     static __initStick(): void {
