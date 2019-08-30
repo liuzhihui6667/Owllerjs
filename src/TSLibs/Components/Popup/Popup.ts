@@ -41,6 +41,10 @@ class PopupComponent extends Components {
      * 主题
      */
     theme: string;
+    /**
+     * 最大化为1，最小化为2，初始状态为0
+     */
+    status: number = 0;
     mousedown: boolean = false;
     constructor(title?: string,
                 type?: string,
@@ -66,14 +70,9 @@ class PopupComponent extends Components {
     }
 
     __getNode(): Element {
-        let node = document.createElement('div');
-        node.classList.add('owl-pop-container');
-        node.classList.add('owl-pop-theme-' + this.theme);
-        node.classList.add('owl-pop-' + this.animation);
-        let titleNode = document.createElement('div');
-        titleNode.classList.add('owl-pop-title-wrapper');
-        let titleSpanNode = document.createElement('span');
-        titleSpanNode.classList.add('owl-pop-title');
+        let node = this._createElement('div', ['owl-pop-container', 'owl-pop-theme-' + this.theme, 'owl-pop-' + this.animation])
+        let titleNode = this._createElement('div', ['owl-pop-title-wrapper'])
+        let titleSpanNode = this._createElement('div', ['owl-pop-title']);
         titleSpanNode.innerText = this.title;
         titleNode.appendChild(titleSpanNode);
         let closeIcon = new IconComponent('close', '14px', '14px');
@@ -84,9 +83,11 @@ class PopupComponent extends Components {
         let popBodyNode = this.__getAlertNode();
         switch (this.type) {
             case 'alert':
+                node.classList.add('owl-pop-alert-container');
                 popBodyNode = this.__getAlertNode();
                 break;
             case 'folder':
+                node.classList.add('owl-pop-folder-container');
                 popBodyNode = this.__getFolderNode();
                 break;
             case 'custom':
@@ -101,14 +102,10 @@ class PopupComponent extends Components {
     }
 
     __getAlertNode(): HTMLElement {
-        let popBodyNode = document.createElement('div');
-        popBodyNode.classList.add('owl-pop-body-wrapper');
-        let popBodyTextNode = document.createElement('p');
-        popBodyTextNode.classList.add('owl-pop-text');
+        let popBodyNode = this._createElement('div', ['owl-pop-alert-body-wrapper']);
+        let popBodyTextNode = this._createElement('p', ['owl-pop-text'])
         popBodyTextNode.innerText = this.innerText;
-        let confirmNode = document.createElement('div');
-        confirmNode.classList.add('owl-pop-button');
-        confirmNode.classList.add('confirm');
+        let confirmNode = this._createElement('div', ['owl-pop-button', 'confirm']);
         confirmNode.innerText = '确定';
         popBodyNode.appendChild(popBodyTextNode);
         popBodyNode.appendChild(confirmNode);
@@ -116,7 +113,7 @@ class PopupComponent extends Components {
     }
 
     __getFolderNode(): HTMLElement {
-        return this._createElement('div');
+        return this._createElement('div', ['owl-pop-folder-body-wrapper']);
     }
 
     __getCustomNode(): HTMLElement {
@@ -138,6 +135,7 @@ class PopupComponent extends Components {
             eh = that.node.clientHeight;
             that.mousedown = true;
             let move = function(e) {
+                that.node.style.transition = '';
                 if(!that.mousedown) {
                     return
                 }
@@ -176,6 +174,29 @@ class PopupComponent extends Components {
         // this.node.getElementsByClassName('confirm')[0].addEventListener('click', function (e) {
         //
         // })
+        if(this.type === 'folder') {
+            this.sizeChange();
+        }
+    }
+
+    sizeChange(): void {
+        let that = this;
+        this.node.getElementsByClassName('owl-pop-title-wrapper')[0].addEventListener('dblclick', function (e) {
+            that.node.style.transition = 'width .3s, height .3s, top .3s, left .3s';
+            if(that.status === 0) {
+                that.node.style.width = '100%';
+                that.node.style.height = '100%';
+                that.node.style.top = '0';
+                that.node.style.left = '0';
+                that.status = 1;
+            }else if(that.status === 1) {
+                that.node.style.width = '';
+                that.node.style.height = '';
+                that.node.style.top = '';
+                that.node.style.left = '';
+                that.status = 0;
+            }
+        });
     }
 
     static __initStick(): void {
@@ -194,7 +215,7 @@ class PopupComponent extends Components {
     }
 
     _destroy(): void {
-
+        this.node.remove();
     }
 
 }

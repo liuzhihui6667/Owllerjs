@@ -9,21 +9,6 @@ import {TipsRender} from "./TSLibs/Renders/Tips/Tips";
 
 import {PopupComponent} from "./TSLibs/Components/Popup/Popup";
 
-let p = new PopupComponent('', 'folder', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter', 'rotate')
-
-document.getElementsByTagName('body')[0].appendChild(p.node)
-//
-// let p2 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'lighter')
-//
-// document.getElementsByClassName('container')[0].appendChild(p2.node)
-//
-// let p3 = new PopupComponent('Popup', '', '你好啊你好啊啊你好好啊你好啊', 'sdasd', 'dark', 'fade')
-//
-// document.getElementsByClassName('container')[0].appendChild(p3.node)
-
-
-
-// document.getElementsByClassName('container')[0].appendChild(u._getTemplate())
 
 // let bs = new ButtonComponent('按钮', '', '', 'store')
 // // b._getTemplate()
@@ -49,7 +34,7 @@ class OwllerUI {
         let op = {
             data: {},
             methods: {}
-        }
+        };
         if(option !== undefined)  {
             op = {
                 data: option.hasOwnProperty('data') ? option['data'] : {},
@@ -83,6 +68,28 @@ class OwllerUI {
         for (let i = 0; i < this.instants.length; i++) {
             this.instants[i].render();
         }
+    }
+
+    alert(option?: object): PopupComponent {
+        let op = {
+            title: '',
+            type: 'alert',
+            text: '你确定要这样吗？',
+            theme: 'lighter',
+            html: '',
+            animation: 'scale'
+        };
+        if(option !== undefined) {
+            op.title = option.hasOwnProperty('title') ? option['title'] : op.title;
+            op.type = option.hasOwnProperty('type') ? option['type'] : op.type;
+            op.text = option.hasOwnProperty('text') ? option['text'] : op.text;
+            op.theme = option.hasOwnProperty('theme') ? option['theme'] : op.theme;
+            op.html = option.hasOwnProperty('html') ? option['html'] : op.html;
+            op.animation = option.hasOwnProperty('animation') ? option['animation'] : op.animation;
+        }
+        let pop = new PopupComponent(op.title, op.type, op.text, op.html, op.theme, op.animation);
+        document.getElementsByTagName('body')[0].appendChild(pop.node);
+        return pop;
     }
 }
 new OwllerUI();
